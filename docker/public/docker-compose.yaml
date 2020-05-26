@@ -10,12 +10,13 @@ services:
       - 443:443
     environment:
       - NGINX_PORT=80
-      - NGINX_PORT_TLS=443
+      - NGINX_TLS_PORT=443
       - NGINX_HOST=0.0.0.0
-      - WILMA=http://sec_wilma_pub:8080
-      - KEYROCK=http://<IP>:3000
-      - DASHBOARD=http://<IP>:80
-      - DASHBOARD_BACKEND=http://<IP>:80
+      - WILMA_HOST=sec_wilma_pub
+      - KEYROCK_HOST=<IP HOST CORE>
+      - DASHBOARD_WEB_HOST=<IP HOST CORE>
+      - DASHBOARD_BACKEND_HOST=<IP HOST CORE>
+      - PIXEL_DOMAIN=pixel-ports.eu
     depends_on: 
       - sec_wilma
     networks:
