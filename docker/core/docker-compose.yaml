@@ -62,11 +62,12 @@ services:
   sec-mysql-db:
     restart: always
     image: mysql:5.7
-    hostname: mysql-db
+    hostname: sec-mysql-db
     container_name: sec-mysql-db
-    security_db:
-      default:
-        ipv4_address: 172.21.1.6
+    networks:
+      security_db:
+        default:
+          ipv4_address: 172.21.1.6
     environment:
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/idm.db.pass
       - MYSQL_ROOT_HOST=172.21.1.5
@@ -83,8 +84,44 @@ services:
       - 3080:8080
     networks:
       security:
+  dal-orion-db:
+    image: mongo
+    command: --auth
+    hostname: dal-orion-db
+    container_name: dal-orion-db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongo 
+      - MONGO_INITDB_ROOT_PASSWORD_FILE=/run/secrets/orion.db.root.password 
+      - MONGO_INITDB_DATABASE=admin
+      - ORIONDB_PASSWORD_FILE=/run/secrets/orion.db.password
+    volumes:
+      - orion-db:/data/db
+      - ./oriondb:/docker-entrypoint-initdb.d
+    networks:
+      - dal-db
+    secrets:
+      - orion.db.root.password
+      - orion.db.password
+  dal-orion:
+    build: ./orion
+    image: pixel-orion
+    environment:
+      - DB_HOST=dal-orion-db 
+      - DB=orion 
+      - DB_USER=orion 
+      - DB_PASSWORD_FILE=/run/secrets/orion.db.password
+    depends_on:
+      - dal-orion-db
+    ports:
+      - "1026:1026"
+    networks:
+      - dal
+      - dal-db
+    secrets:
+      - orion.db.password
 volumes:
   mysql-db:
+  orion-db:
 networks:
   ih_public:
   ih:
@@ -104,5 +141,10 @@ secrets:
     file: ./secrets/idm.db.pass
   idm.admin.pass:
     file: ./secrets/idm.admin.pass
+  orion.db.root.password:
+    file: ./secrets/orion.db.root.password
+  orion.db.password:
+    file: ./secrets/orion.db.password
+
 
 
