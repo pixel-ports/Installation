@@ -1,0 +1,147 @@
+version: '3'
+services:
+  ih-zookeeper:
+    image: wurstmeister/zookeeper
+    volumes:
+      - zookeeper_data:/var/opt/zookeeper
+    logging:
+      options:
+        max-size: "15m"
+        max-file: "2"
+    networks:
+      ih:
+  ih-kafka:
+    image: wurstmeister/kafka
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: ih-kafka
+      KAFKA_CREATE_TOPICS: "data:1:1,status:1:1,notifications:1:1"
+      KAFKA_ZOOKEEPER_CONNECT: ih-zookeeper:2181
+    depends_on:
+      - ih-zookeeper
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    logging:
+      options:
+        max-size: "15m"
+        max-file: "2"
+    networks:
+      ih:
+  ih-orion-collector:
+    image: docker.pixel-ports.eu/information-hub/orion-data-collector
+    depends_on:
+      - zookeeper
+      - kafka
+    volumes:
+      - ./ih-config:/etc/inf-hub
+    extra_hosts:
+      - csco.archiving.broker:ih-kafka
+      - csco.archiving.config:ih-zookeeper
+      - csco.archiving.sts:elasticsearch
+      - csco.archiving.lts:elasticsearch
+    logging:
+      options:
+        max-size: "15m"
+        max-file: "2"
+    networks:
+      ih:
+  controller:
+    image: docker.pixel-ports.eu/information-hub/information-hub-controller
+    depends_on:
+      - zookeeper
+      - kafka
+    volumes:
+      - ./ih-config:/etc/inf-hub
+    extra_hosts:
+      - csco.archiving.broker:ih-kafka
+      - csco.archiving.config:ih-zookeeper
+      - csco.archiving.sts:elasticsearch
+      - csco.archiving.lts:elasticsearch
+    logging:
+      options:
+        max-size: "15m"
+        max-file: "2"
+    networks:
+      ih:
+  extractor:
+    image: docker.pixel-ports.eu/information-hub/srv-data-extractor
+    depends_on:
+      - zookeeper
+      - kafka
+    volumes:
+      - ./ih-config:/etc/inf-hub
+    extra_hosts:
+      - csco.archiving.broker:ih-kafka
+      - csco.archiving.config:ih-zookeeper
+      - csco.archiving.sts:elasticsearch
+      - csco.archiving.lts:elasticsearch
+    logging:
+      options:
+        max-size: "15m"
+        max-file: "2"
+    networks:
+      ih:
+      ih_public:
+  monitor:
+    image: docker.pixel-ports.eu/information-hub/srv-data-monitor
+    depends_on:
+      - zookeeper
+      - kafka
+      - controller
+    volumes:
+      - ./ih-config:/etc/inf-hub
+    extra_hosts:
+      - csco.archiving.broker:ih-kafka
+      - csco.archiving.config:ih-zookeeper
+      - csco.archiving.sts:elasticsearch
+      - csco.archiving.lts:elasticsearch
+    logging:
+      options:
+        max-size: "15m"
+        max-file: "2"
+    networks:
+      ih:
+
+  writer:
+    image: docker.pixel-ports.eu/information-hub/srv-data-writer
+    depends_on:
+      - zookeeper
+      - kafka
+    volumes:
+      - ./ih-config:/etc/inf-hub
+    extra_hosts:
+      - csco.archiving.broker:ih-kafka
+      - csco.archiving.config:ih-zookeeper
+      - csco.archiving.sts:elasticsearch
+      - csco.archiving.lts:elasticsearch
+    logging:
+      options:
+        max-size: "15m"
+        max-file: "2"
+    networks:
+      ih:
+
+  elasticsearch-proxy:
+    image: docker.pixel-ports.eu/information-hub/elasticsearch-proxy
+    environment:
+      - ELASTICSEARCH_ADDRESS=elasticsearch:9200
+    logging:
+      options:
+        max-size: "15m"
+        max-file: "2"
+    networks:
+      ih:
+      ih_public:
+
+volumes:
+  zookeeper_data:
+    driver: local
+networks:
+  ih_public:
+  ih:
+  security:
+  security_db:
+    ipam:
+      config:
+        - subnet: 172.21.1.0/24
+  dal_db:
+  dal:

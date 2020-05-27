@@ -10,19 +10,22 @@ services:
       - NGINX_TLS_PORT=443
       - NGINX_HOST=0.0.0.0
       - PIXEL_DOMAIN=pixel.internal
-      - IH_DATA_EXTRACTOR_HOST=sec-wilma-pub
+      - IH_DATA_EXTRACTOR_HOST=extractor
       - SEC_KEYROCK_HOST=sec-keyrock
-      - IH_ELASTICSEARCH_PROXY_HOST=<IP HOST CORE>
+      - IH_ELASTICSEARCH_PROXY_HOST=elasticsearch-proxy
       - SEC_AUTHZFORCE_HOST=sec-authzforce
-      - DAL_ORCHESTRATOR_HOST=<IP HOST PUBLIC>
+      - DAL_ORCHESTRATOR_HOST=${PUBLIC_HOST_IP}
     depends_on: 
-      - ih-data-extractor
-      - ih-elacticsearch-proxy
+      - extractor
+      - elasticsearch-proxy
       - sec-keyrock
       - sec-authzforce
     networks:
       - ih_public
       - security
+    logging:
+      options:
+        max-size: "15m"
   sec_keyrock:
     build: ./keyrock
     image: sec-keyrock:7.8.0
@@ -39,13 +42,13 @@ services:
     environment:
       - IDM_CORS_ENABLED=true 
       - IDM_DB_HOST=sec-mysql-db
-      - IDM_HOST=http://<IP HOST CORE>:3000
+      - IDM_HOST=http://${CORE_HOST_IP}:3000
       - IDM_PORT=3000
       - IDM_DB_USER=root
       - IDM_ADMIN_USER=admin
-      - IDM_ADMIN_EMAIL=admin@example.com
-      - IDM_EMAIL_ADDRESS=noreply@example.com
-      - IDM_TITLE=My Identity Manager
+      - IDM_ADMIN_EMAIL=admin@pixel-ports.eu
+      - IDM_EMAIL_ADDRESS=noreply@pixel-ports.eu
+      - IDM_TITLE=Pixel Identity Manager
       - IDM_THEME=pixel
       - IDM_PDP_LEVEL=advanced
       - IDM_AUTHZFORCE_ENABLED=true
@@ -59,6 +62,9 @@ services:
       - idm.encryption.key
       - idm.db.pass
       - idm.admin.pass
+    logging:
+      options:
+        max-size: "15m"
   sec-mysql-db:
     restart: always
     image: mysql:5.7
@@ -75,6 +81,9 @@ services:
       - mysql-db:/var/lib/mysql
     secrets:
       - idm.db.pass
+    logging:
+      options:
+        max-size: "15m"
   sec-authzforce:
     restart: always
     image: fiware/authzforce-ce-server:release-8.1.0
@@ -84,6 +93,9 @@ services:
       - 3080:8080
     networks:
       security:
+    logging:
+      options:
+        max-size: "15m"
   dal-orion-db:
     image: mongo
     command: --auth
@@ -102,6 +114,9 @@ services:
     secrets:
       - orion.db.root.password
       - orion.db.password
+    logging:
+      options:
+        max-size: "15m"
   dal-orion:
     build: ./orion
     image: pixel-orion
@@ -119,6 +134,9 @@ services:
       - dal-db
     secrets:
       - orion.db.password
+    logging:
+      options:
+        max-size: "15m"
 volumes:
   mysql-db:
   orion-db:

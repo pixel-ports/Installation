@@ -3,6 +3,7 @@ RUN apt -y update && apt -y upgrade
 RUN apt-get -y install certbot python-certbot-nginx
 RUN openssl dhparam 2048 -out /etc/ssl/dhparam.pem
 COPY default.conf /etc/nginx/conf.d/default.conf.template
+COPY cors.conf /etc/nginx/conf.d/cors.conf
 COPY docker_entrypoint.sh /docker_entrypoint.sh
 COPY pixel.internal.crt /etc/ssl/fullchain.pem
 COPY pixel.privatekey.pem /etc/ssl/privkey.pem

@@ -1,0 +1,47 @@
+version: '2.2'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
+    environment:
+      - node.name=elasticsearch
+      - cluster.initial_master_nodes=elasticsearch
+      - cluster.name=fair-elastic
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    logging:
+      options:
+        max-size: "15m"
+        max-file: "2"
+    network:
+      ih:
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.2.0
+    environment:
+      - "ELASTICSEARCH_URL=http://elasticsearch:9200"
+    depends_on:
+      - elasticsearch
+    logging:
+      options:
+        max-size: "15m"
+        max-file: "2"
+    network:
+      ih:
+volumes:
+  elasticsearch_data:
+    driver: local
+networks:
+  ih_public:
+  ih:
+  security:
+  security_db:
+    ipam:
+      config:
+        - subnet: 172.21.1.0/24
+  dal_db:
+  dal:

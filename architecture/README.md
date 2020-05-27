@@ -43,3 +43,10 @@ iptables -A INPUT -p tcp -i ens2 -s <IP PUBLIC> --dport 3080 -j ACCEPT
 iptables -A INPUT -p tcp -i ens2 -s <IP PUBLIC> --dport 1026 -j ACCEPT
 iptables -P INPUT DROP
 ```
+
+# Configure Secrets
+You can manualy configure each secrets, or just run the following command that will generate random data
+
+```
+docker run -it --rm -v ${PWD}/secrets:/app/secrets marcdespland/secrets
+```
