@@ -10,14 +10,14 @@ services:
       - NGINX_TLS_PORT=443
       - NGINX_HOST=0.0.0.0
       - PIXEL_DOMAIN=pixel.internal
-      - IH_DATA_EXTRACTOR_HOST=ih-extractor
+      - IH_DATA_EXTRACTOR_HOST=extractor
       - SEC_KEYROCK_HOST=sec-keyrock
-      - IH_ELASTICSEARCH_PROXY_HOST=ih-elasticsearch-proxy
+      - IH_ELASTICSEARCH_PROXY_HOST=elasticsearch-proxy
       - SEC_AUTHZFORCE_HOST=sec-authzforce
       - DAL_ORCHESTRATOR_HOST=${PUBLIC_HOST_IP}
     depends_on: 
-      - ih-extractor
-      - ih-elasticsearch-proxy
+      - extractor
+      - elasticsearch-proxy
       - sec-keyrock
       - sec-authzforce
     networks:
@@ -34,7 +34,7 @@ services:
     networks:
       security:
       security_db:
-        ipv4_address: 172.21.1.5
+        ipv4_address: 172.23.1.5
     depends_on:
       - sec-mysql-db
     ports:
@@ -72,10 +72,10 @@ services:
     container_name: sec-mysql-db
     networks:
       security_db:
-          ipv4_address: 172.21.1.6
+          ipv4_address: 172.23.1.6
     environment:
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/idm.db.pass
-      - MYSQL_ROOT_HOST=172.21.1.5
+      - MYSQL_ROOT_HOST=172.23.1.5
     volumes:
       - mysql-db:/var/lib/mysql
     secrets:
@@ -141,14 +141,29 @@ volumes:
   orion-db:
 networks:
   ih_public:
+    ipam:
+      config:
+        - subnet: 172.25.1.0/24
   ih:
+    ipam:
+      config:
+        - subnet: 172.24.1.0/24
   security:
+    ipam:
+      config:
+        - subnet: 172.26.1.0/24
   security_db:
     ipam:
       config:
-        - subnet: 172.21.1.0/24
+        - subnet: 172.23.1.0/24
   dal_db:
+    ipam:
+      config:
+        - subnet: 172.27.1.0/24
   dal:
+    ipam:
+      config:
+        - subnet: 172.28.1.0/24
 secrets:
   idm.session.secret:
     file: ./secrets/idm.session.secret
