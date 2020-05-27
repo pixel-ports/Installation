@@ -1,4 +1,4 @@
-version: '3'
+version: '3.3'
 services:
   ih-zookeeper:
     image: wurstmeister/zookeeper
@@ -29,8 +29,8 @@ services:
   ih-orion-collector:
     image: docker.pixel-ports.eu/information-hub/orion-data-collector
     depends_on:
-      - zookeeper
-      - kafka
+      - ih-zookeeper
+      - ih-kafka
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
@@ -44,11 +44,11 @@ services:
         max-file: "2"
     networks:
       ih:
-  controller:
+  ih-controller:
     image: docker.pixel-ports.eu/information-hub/information-hub-controller
     depends_on:
-      - zookeeper
-      - kafka
+      - ih-zookeeper
+      - ih-kafka
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
@@ -62,11 +62,11 @@ services:
         max-file: "2"
     networks:
       ih:
-  extractor:
+  ih-extractor:
     image: docker.pixel-ports.eu/information-hub/srv-data-extractor
     depends_on:
-      - zookeeper
-      - kafka
+      - ih-zookeeper
+      - ih-kafka
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
@@ -81,12 +81,12 @@ services:
     networks:
       ih:
       ih_public:
-  monitor:
+  ih-monitor:
     image: docker.pixel-ports.eu/information-hub/srv-data-monitor
     depends_on:
-      - zookeeper
-      - kafka
-      - controller
+      - ih-zookeeper
+      - ih-kafka
+      - ih-controller
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
@@ -101,11 +101,11 @@ services:
     networks:
       ih:
 
-  writer:
+  ih-writer:
     image: docker.pixel-ports.eu/information-hub/srv-data-writer
     depends_on:
-      - zookeeper
-      - kafka
+      - ih-zookeeper
+      - ih-kafka
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
@@ -119,8 +119,7 @@ services:
         max-file: "2"
     networks:
       ih:
-
-  elasticsearch-proxy:
+  ih-elasticsearch-proxy:
     image: docker.pixel-ports.eu/information-hub/elasticsearch-proxy
     environment:
       - ELASTICSEARCH_ADDRESS=elasticsearch:9200

@@ -10,14 +10,14 @@ services:
       - NGINX_TLS_PORT=443
       - NGINX_HOST=0.0.0.0
       - PIXEL_DOMAIN=pixel.internal
-      - IH_DATA_EXTRACTOR_HOST=extractor
+      - IH_DATA_EXTRACTOR_HOST=ih-extractor
       - SEC_KEYROCK_HOST=sec-keyrock
-      - IH_ELASTICSEARCH_PROXY_HOST=elasticsearch-proxy
+      - IH_ELASTICSEARCH_PROXY_HOST=ih-elasticsearch-proxy
       - SEC_AUTHZFORCE_HOST=sec-authzforce
       - DAL_ORCHESTRATOR_HOST=${PUBLIC_HOST_IP}
     depends_on: 
-      - extractor
-      - elasticsearch-proxy
+      - ih-extractor
+      - ih-elasticsearch-proxy
       - sec-keyrock
       - sec-authzforce
     networks:
@@ -26,7 +26,7 @@ services:
     logging:
       options:
         max-size: "15m"
-  sec_keyrock:
+  sec-keyrock:
     build: ./keyrock
     image: sec-keyrock:7.8.0
     container_name: sec-keyrock
@@ -72,7 +72,6 @@ services:
     container_name: sec-mysql-db
     networks:
       security_db:
-        default:
           ipv4_address: 172.21.1.6
     environment:
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/idm.db.pass
@@ -110,7 +109,7 @@ services:
       - orion-db:/data/db
       - ./oriondb:/docker-entrypoint-initdb.d
     networks:
-      - dal-db
+      - dal_db
     secrets:
       - orion.db.root.password
       - orion.db.password
@@ -131,7 +130,7 @@ services:
       - "1026:1026"
     networks:
       - dal
-      - dal-db
+      - dal_db
     secrets:
       - orion.db.password
     logging:
