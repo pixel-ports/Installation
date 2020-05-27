@@ -1,6 +1,6 @@
 version: '3.3'
 services:
-  ih-zookeeper:
+  zookeeper:
     image: wurstmeister/zookeeper
     volumes:
       - zookeeper_data:/var/opt/zookeeper
@@ -10,14 +10,14 @@ services:
         max-file: "2"
     networks:
       ih:
-  ih-kafka:
+  kafka:
     image: wurstmeister/kafka
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: ih-kafka
+      KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_CREATE_TOPICS: "data:1:1,status:1:1,notifications:1:1"
-      KAFKA_ZOOKEEPER_CONNECT: ih-zookeeper:2181
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     depends_on:
-      - ih-zookeeper
+      - zookeeper
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     logging:
@@ -26,16 +26,16 @@ services:
         max-file: "2"
     networks:
       ih:
-  ih-orion-collector:
+  orion-collector:
     image: docker.pixel-ports.eu/information-hub/orion-data-collector
     depends_on:
-      - ih-zookeeper
-      - ih-kafka
+      - zookeeper
+      - kafka
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
-      - csco.archiving.broker:ih-kafka
-      - csco.archiving.config:ih-zookeeper
+      - csco.archiving.broker:kafka
+      - csco.archiving.config:zookeeper
       - csco.archiving.sts:elasticsearch
       - csco.archiving.lts:elasticsearch
     logging:
@@ -44,16 +44,16 @@ services:
         max-file: "2"
     networks:
       ih:
-  ih-controller:
+  controller:
     image: docker.pixel-ports.eu/information-hub/information-hub-controller
     depends_on:
-      - ih-zookeeper
-      - ih-kafka
+      - zookeeper
+      - kafka
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
-      - csco.archiving.broker:ih-kafka
-      - csco.archiving.config:ih-zookeeper
+      - csco.archiving.broker:kafka
+      - csco.archiving.config:zookeeper
       - csco.archiving.sts:elasticsearch
       - csco.archiving.lts:elasticsearch
     logging:
@@ -62,16 +62,16 @@ services:
         max-file: "2"
     networks:
       ih:
-  ih-extractor:
+  extractor:
     image: docker.pixel-ports.eu/information-hub/srv-data-extractor
     depends_on:
-      - ih-zookeeper
-      - ih-kafka
+      - zookeeper
+      - kafka
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
-      - csco.archiving.broker:ih-kafka
-      - csco.archiving.config:ih-zookeeper
+      - csco.archiving.broker:kafka
+      - csco.archiving.config:zookeeper
       - csco.archiving.sts:elasticsearch
       - csco.archiving.lts:elasticsearch
     logging:
@@ -81,12 +81,12 @@ services:
     networks:
       ih:
       ih_public:
-  ih-monitor:
+  monitor:
     image: docker.pixel-ports.eu/information-hub/srv-data-monitor
     depends_on:
-      - ih-zookeeper
-      - ih-kafka
-      - ih-controller
+      - zookeeper
+      - kafka
+      - controller
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
@@ -101,16 +101,16 @@ services:
     networks:
       ih:
 
-  ih-writer:
+  writer:
     image: docker.pixel-ports.eu/information-hub/srv-data-writer
     depends_on:
-      - ih-zookeeper
-      - ih-kafka
+      - zookeeper
+      - kafka
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
-      - csco.archiving.broker:ih-kafka
-      - csco.archiving.config:ih-zookeeper
+      - csco.archiving.broker:kafka
+      - csco.archiving.config:zookeeper
       - csco.archiving.sts:elasticsearch
       - csco.archiving.lts:elasticsearch
     logging:
@@ -119,7 +119,7 @@ services:
         max-file: "2"
     networks:
       ih:
-  ih-elasticsearch-proxy:
+  elasticsearch-proxy:
     image: docker.pixel-ports.eu/information-hub/elasticsearch-proxy
     environment:
       - ELASTICSEARCH_ADDRESS=elasticsearch:9200
