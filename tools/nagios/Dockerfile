@@ -7,8 +7,6 @@ RUN yum install gcc gcc-c++ make  -y
 RUN cd /tmp/nagios-4.1.1 && ./configure --with-command-group=nagcmd && make all && make install && make install-init && make install-config && make install-commandmode && make install-webconf
 #RUN htpasswd -c /usr/local/nagios/etc/htpasswd.users nagiosadmin
 RUN cd /tmp/nagios-plugins-2.1.1 && ./configure --with-nagios-user=nagios --with-nagios-group=nagios --with-openssl=/usr/lib64/openssl && make all && make install
-COPY pixel.cfg /usr/local/nagios/etc/objects/pixel.cfg
-COPY nagios.cfg /usr/local/nagios/etc/nagios.cfg
 COPY start.sh /docker_entrypoint.sh
 EXPOSE 80
 ENV NAGIOSADMIN_USER=nagiosadmin
