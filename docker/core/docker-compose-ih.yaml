@@ -10,15 +10,15 @@ services:
         max-file: "2"
     networks:
       ih:
-        ipv4_address: 172.24.1.5
+        ipv4_address: 172.24.1.13
   kafka:
     image: wurstmeister/kafka
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 172.24.1.6
+      KAFKA_ADVERTISED_HOST_NAME: 172.24.1.14
       KAFKA_CREATE_TOPICS: "data:1:1,status:1:1,notifications:1:1"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ZOOKEEPER_CONNECT: 172.24.1.13:2181
     depends_on:
       - zookeeper
     volumes:
@@ -29,7 +29,7 @@ services:
         max-file: "2"
     networks:
       ih:
-        ipv4_address: 172.24.1.6
+        ipv4_address: 172.24.1.14
   orion-collector:
     image: docker.pixel-ports.eu/information-hub/orion-data-collector
     depends_on:
@@ -38,17 +38,17 @@ services:
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
-      - csco.archiving.broker:172.24.1.6
-      - csco.archiving.config:172.24.1.5
-      - csco.archiving.sts:172.24.1.7
-      - csco.archiving.lts:172.24.1.7
+      - csco.archiving.broker:172.24.1.14
+      - csco.archiving.config:172.24.1.13
+      - csco.archiving.sts:172.24.1.11
+      - csco.archiving.lts:172.24.1.11
     logging:
       options:
         max-size: "15m"
         max-file: "2"
     networks:
       ih:
-        ipv4_address: 172.24.1.9
+        ipv4_address: 172.24.1.15
   controller:
     image: docker.pixel-ports.eu/information-hub/information-hub-controller
     depends_on:
@@ -57,17 +57,17 @@ services:
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
-      - csco.archiving.broker:172.24.1.6
-      - csco.archiving.config:172.24.1.5
-      - csco.archiving.sts:172.24.1.7
-      - csco.archiving.lts:172.24.1.7
+      - csco.archiving.broker:172.24.1.14
+      - csco.archiving.config:172.24.1.13
+      - csco.archiving.sts:172.24.1.11
+      - csco.archiving.lts:172.24.1.11
     logging:
       options:
         max-size: "15m"
         max-file: "2"
     networks:
       ih:
-        ipv4_address: 172.24.1.10
+        ipv4_address: 172.24.1.16
   extractor:
     image: docker.pixel-ports.eu/information-hub/srv-data-extractor
     depends_on:
@@ -76,18 +76,19 @@ services:
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
-      - csco.archiving.broker:172.24.1.6
-      - csco.archiving.config:172.24.1.5
-      - csco.archiving.sts:172.24.1.7
-      - csco.archiving.lts:172.24.1.7
+      - csco.archiving.broker:172.24.1.14
+      - csco.archiving.config:172.24.1.13
+      - csco.archiving.sts:172.24.1.11
+      - csco.archiving.lts:172.24.1.11
     logging:
       options:
         max-size: "15m"
         max-file: "2"
     networks:
       ih:
-        ipv4_address: 172.24.1.11
+        ipv4_address: 172.24.1.17
       ih_public:
+        ipv4_address: 172.25.1.17
   monitor:
     image: docker.pixel-ports.eu/information-hub/srv-data-monitor
     depends_on:
@@ -97,17 +98,17 @@ services:
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
-      - csco.archiving.broker:172.24.1.6
-      - csco.archiving.config:172.24.1.5
-      - csco.archiving.sts:172.24.1.7
-      - csco.archiving.lts:172.24.1.7
+      - csco.archiving.broker:172.24.1.14
+      - csco.archiving.config:172.24.1.13
+      - csco.archiving.sts:172.24.1.11
+      - csco.archiving.lts:172.24.1.11
     logging:
       options:
         max-size: "15m"
         max-file: "2"
     networks:
       ih:
-        ipv4_address: 172.24.1.12
+        ipv4_address: 172.24.1.18
 
   writer:
     image: docker.pixel-ports.eu/information-hub/srv-data-writer
@@ -117,29 +118,30 @@ services:
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
-      - csco.archiving.broker:172.24.1.6
-      - csco.archiving.config:172.24.1.5
-      - csco.archiving.sts:172.24.1.7
-      - csco.archiving.lts:172.24.1.7
+      - csco.archiving.broker:172.24.1.14
+      - csco.archiving.config:172.24.1.13
+      - csco.archiving.sts:172.24.1.11
+      - csco.archiving.lts:172.24.1.11
     logging:
       options:
         max-size: "15m"
         max-file: "2"
     networks:
       ih:
-        ipv4_address: 172.24.1.13
+        ipv4_address: 172.24.1.19
   elasticsearch-proxy:
     image: docker.pixel-ports.eu/information-hub/elasticsearch-proxy
     environment:
-      - ELASTICSEARCH_ADDRESS=elasticsearch:9200
+      - ELASTICSEARCH_ADDRESS=172.24.1.11:9200
     logging:
       options:
         max-size: "15m"
         max-file: "2"
     networks:
       ih:
-        ipv4_address: 172.24.1.14
+        ipv4_address: 172.24.1.20
       ih_public:
+        ipv4_address: 172.25.1.20
 
 volumes:
   zookeeper_data:

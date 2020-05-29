@@ -20,7 +20,7 @@ services:
         max-file: "2"
     networks:
       ih:
-        ipv4_address: 172.24.1.7
+        ipv4_address: 172.24.1.11
   kibana:
     image: docker.elastic.co/kibana/kibana:7.2.0
     environment:
@@ -33,7 +33,7 @@ services:
         max-file: "2"
     networks:
       ih:
-        ipv4_address: 172.24.1.8
+        ipv4_address: 172.24.1.12
 volumes:
   elasticsearch_data:
     driver: local
