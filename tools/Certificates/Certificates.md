@@ -73,10 +73,10 @@ To check the CSR created:
 
 To generate your certificate for my.domain.com execute
 
-```openssl x509 -req -in pixel.internal.csr -out pixel.internal.crt -CAkey pixel.pem -CA pixel.pem -days 365 -CAcreateserial -CAserial pixel.internal.serial -extensions v3_req -extfile pixel.internal.cnf```
+```openssl x509 -req -in pixel.internal.csr -out pixel.internal.crt -sha1 -CAkey pixel.pem -CA pixel.pem -days 365 -CAcreateserial -CAserial pixel.internal.serial -extensions v3_req -extfile pixel.internal.cnf```
 
 To check your new certificate :
 
-```openssl x509 -in pixel.internal.com.crt -noout -text```
+```openssl x509 -in pixel.internal.crt -noout -text```
 
  
