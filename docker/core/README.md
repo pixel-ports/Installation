@@ -134,4 +134,18 @@ And ```docker ps -a``` should show all containers working excepted ```dal-provis
 
 ```docker logs dal-provisioning``` display useful information to install ```PUBLIC``` server.
 
+It should display something like that
+```
 
+> provisioning@1.0.0 start /app
+> node index.js
+
+Token                           : 99f4bf97-e915-417b-9285-09023905a491
+Organization PIXEL              : 96a7da6e-1bbc-4ee3-aee8-dacab079d485
+Appli DAL NGSIAGENTS PROXY      : 5ff34b1c-4e41-4b2e-9085-0f52b0b1c810
+PEP Proxy password              : pep_proxy_6c7b2771-1704-42c1-ab04-d8753401f3a2
+PEP Proxy oauth_client_id       : 5fe89b1c-4e41-4b2e-9085-0f52b0b1c810
+Keyrock         .............   Done
+Subscription created            : 5ed36ccd502bffe0fedc6847
+Inquisitor      .............   Done
+```

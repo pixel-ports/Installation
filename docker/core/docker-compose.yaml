@@ -8,7 +8,7 @@ services:
     environment:
       - NGINX_PORT=80
       - NGINX_TLS_PORT=443
-      - NGINX_HOST=0.0.0.0
+      - NGINX_HOST=172.29.1.5
       - PIXEL_DOMAIN=pixel.internal
       - IH_DATA_EXTRACTOR_HOST=172.25.1.17
       - SEC_KEYROCK_HOST=172.26.1.6
@@ -21,6 +21,8 @@ services:
       - sec-keyrock
       - sec-authzforce
     networks:
+      pixel:
+        ipv4_address: 172.29.1.5
       ih_public:
         ipv4_address: 172.25.1.5
       security:
@@ -188,6 +190,10 @@ networks:
     ipam:
       config:
         - subnet: 172.28.1.0/24
+  pixel:
+    ipam:
+      config:
+        - subnet: 172.29.1.0/24
 secrets:
   idm.session.secret:
     file: ./secrets/idm.session.secret

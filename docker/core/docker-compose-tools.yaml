@@ -11,9 +11,13 @@ services:
       options:
         max-size: "15m"
         max-file: "2"
+    ports:
+      - 8088:80
     secrets:
       - nagios.ngiosadmin.password
     networks:
+      pixel:
+        ipv4_address: 172.29.1.200
       ih:
         ipv4_address: 172.24.1.200
       ih_public:
