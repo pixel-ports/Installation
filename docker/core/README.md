@@ -26,6 +26,11 @@ Using GIT :
 GIT_SSL_NO_VERIFY=false git clone https://gitpixel.satrdlab.upv.es/marc.despland/Installation.git
 ```
 
+Later tou can just run to update
+```
+GIT_SSL_NO_VERIFY=false git pull
+```
+
 then go to the Core folder
 ```
 cd /opt/pixel/Installation/docker/core
@@ -83,6 +88,15 @@ All the previous rules will be deleted after reboot, until you execute the next 
 
 ## Installation
 
+### Private registry docker.pixel-ports.eu
+login in docker private registry !!!!
+```
+cat docker.password | docker login --username pixel --password-stdin docker.pixel-ports.eu
+```
+docker.password is not provide
+
+### Installation process
+
 First build the local images using the helper scripts (could take some times):
 ```
 ./build.sh
@@ -93,5 +107,31 @@ Then run the installation using the helper scripts:
 ./install.sh
 ```
 
+This should end with something like that
+```
+Creating dal-provisioning           ... done
+Creating core_zookeeper_1           ... done
+Creating sec-mysql-db               ... done
+Creating core_elasticsearch_1       ... done
+Creating dal-orion-db               ... done
+Creating nagios                     ... done
+Creating sec-authzforce             ... done
+Creating core_elasticsearch-proxy_1 ... done
+Creating core_dal-orion_1           ... done
+Creating core_kibana_1              ... done
+Creating core_kafka_1               ... done
+Creating sec-keyrock                ... done
+Creating core_writer_1              ... done
+Creating core_orion-collector_1     ... done
+Creating core_extractor_1           ... done
+Creating core_controller_1          ... done
+Creating core_monitor_1             ... done
+Creating dal-inquisitor             ... done
+Creating internal-proxy             ... done
+```
+
+And ```docker ps -a``` should show all containers working excepted ```dal-provisiong``` that run only once
+
+```docker logs dal-provisioning``` display useful information to install ```PUBLIC``` server.
 
 

@@ -2,6 +2,8 @@
 PUBLIC_INTERFACE=ens2
 source .env
 echo iptables -A INPUT -i ${PUBLIC_INTERFACE} -m conntrack --ctstate ESTABLISHED -j ACCEPT
+echo iptables -A INPUT -p udp -i lo -s 127.0.0.1/24 -j ACCEPT
+echo iptables -A INPUT -p tcp -i lo -s 127.0.0.1/24 -j ACCEPT
 echo iptables -A INPUT -p tcp -i ${PUBLIC_INTERFACE} --dport ssh -j ACCEPT
 echo iptables -A INPUT -p tcp -i ${PUBLIC_INTERFACE} -s ${PUBLIC_HOST_IP} --dport 3000 -j ACCEPT
 echo iptables -A INPUT -p tcp -i ${PUBLIC_INTERFACE} -s ${PUBLIC_HOST_IP} --dport 3080 -j ACCEPT
