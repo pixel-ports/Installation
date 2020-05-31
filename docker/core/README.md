@@ -26,7 +26,7 @@ Using GIT :
 GIT_SSL_NO_VERIFY=false git clone https://gitpixel.satrdlab.upv.es/marc.despland/Installation.git
 ```
 
-Later tou can just run to update
+Later you can just run git pull to update
 ```
 GIT_SSL_NO_VERIFY=false git pull
 ```
@@ -56,35 +56,65 @@ docker run -it --rm -v ${PWD}/secrets:/app/secrets pixelh2020/secrets:1.0.0
 
 ## Network security
 
-Depending of your infrastructure, it could be a good idea to configure ```iptables``` to prebvent unwanted network trafic.
+Depending of your infrastructure, it could be a good idea to configure ```iptables``` to prevent unwanted network trafic.
 
-The script ```iptables-rules.sh``` generate the appropriate rules, but it doesn't install them, you have to execute them manually. Until you save the rules, you just have to reboot to deleted them.
+The script ```pixel-rules.install.sh``` generate the appropriate rules, it will create a file ```pixel-rules``` based on the template ```pixel-rules.template```
+Edit ```pixel-rules.install.sh``` if the public interface is not ``èns2```
 
-Example rules generate by ```./iptables-rules.sh```
+Verify the content of the file !!!
 
 ```
-iptables -A INPUT -i ens2 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-iptables -A INPUT -p tcp -i ens2 --dport ssh -j ACCEPT
-iptables -A INPUT -p tcp -i ens2 -s 10.66.16.137 --dport 3000 -j ACCEPT
-iptables -A INPUT -p tcp -i ens2 -s 10.66.16.137 --dport 3080 -j ACCEPT
-iptables -A INPUT -p tcp -i ens2 -s 10.66.16.137 --dport 1026 -j ACCEPT
-iptables -P INPUT DROP
-iptables -I FORWARD -p tcp --dport 9092 -d 172.24.1.14 -j DROP
-iptables -I FORWARD ! -s 10.66.16.137 -p tcp --dport 1026 -d 172.28.1.10 -j DROP
-iptables -I FORWARD ! -s 10.66.16.137 -p tcp --dport 1026 -d 172.27.1.10 -j DROP
-iptables -I FORWARD ! -s 10.66.16.137 -p tcp --dport 3000 -d 172.26.1.6 -j DROP
-iptables -I FORWARD ! -s 10.66.16.137 -p tcp --dport 3000 -d 172.23.1.6 -j DROP
-iptables -I FORWARD ! -s 10.66.16.137 -p tcp --dport 8080 -d 172.26.1.8 -j DROP
+#!/bin/sh
+set -e
 
-  / \
- / | \
-/  *  \
--------
+ ### BEGIN INIT INFO
+ # Provides:           docker
+ # Required-Start:     docker
+ # Required-Stop:      docker
+ # Default-Start:      2 3 4 5
+ # Default-Stop:       0 1 6
+ # Short-Description:  Create IPTables rules to secure the machine
+ # Description:
+ #  iptables rules to secure the machine for the PIXEL Application
+ ### END INIT INFO
 
-Test everything is still working before executing the next command
-All the previous rules will be deleted after reboot, until you execute the next one
-/!\ : apt-get install iptables-persistent
+ case "$1" in
+          start)
+                   #iptables -A INPUT -i ens2 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+                   #iptables -I INPUT 2 -i lo -j ACCEPT
+                   #iptables -A INPUT -p tcp -i ens2 --dport ssh -j ACCEPT
+                   #iptables -P INPUT DROP
+                   iptables -F DOCKER-USER
+                   iptables -A DOCKER-USER -i ens2 -p tcp -m tcp -m conntrack --ctorigdstport 3080 -s 10.66.16.137 -j RETURN
+                   iptables -A DOCKER-USER -i ens2 -p tcp -m tcp -m conntrack --ctorigdstport 3000 -s 10.66.16.137 -j RETURN
+                   iptables -A DOCKER-USER -i ens2 -p tcp -m tcp -m conntrack --ctorigdstport 1026 -s 10.66.16.137 -j RETURN
+                   iptables -A DOCKER-USER -i ens2 -p tcp -m tcp -m conntrack --ctorigdstport 8088 -s 10.66.16.137 -j RETURN
+                   iptables -A DOCKER-USER -i ens2 -j DROP
+                   iptables -A DOCKER-USER -j RETURN
+                   
+                   ;;
+           stop)
+                   ;;
+           *)
+                   echo  "Usage: service docker {start|stop|restart|status}"
+                   exit 1
+                   ;;
+ esac
 ```
+
+Then copy the file in ```/etc/init.d``` and run it
+
+```
+cp pixel-rules /etc/init.d
+/etc/init.d/pixel-rules start
+```
+
+If something go south and you are kick out the server, reboot it, default rules should be reinstall
+
+if it works as expected, auto-start the script
+```
+```
+
 
 ## Installation
 
