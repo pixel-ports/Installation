@@ -19,10 +19,10 @@ set -e
                    iptables -A INPUT -p tcp -i ${PUBLIC_INTERFACE} --dport ssh -j ACCEPT
                    iptables -P INPUT DROP
                    iptables -F DOCKER-USER
-                   iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -p tcp -m tcp -m conntrack --ctorigdstport 3080 -s ${PUBLIC_HOST_IP} -j RETURN
-                   iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -p tcp -m tcp -m conntrack --ctorigdstport 3000 -s ${PUBLIC_HOST_IP} -j RETURN
-                   iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -p tcp -m tcp -m conntrack --ctorigdstport 1026 -s ${PUBLIC_HOST_IP} -j RETURN
-                   iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -p tcp -m tcp -m conntrack --ctorigdstport 8088 -s ${PUBLIC_HOST_IP} -j RETURN
+                   iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -p tcp -m tcp -m conntrack --ctorigdstport 80  -j RETURN
+                   iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -p tcp -m tcp -m conntrack --ctorigdstport 443  -j RETURN
+                   iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -p tcp -m tcp -m conntrack --ctorigdstport 8080 -s ${CORE_HOST_IP} -j RETURN
+                   iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -p tcp -m tcp -m conntrack --ctorigdstport 5666 -s ${CORE_HOST_IP} -j RETURN
                    iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -j DROP
                    iptables -A DOCKER-USER -j RETURN
                    

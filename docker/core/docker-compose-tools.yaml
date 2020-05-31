@@ -7,6 +7,9 @@ services:
     hostname: nagios
     environment:
       - NAGIOSADMIN_PASSWORD_FILE=/run/secrets/nagios.ngiosadmin.password
+      - PIXEL_DOMAIN=${PIXEL_DOMAIN}
+      - PUBLIC_HOST_IP=${PUBLIC_HOST_IP}
+      - CORE_HOST_IP=${CORE_HOST_IP}
     logging:
       options:
         max-size: "15m"
