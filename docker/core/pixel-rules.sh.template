@@ -18,12 +18,13 @@ set -e
                    iptables -I INPUT 2 -i lo -j ACCEPT
                    iptables -A INPUT -p tcp -i ${PUBLIC_INTERFACE} --dport ssh -j ACCEPT
                    iptables -P INPUT DROP
-                   iptables -I DOCKER-USER -i ${PUBLIC_INTERFACE} ! -s ${PUBLIC_HOST_IP} -p tcp --dport 3000 -j DROP
-                   iptables -I DOCKER-USER -i ${PUBLIC_INTERFACE} ! -s ${PUBLIC_HOST_IP} -p tcp --dport 3080 -j DROP
-                   iptables -I DOCKER-USER -i ${PUBLIC_INTERFACE} ! -s ${PUBLIC_HOST_IP} -p tcp --dport 1026 -j DROP
-                   iptables -I DOCKER-USER -i ${PUBLIC_INTERFACE} ! -s ${PUBLIC_HOST_IP} -p tcp --dport 8088 -j DROP
-                   iptables -I DOCKER-USER -i ${PUBLIC_INTERFACE}  -p tcp --dport 9200 -j DROP
-
+                   iptables -F DOCKER-USER
+                   iptables -A DOCKER-USER -j RETURN
+                   iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -j DROP
+                   iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -p tcp -m tcp -m conntrack --ctorigdstport 3080 -s ${PUBLIC_HOST_IP} -j RETURN
+                   iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -p tcp -m tcp -m conntrack --ctorigdstport 3000 -s ${PUBLIC_HOST_IP} -j RETURN
+                   iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -p tcp -m tcp -m conntrack --ctorigdstport 1026 -s ${PUBLIC_HOST_IP} -j RETURN
+                   iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -p tcp -m tcp -m conntrack --ctorigdstport 8088 -s ${PUBLIC_HOST_IP} -j RETURN
                    ;;
            stop)
                    ;;
