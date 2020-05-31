@@ -35,6 +35,8 @@ services:
     depends_on:
       - zookeeper
       - kafka
+      - elasticsearch
+      - dal-orion
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
@@ -54,6 +56,7 @@ services:
     depends_on:
       - zookeeper
       - kafka
+      - elasticsearch
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
@@ -73,6 +76,7 @@ services:
     depends_on:
       - zookeeper
       - kafka
+      - elasticsearch
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
@@ -95,6 +99,7 @@ services:
       - zookeeper
       - kafka
       - controller
+      - elasticsearch
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
@@ -115,6 +120,7 @@ services:
     depends_on:
       - zookeeper
       - kafka
+      - elasticsearch
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
@@ -133,6 +139,8 @@ services:
     image: docker.pixel-ports.eu/information-hub/elasticsearch-proxy
     environment:
       - ELASTICSEARCH_ADDRESS=172.24.1.11:9200
+    depends_on:
+      - elasticsearch
     logging:
       options:
         max-size: "15m"
