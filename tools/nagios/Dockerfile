@@ -11,4 +11,5 @@ COPY start.sh /docker_entrypoint.sh
 EXPOSE 80
 ENV NAGIOSADMIN_USER=nagiosadmin
 ENV NAGIOSADMIN_PASSWORD=changeit
+COPY check_nrpe /usr/local/nagios/libexec/check_nrpe
 ENTRYPOINT ["/docker_entrypoint.sh"]
