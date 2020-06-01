@@ -76,39 +76,41 @@ Verify the content of the file !!!
 #!/bin/sh
 set -e
 
- ### BEGIN INIT INFO
- # Provides:           pixel-rules
- # Required-Start:     docker
- # Required-Stop:      docker
- # Default-Start:      2 3 4 5
- # Default-Stop:       0 1 6
- # Short-Description:  Create IPTables rules to secure the machine
- # Description:
- #  iptables rules to secure the machine for the PIXEL Application
- ### END INIT INFO
+### BEGIN INIT INFO
+# Provides:           pixel-rules
+# Required-Start:     docker
+# Required-Stop:      docker
+# Default-Start:      2 3 4 5
+# Default-Stop:       0 1 6
+# Short-Description:  Create IPTables rules to secure the machine
+# Description:
+#  iptables rules to secure the machine for the PIXEL Application
+### END INIT INFO
 
- case "$1" in
-          start)
-                   #iptables -A INPUT -i ens2 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-                   #iptables -I INPUT 2 -i lo -j ACCEPT
-                   #iptables -A INPUT -p tcp -i ens2 --dport ssh -j ACCEPT
-                   #iptables -P INPUT DROP
-                   iptables -F DOCKER-USER
-                   iptables -A DOCKER-USER -i ens2 -p tcp -m tcp -m conntrack --ctorigdstport 3080 -s 10.66.16.137 -j RETURN
-                   iptables -A DOCKER-USER -i ens2 -p tcp -m tcp -m conntrack --ctorigdstport 3000 -s 10.66.16.137 -j RETURN
-                   iptables -A DOCKER-USER -i ens2 -p tcp -m tcp -m conntrack --ctorigdstport 1026 -s 10.66.16.137 -j RETURN
-                   iptables -A DOCKER-USER -i ens2 -p tcp -m tcp -m conntrack --ctorigdstport 8088 -s 10.66.16.137 -j RETURN
-                   iptables -A DOCKER-USER -i ens2 -j DROP
-                   iptables -A DOCKER-USER -j RETURN
+case "$1" in
+        start)
+                iptables -A INPUT -i ens2 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+                iptables -I INPUT 2 -i lo -j ACCEPT
+                iptables -A INPUT -p tcp -i ens2 --dport ssh -j ACCEPT
+                iptables -P INPUT DROP
+                iptables -F DOCKER-USER
+                iptables -A DOCKER-USER -i ens2 -m conntrack --ctstate ESTABLISHED -j RETURN
+                iptables -A DOCKER-USER -i ens2 -p tcp -m tcp -m conntrack --ctorigdstport 80  -j RETURN
+                iptables -A DOCKER-USER -i ens2 -p tcp -m tcp -m conntrack --ctorigdstport 443  -j RETURN
+                iptables -A DOCKER-USER -i ens2 -p tcp -m tcp -m conntrack --ctorigdstport 8080 -s  -j RETURN
+                iptables -A DOCKER-USER -i ens2 -p tcp -m tcp -m conntrack --ctorigdstport 5666 -s  -j RETURN
+                iptables -A DOCKER-USER -i ens2 -p udp -m udp -m conntrack --ctorigdstport 53 -j RETURN
+                iptables -A DOCKER-USER -i ens2 -j DROP
+                iptables -A DOCKER-USER -j RETURN
                    
-                   ;;
-           stop)
-                   ;;
-           *)
-                   echo  "Usage: service docker {start|stop|restart|status}"
-                   exit 1
-                   ;;
- esac
+                ;;
+        stop)
+                ;;
+        *)
+                echo  "Usage: service docker {start|stop|restart|status}"
+                exit 1
+                ;;
+esac
 ```
 
 Then copy the file in ```/etc/init.d``` and run it
