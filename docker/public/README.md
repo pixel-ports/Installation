@@ -126,7 +126,25 @@ if it works as expected, auto-start the script
 ```
 update-rc.d pixel-rules defaults
 ```
+## Generate Certificate
 
+We need a wildcard certificate for the choosen domain.
+
+Here we propose to generate it using [Let's Encrypt](https://letsencrypt.org)
+
+We choose to use ```*.<un/locode>.pixel-ports.eu```
+
+In order to generate it, you will need to contact UPV to create a DNS TXT Entry
+Here is the process for ```*.frbod.pixel-ports.eu```
+
+```
+cd /opt/pixel
+mkdir LetsEncrypt
+cd LetsEncrypt
+docker run -it --rm $(PwD):/etc/letsencrypt --entrypoint certbot pixelh2020/certbot certonly --manual -m infos@pixel-ports.eu -d *.frbod.pixel-ports.eu
+cp live/frbod.pixel-ports.eu/fullchain.pem Installation/docker/public/frontrp/
+cp live/frbod.pixel-ports.eu/privkey.pem Installation/docker/public/frontrp/
+```
 
 ## Installation
 
