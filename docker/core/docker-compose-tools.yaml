@@ -8,6 +8,7 @@ services:
         - PUBLIC_HOST_IP=${PUBLIC_HOST_IP}
         - CORE_HOST_IP=${CORE_HOST_IP}
     image: nagios-core:latest
+    restart: always
     container_name: nagios
     hostname: nagios
     environment:

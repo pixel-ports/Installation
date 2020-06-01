@@ -1,6 +1,7 @@
 version: "3.3"
 services:
   internal_proxy:
+    restart: always
     build: ./internal_proxy
     image: internal-proxy:latest
     container_name: internal-proxy
@@ -35,6 +36,7 @@ services:
         max-file: "2"
   sec-keyrock:
     build: ./keyrock
+    restart: always
     image: sec-keyrock:7.8.0
     container_name: sec-keyrock
     hostname: sec-keyrock
@@ -109,6 +111,7 @@ services:
         max-file: "2"
   dal-orion-db:
     image: mongo
+    restart: always
     command: --auth
     hostname: dal-orion-db
     container_name: dal-orion-db
@@ -132,6 +135,7 @@ services:
         max-file: "2"
   dal-orion:
     build: ./orion
+    restart: always
     image: pixel-orion
     environment:
       - DB_HOST=dal-orion-db 
@@ -155,6 +159,7 @@ services:
         max-file: "2"
   dal-inquisitor:
     image: pixelh2020/dal-inquisitor:1.0.0
+    restart: always
     hostname: dal-inquisitor
     container_name: dal-inquisitor
     environment:
