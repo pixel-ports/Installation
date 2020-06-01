@@ -36,7 +36,7 @@ services:
       dal:
         ipv4_address: 172.28.1.200
   dal-provisioning:
-    image: pixelh2020/dal-provisioning:1.0.0
+    image: pixelh2020/dal-provisioning:1.0.1
     hostname: dal-provisioning
     container_name: dal-provisioning
     environment:
