@@ -12,7 +12,7 @@ services:
       - NGINX_PORT=80
       - NGINX_TLS_PORT=443
       - NGINX_HOST=0.0.0.0
-      - WILMA_HOST=sec_wilma_pub
+      - WILMA_HOST=172.40.1.4
       - KEYROCK_HOST=${CORE_HOST_IP}
       - DASHBOARD_WEB_HOST=${CORE_HOST_IP}
       - DASHBOARD_BACKEND_HOST=${CORE_HOST_IP}
@@ -46,6 +46,8 @@ services:
     depends_on: 
       - dal-proxy
     networks:
+      proxy:
+        ipv4_address: 172.40.1.4
       dal_proxy:
         ipv4_address: 172.43.1.4
     secrets:
