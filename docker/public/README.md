@@ -124,6 +124,7 @@ If something go south and you are kick out the server, reboot it, default rules 
 
 if it works as expected, auto-start the script
 ```
+update-rc.d pixel-rules defaults
 ```
 
 
