@@ -24,7 +24,7 @@ services:
         ipv4_address: 172.40.1.5
   sec-wilma-pub:
     image: marcdespland/fiware-pep-proxy
-    container_name: sec-wilma-_pub
+    container_name: sec-wilma-pub
     hostname: sec-wilma-pub
     environment:
       - PEP_PROXY_AUTH_ENABLED=true
