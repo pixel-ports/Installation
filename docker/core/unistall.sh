@@ -6,13 +6,11 @@ then
     sleep 10
     echo Unistall ...
     echo ... Stoping containers
-    docker-compose -f docker-compose.yaml -f docker-compose-elastic.yaml -f docker-compose-ih.yaml -f docker-compose-tools.yaml stop
+    docker-compose -f docker-compose.yaml -f docker-compose-elastic.yaml -f docker-compose-ih.yaml -f docker-compose-tools.yaml -f docker-compose-ot.yaml stop
     echo ... Removing containers
-    docker-compose -f docker-compose.yaml -f docker-compose-elastic.yaml -f docker-compose-ih.yaml -f docker-compose-tools.yaml rm
+    docker-compose -f docker-compose.yaml -f docker-compose-elastic.yaml -f docker-compose-ih.yaml -f docker-compose-tools.yaml -f docker-compose-ot.yaml rm
     echo ... Removing networks
-    docker network rm core_dal core_dal_db core_ih core_ih_public core_security core_security_db 
-    echo ... Removing volumes
-    docker volume rm core_elasticsearch_data core_mysql-db core_orion-db core_zookeeper_data
+    docker network prune 
     echo ... Prune the unused volumes
     docker volume prune
 fi

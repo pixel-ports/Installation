@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Configuration status="warn">
+    <Properties>
+        <Property name="basePath">/var/lib/tomcat8/logs/</Property>
+    </Properties>
+ 
+    <Appenders>
+        <RollingFile name="fileLoggerAPI" fileName="${basePath}/otpixelAPI.log" filePattern="${basePath}/otpixelAPI-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+            <!--   <param name="MaxBackupIndex" value="1" /> -->
+            <!--   <param name="MaxFileSize" value="1MB" />      -->      
+        </RollingFile>
+ 
+ 		<RollingFile name="fileLoggerEngine-DeleteModels" fileName="${basePath}/otpixelEngineDeleteModels.log" filePattern="${basePath}/otpixelDel-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+        
+        <RollingFile name="fileLoggerEngine-CreateModels" fileName="${basePath}/otpixelEngineCreateModels.log" filePattern="${basePath}/otpixelCrM-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+        
+         <RollingFile name="fileLoggerEngine-CreateInstances" fileName="${basePath}/otpixelEngineCreateInstances.log" filePattern="${basePath}/otpixelCrI-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+        
+        <RollingFile name="fileLoggerEngine-CreateScheduledInstances" fileName="${basePath}/otpixelEngineCreateScheduledInstances.log" filePattern="${basePath}/otpixelCrSI-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+        
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout   pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="ot-DeleteModels" level="info" additivity="false">
+            <appender-ref ref="fileLoggerEngine-DeleteModels" level="info" />
+        </Logger>
+        
+        <Logger name="ot-CreateModels" level="info" additivity="false">
+            <appender-ref ref="fileLoggerEngine-CreateModels" level="info" />
+        </Logger>
+        
+        <Logger name="ot-CreateInstances" level="info" additivity="false">
+            <appender-ref ref="fileLoggerEngine-CreateInstances" level="info" />
+        </Logger>
+        
+         <Logger name="ot-CreateScheduledInstances" level="info" additivity="false">
+            <appender-ref ref="fileLoggerEngine-CreateScheduledInstances" level="info" />
+        </Logger>
+        
+        
+        
+        <Root level="info" additivity="false">
+            <!--  <appender-ref ref="console" />-->
+            <appender-ref ref="fileLoggerAPI" />
+        </Root>
+    </Loggers>
+</Configuration>

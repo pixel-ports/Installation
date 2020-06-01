@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration>
+	<server>
+		<headers>
+			<header enabled="true" key="Access-Control-Allow-Origin" value="*" />
+			<header enabled="true" key="Access-Control-Allow-Headers" value="origin, content-type, accept, authorization" />
+			<header enabled="true" key="Access-Control-Allow-Credentials" value="true" />
+			<header enabled="true" key="Access-Control-Allow-Methods" value="GET, POST, PUT, DELETE, OPTIONS, HEAD" />
+		</headers>
+	</server>
+	<security>
+		<apikey>p1x3l</apikey>
+	</security>
+	<elastic>		
+		<host>elastic.pixel.internal</host> 
+		<port>443</port>
+		<scheme>https</scheme>
+		<!--<username>username</username>
+		<password>password</password>-->	
+	</elastic>
+	<ot-engine>
+		<!--  Frequency (in seconds) to search for new models added to the platform -->
+		<frequency>30</frequency>
+	</ot-engine>
+	<datasource>
+		<className>eu.pixel.otpixel.datasource.impl.mongodb.MongoDBDataSource</className>
+		  <!-- <uri>mongodb://mongo:27017/otpixel</uri>   this will be used in docker-compose with mongo as a docker instance-->
+		    <uri>mongodb://otdb:changeit@localhost:27017/otpixel</uri> 
+	</datasource>
+</configuration>
