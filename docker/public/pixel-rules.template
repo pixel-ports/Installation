@@ -14,7 +14,7 @@ set -e
 
 case "$1" in
         start)
-                iptables -A INPUT -i ${PUBLIC_INTERFACE} -m conntrack --ctstate ESTABLISHED -j ACCEPT
+                iptables -A INPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT
                 iptables -I INPUT 2 -i lo -j ACCEPT
                 iptables -A INPUT -p icmp -i ${PUBLIC_INTERFACE} -s ${CORE_HOST_IP} -j ACCEPT
                 iptables -A INPUT -p tcp -i ${PUBLIC_INTERFACE} --dport ssh -j ACCEPT
