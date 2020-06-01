@@ -75,7 +75,7 @@ services:
       dal_proxy:
         ipv4_address: 172.43.1.2
   dal-orchestrator:
-    image: pixel/dalorchestrator:1.0.0
+    image: pixel/dal-orchestrator:1.0.0
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
