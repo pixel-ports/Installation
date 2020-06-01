@@ -1,4 +1,4 @@
-# Install Pixel Core Components
+# Install Pixel Public Components
 
 ## Prepare installation
 Before installing PIXEL you have to install docker and docker-compose
@@ -18,8 +18,8 @@ chmod +x /usr/local/bin/docker-compose
 apt install -y git
 ```
 
-## Retrieve the Core Archive
-Install the core archive in /opt/pixel
+## Retrieve the Public Archive
+Install the public archive in /opt/pixel
 
 Using GIT :
 ```
@@ -31,19 +31,23 @@ Later you can just run git pull to update
 GIT_SSL_NO_VERIFY=false git pull
 ```
 
-then go to the Core folder
+then go to the Public folder
 ```
-cd /opt/pixel/Installation/docker/core
+cd /opt/pixel/Installation/docker/public
 ```
 
 ## Configure the scripts 
 
-This part is easy :
+Retrieve the data from the dal-provisioning after installing the [DAL-Provisioning](../core/README.md#DAL-Provisioning)
+
+PEP_PROXY_APP should be filed with ```Appli DAL NGSIAGENTS PROXY```value
 
 Edit the ```.env``` to set the IP of the two servers.
 ```
 PUBLIC_HOST_IP=10.66.16.137
 CORE_HOST_IP=10.12.182.193
+PEP_PROXY_APP=5ff34b1c-4e41-4b2e-9085-0f52b0b1c810
+PIXEL_DOMAIN=frbod.pixel-ports.eu
 ```
  
  Then define the value for all secrets, you have to edit each files in ```./secrets``` with strong and secure value.
@@ -53,6 +57,11 @@ CORE_HOST_IP=10.12.182.193
 ```
 docker run -it --rm -v ${PWD}/secrets:/app/secrets pixelh2020/secrets:1.0.0
 ```
+
+But some secrets need a specifics value from [DAL-Provisioning](../core/README.md#DAL-Provisioning)
+* sec_wilma_pub.password : PEP Proxy password
+* sec_wilma_pub.proxy.username : PEP Proxy oauth_client_id
+
 
 ## Network security
 
@@ -68,7 +77,7 @@ Verify the content of the file !!!
 set -e
 
  ### BEGIN INIT INFO
- # Provides:           docker
+ # Provides:           pixel-rules
  # Required-Start:     docker
  # Required-Stop:      docker
  # Default-Start:      2 3 4 5
@@ -118,15 +127,6 @@ if it works as expected, auto-start the script
 
 ## Installation
 
-### Private registry docker.pixel-ports.eu
-login in docker private registry !!!!
-```
-cat docker.password | docker login --username pixel --password-stdin docker.pixel-ports.eu
-```
-docker.password is not provide
-
-### Installation process
-
 First build the local images using the helper scripts (could take some times):
 ```
 ./build.sh
@@ -160,22 +160,4 @@ Creating dal-inquisitor             ... done
 Creating internal-proxy             ... done
 ```
 
-And ```docker ps -a``` should show all containers working excepted ```dal-provisiong``` that run only once
-
-```docker logs dal-provisioning``` display useful information to install ```PUBLIC``` server.
-
-It should display something like that
-```
-
-> provisioning@1.0.0 start /app
-> node index.js
-
-Token                           : 99f4bf97-e915-417b-9285-09023905a491
-Organization PIXEL              : 96a7da6e-1bbc-4ee3-aee8-dacab079d485
-Appli DAL NGSIAGENTS PROXY      : 5ff34b1c-4e41-4b2e-9085-0f52b0b1c810
-PEP Proxy password              : pep_proxy_6c7b2771-1704-42c1-ab04-d8753401f3a2
-PEP Proxy oauth_client_id       : 5fe89b1c-4e41-4b2e-9085-0f52b0b1c810
-Keyrock         .............   Done
-Subscription created            : 5ed36ccd502bffe0fedc6847
-Inquisitor      .............   Done
-```
+And ```docker ps -a``` should show all containers 

@@ -68,7 +68,7 @@ Verify the content of the file !!!
 set -e
 
  ### BEGIN INIT INFO
- # Provides:           docker
+ # Provides:           pixel-rules
  # Required-Start:     docker
  # Required-Stop:      docker
  # Default-Start:      2 3 4 5
@@ -161,6 +161,8 @@ Creating internal-proxy             ... done
 ```
 
 And ```docker ps -a``` should show all containers working excepted ```dal-provisiong``` that run only once
+
+### DAL-Provisioning
 
 ```docker logs dal-provisioning``` display useful information to install ```PUBLIC``` server.
 
