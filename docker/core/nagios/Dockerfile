@@ -12,6 +12,9 @@ COPY plugins/check_mysqld.py /usr/local/nagios/libexec/check_mysqld.py
 RUN pip3 install Kazoo
 COPY plugins/check_zookeeper /usr/local/nagios/libexec/check_zookeeper
 COPY plugins/check_zookeeper.py /usr/local/nagios/libexec/check_zookeeper.py
+RUN pip3 install Kafka-Python
+COPY plugins/check_kafka /usr/local/nagios/libexec/check_kafka
+COPY plugins/check_kafka.py /usr/local/nagios/libexec/check_kafka.py
 COPY nagios.cfg /usr/local/nagios/etc/nagios.cfg
 COPY pixel_cmd.cfg /usr/local/nagios/etc/objects/pixel_cmd.cfg
 COPY pixel.cfg /usr/local/nagios/etc/objects/pixel.cfg
