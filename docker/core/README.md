@@ -46,11 +46,15 @@ Edit the ```.env``` to set the IP of the two servers.
 ```
 PUBLIC_HOST_IP=10.66.16.137
 CORE_HOST_IP=10.12.182.193
+PIXEL_DOMAIN=frbod.pixel-ports.eu
+PIXEL_INTERNAL_DOMAIN=pixel.internal
 ```
- 
- Then define the value for all secrets, you have to edit each files in ```./secrets``` with strong and secure value.
+You can now run ```hosts.install.sh```to install local hostname used for configuration
+Check ```/etc/hosts```to check the result 
 
- A quicker way is to use the given docker image ```pixelh2020/secrets````
+Then define the value for all secrets, you have to edit each files in ```./secrets``` with strong and secure value.
+
+A quicker way is to use the given docker image ```pixelh2020/secrets````
 
 ```
 docker run -it --rm -v ${PWD}/secrets:/app/secrets pixelh2020/secrets:1.0.0

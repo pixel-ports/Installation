@@ -15,6 +15,7 @@ services:
       - NAGIOSADMIN_PASSWORD_FILE=/run/secrets/nagios.ngiosadmin.password
       - ORIONDB_PASSWORD_FILE=/run/secrets/orion.db.password
       - OTDB_PASSWORD_FILE=/run/secrets/ot.db.password
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/idm.db.pass
     logging:
       options:
         max-size: "15m"
@@ -25,6 +26,7 @@ services:
       - nagios.ngiosadmin.password
       - orion.db.password
       - ot.db.password
+      - idm.db.pass
     networks:
       pixel:
         ipv4_address: 172.29.1.200

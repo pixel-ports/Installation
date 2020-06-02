@@ -86,7 +86,7 @@ services:
           ipv4_address: 172.23.1.7
     environment:
       - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/idm.db.pass
-      - MYSQL_ROOT_HOST=172.23.1.6
+      - MYSQL_ROOT_HOST=172.23.1.*
     volumes:
       - mysql-db:/var/lib/mysql
     secrets:
