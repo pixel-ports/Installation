@@ -33,3 +33,4 @@ fi
 
 cp tomcat-users.xml /var/lib/tomcat8/conf
 chown -R tomcat8 /var/lib/tomcat8/conf/tomcat-users.xml 
+keytool -import -trustcacerts -keystore /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/cacerts -storepass changeit -alias Root -import -file pixel.pem
