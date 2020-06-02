@@ -24,6 +24,7 @@ services:
     secrets:
       - nagios.ngiosadmin.password
       - orion.db.password
+      - ot.db.password
     networks:
       pixel:
         ipv4_address: 172.29.1.200
