@@ -14,6 +14,7 @@ services:
     environment:
       - NAGIOSADMIN_PASSWORD_FILE=/run/secrets/nagios.ngiosadmin.password
       - ORIONDB_PASSWORD_FILE=/run/secrets/orion.db.password
+      - OTDB_PASSWORD_FILE=/run/secrets/ot.db.password
     logging:
       options:
         max-size: "15m"

@@ -1,2 +1,2 @@
 #!/bin/bash
-exec python3 ./check_mongod.py $@
+exec python3 /usr/local/nagios/libexec/check_mongod.py $@
