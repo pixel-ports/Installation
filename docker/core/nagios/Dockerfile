@@ -9,6 +9,6 @@ RUN sed -i 's/CORE_HOST_IP/'${CORE_HOST_IP}'/' /usr/local/nagios/etc/objects/pix
 RUN sed -i 's/PUBLIC_HOST_IP/'${PUBLIC_HOST_IP}'/' /usr/local/nagios/etc/objects/pixel.cfg
 RUN sed -i 's/PIXEL_DOMAIN/'${PIXEL_DOMAIN}'/' /usr/local/nagios/etc/objects/pixel.cfg
 RUN yum install python3 -y
-RUN pip3 install -y pymongo
+RUN pip3 install pymongo
 COPY check_mongod /usr/local/nagios/libexec/check_mongod
 COPY check_mongod.py /usr/local/nagios/libexec/check_mongod.py
