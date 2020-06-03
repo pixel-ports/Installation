@@ -16,5 +16,10 @@ case "$1" in
        *)
             echo "CORE    212.47.227.23   - 10.12.182.193"
             echo "PUBLIC  163.172.188.163 - 10.66.16.137"
+            echo
+            echo ./connect.sh core : Connect to core server
+            echo ./connect.sh public : Connect to public server
+            echo ./connect.sh public-nagios : Connect to public with Tunnel for nagios http://127.0.0.1:8088/nagios
+            echo ./connect.sh core-ot : Connect to core with Tunnel for OT http://127.0.0.1:8089/ui
             ;;
 esac
