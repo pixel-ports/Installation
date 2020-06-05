@@ -1,0 +1,558 @@
+[{
+        "terminal": "default",
+        "ships_list": [{
+                "ID": " 9571545",
+                "label": "MUNTGRACHT",
+                "stopovers_list": [{
+                        "ID": 20180001,
+                        "handlings_list": [{
+                                "nature": "cargo",
+                                "dangerous": false,
+                                "agent": "SEAINVEST",
+                                "dock": {
+                                    "ID": 435,
+                                    "ETA": "2018-01-01T18:50:00",
+                                    "ETD": "2018-01-07T21:15:00"
+                                },
+                                "contents": {
+                                    "direction": "unloading",
+                                    "category": "I.CHARBON",
+                                    "amount": 10094
+                                },
+                                "ID": 0,
+                                "supply_chain_ID": "SC_I.CHARBON",
+                                "activities_list": [{
+                                        "ID": 0,
+                                        "step_ID": "step_1",
+                                        "timespan_scheduled": {
+                                            "start": "2018-01-01T18:50:00",
+                                            "end": "2018-01-02T05:13:05.185185",
+                                            "duration": 623.08641975
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_17",
+                                                "energy_consumed": [{
+                                                        "nature": "gazol",
+                                                        "value": 238.84979423750002
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }, {
+                                        "ID": 1,
+                                        "step_ID": "step_2",
+                                        "timespan_scheduled": {
+                                            "start": "2018-01-02T05:13:05.185185",
+                                            "end": "2018-01-03T00:35:32.594014",
+                                            "duration": 1162.4568138166667
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_8",
+                                                "energy_consumed": [{
+                                                        "nature": "gazol",
+                                                        "value": 445.6084452963889
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }, {
+                                        "ID": 2,
+                                        "step_ID": "step_3",
+                                        "timespan_scheduled": {
+                                            "start": "2018-01-01T18:50:00",
+                                            "end": "2018-01-04T07:38:26.024096",
+                                            "duration": 3648.4337349333337
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_26",
+                                                "energy_consumed": [{
+                                                        "nature": "electricity",
+                                                        "value": 49801.12048184
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }, {
+                "ID": " 9803429",
+                "label": "TANAB",
+                "stopovers_list": [{
+                        "ID": 20180002,
+                        "handlings_list": [{
+                                "nature": "cargo",
+                                "dangerous": false,
+                                "agent": "SEAINVEST",
+                                "dock": {
+                                    "ID": 436,
+                                    "ETA": "2018-01-02T18:30:00",
+                                    "ETD": "2018-01-03T19:20:00"
+                                },
+                                "contents": {
+                                    "direction": "unloading",
+                                    "category": "I.EMHV%20-%20EMAG%20-%20FAME",
+                                    "amount": 2500
+                                },
+                                "ID": 1,
+                                "supply_chain_ID": "SC_I.EMHV%20-%20EMAG%20-%20FAME",
+                                "activities_list": [{
+                                        "ID": 3,
+                                        "step_ID": "step_1",
+                                        "timespan_scheduled": {
+                                            "start": "2018-01-02T18:30:00",
+                                            "end": "2018-01-02T18:45:00",
+                                            "duration": 15.0
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_17",
+                                                "energy_consumed": [{
+                                                        "nature": "gazol",
+                                                        "value": 5.75
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }, {
+                                        "ID": 4,
+                                        "step_ID": "step_2",
+                                        "timespan_scheduled": {
+                                            "start": "2018-01-02T18:45:00",
+                                            "end": "2018-01-03T07:34:13.846154",
+                                            "duration": 769.2307692333333
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_11",
+                                                "energy_consumed": [{
+                                                        "nature": "gazol",
+                                                        "value": 294.8717948727778
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }, {
+                                        "ID": 5,
+                                        "step_ID": "step_3",
+                                        "timespan_scheduled": {
+                                            "start": "2018-01-02T18:45:00",
+                                            "end": "2018-01-02T21:12:46.995074",
+                                            "duration": 147.78325123333335
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_35",
+                                                "energy_consumed": [{
+                                                        "nature": "gazol",
+                                                        "value": 56.65024630611112
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }, {
+                "ID": " 9534298",
+                "label": "JOHANN",
+                "stopovers_list": [{
+                        "ID": 20180003,
+                        "handlings_list": [{
+                                "nature": "cargo",
+                                "dangerous": false,
+                                "agent": "SEAINVEST",
+                                "dock": {
+                                    "ID": 416,
+                                    "ETA": "2018-01-02T18:50:00",
+                                    "ETD": "2018-01-08T21:40:00"
+                                },
+                                "contents": {
+                                    "direction": "unloading",
+                                    "category": "I.CLINKER",
+                                    "amount": 5703
+                                },
+                                "ID": 2,
+                                "supply_chain_ID": "SC_I.CLINKER",
+                                "activities_list": [{
+                                        "ID": 6,
+                                        "step_ID": "step_1",
+                                        "timespan_scheduled": {
+                                            "start": "2018-01-02T18:50:00",
+                                            "end": "2018-01-03T00:42:02.222222",
+                                            "duration": 352.0370370333333
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_17",
+                                                "energy_consumed": [{
+                                                        "nature": "gazol",
+                                                        "value": 134.94753086277777
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }, {
+                                        "ID": 7,
+                                        "step_ID": "step_2",
+                                        "timespan_scheduled": {
+                                            "start": "2018-01-03T00:42:02.222222",
+                                            "end": "2018-01-03T16:01:52.544803",
+                                            "duration": 919.8387096833334
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_9",
+                                                "energy_consumed": [{
+                                                        "nature": "electricity",
+                                                        "value": 12555.7983871775
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }, {
+                                        "ID": 8,
+                                        "step_ID": "step_3",
+                                        "timespan_scheduled": {
+                                            "start": "2018-01-03T00:42:02.222222",
+                                            "end": "2018-01-04T04:07:07.991453",
+                                            "duration": 1645.09615385
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_27",
+                                                "energy_consumed": [{
+                                                        "nature": "electricity",
+                                                        "value": 25608.663461598335
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }, {
+                "ID": " 9377092",
+                "label": "LEENI",
+                "stopovers_list": [{
+                        "ID": 20180004,
+                        "handlings_list": [{
+                                "nature": "cargo",
+                                "dangerous": false,
+                                "agent": "SEAINVEST",
+                                "dock": {
+                                    "ID": 436,
+                                    "ETA": "2018-01-03T19:30:00",
+                                    "ETD": "2018-01-04T21:25:00"
+                                },
+                                "contents": {
+                                    "direction": "loading",
+                                    "category": "E.HUILE%20TOURNESOL",
+                                    "amount": 2424
+                                },
+                                "ID": 3,
+                                "supply_chain_ID": "SC_E.HUILE%20TOURNESOL",
+                                "activities_list": [{
+                                        "ID": 9,
+                                        "step_ID": "step_1",
+                                        "timespan_scheduled": {
+                                            "start": "2018-01-03T19:30:00",
+                                            "end": "2018-01-03T21:59:37.777778",
+                                            "duration": 149.62962963333334
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_17",
+                                                "energy_consumed": [{
+                                                        "nature": "gazol",
+                                                        "value": 57.35802469277778
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }, {
+                                        "ID": 10,
+                                        "step_ID": "step_2",
+                                        "timespan_scheduled": {
+                                            "start": "2018-01-03T21:59:37.777778",
+                                            "end": "2018-01-04T08:29:14.401155",
+                                            "duration": 629.6103896166667
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_3",
+                                                "energy_consumed": [{
+                                                        "nature": "gazol",
+                                                        "value": 241.35064935305556
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }, {
+                                        "ID": 11,
+                                        "step_ID": "step_3",
+                                        "timespan_scheduled": {
+                                            "start": "2018-01-03T21:59:37.777778",
+                                            "end": "2018-01-04T11:23:09.932474",
+                                            "duration": 803.5359116
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_34",
+                                                "energy_consumed": [{
+                                                        "nature": "electricity",
+                                                        "value": 10271.867403286666
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }, {
+                        "ID": 20180333,
+                        "handlings_list": [{
+                                "nature": "cargo",
+                                "dangerous": false,
+                                "agent": "SEAINVEST",
+                                "dock": {
+                                    "ID": 436,
+                                    "ETA": "2018-05-25T02:45:00",
+                                    "ETD": "2018-05-26T05:20:00"
+                                },
+                                "contents": {
+                                    "direction": "unloading",
+                                    "category": "I.EMHV%20-%20EMAG%20-%20FAME",
+                                    "amount": 3003
+                                },
+                                "ID": 160,
+                                "supply_chain_ID": "SC_I.EMHV%20-%20EMAG%20-%20FAME",
+                                "activities_list": [{
+                                        "ID": 228,
+                                        "step_ID": "step_1",
+                                        "timespan_scheduled": {
+                                            "start": "2018-05-25T02:45:00",
+                                            "end": "2018-05-25T03:00:00",
+                                            "duration": 15.0
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_17",
+                                                "energy_consumed": [{
+                                                        "nature": "gazol",
+                                                        "value": 5.75
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }, {
+                                        "ID": 229,
+                                        "step_ID": "step_2",
+                                        "timespan_scheduled": {
+                                            "start": "2018-05-25T03:00:00",
+                                            "end": "2018-05-25T18:24:00",
+                                            "duration": 924.0
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_11",
+                                                "energy_consumed": [{
+                                                        "nature": "gazol",
+                                                        "value": 354.2
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }, {
+                                        "ID": 230,
+                                        "step_ID": "step_3",
+                                        "timespan_scheduled": {
+                                            "start": "2018-05-25T03:00:00",
+                                            "end": "2018-05-25T05:57:31.034483",
+                                            "duration": 177.51724138333333
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_35",
+                                                "energy_consumed": [{
+                                                        "nature": "gazol",
+                                                        "value": 68.04827586361111
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }, {
+                        "ID": 20180356,
+                        "handlings_list": [{
+                                "nature": "cargo",
+                                "dangerous": false,
+                                "agent": "SEAINVEST",
+                                "dock": {
+                                    "ID": 436,
+                                    "ETA": "2018-05-31T08:00:00",
+                                    "ETD": "2018-06-01T08:55:00"
+                                },
+                                "contents": {
+                                    "direction": "loading",
+                                    "category": "E.HUILES%20MIXTES",
+                                    "amount": 3145
+                                },
+                                "ID": 170,
+                                "supply_chain_ID": "SC_E.HUILES%20MIXTES",
+                                "activities_list": [{
+                                        "ID": 246,
+                                        "step_ID": "step_1",
+                                        "timespan_scheduled": {
+                                            "start": "2018-05-31T11:22:24.444444",
+                                            "end": "2018-05-31T14:36:32.592592",
+                                            "duration": 194.13580246666666
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_17",
+                                                "energy_consumed": [{
+                                                        "nature": "gazol",
+                                                        "value": 74.41872427888889
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }, {
+                                        "ID": 247,
+                                        "step_ID": "step_2",
+                                        "timespan_scheduled": {
+                                            "start": "2018-05-31T14:36:32.592592",
+                                            "end": "2018-06-01T04:50:23.361823",
+                                            "duration": 853.84615385
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_4",
+                                                "energy_consumed": [{
+                                                        "nature": "gazol",
+                                                        "value": 327.30769230916667
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }, {
+                                        "ID": 248,
+                                        "step_ID": "step_3",
+                                        "timespan_scheduled": {
+                                            "start": "2018-05-31T14:36:32.592592",
+                                            "end": "2018-06-01T07:53:21.383801",
+                                            "duration": 1036.8131868166668
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_22",
+                                                "energy_consumed": [{
+                                                        "nature": "gazol",
+                                                        "value": 397.44505494638895
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }, {
+                        "ID": 20180421,
+                        "handlings_list": [{
+                                "nature": "cargo",
+                                "dangerous": false,
+                                "agent": "SEAINVEST",
+                                "dock": {
+                                    "ID": 436,
+                                    "ETA": "2018-06-23T01:30:00",
+                                    "ETD": "2018-06-26T06:55:00"
+                                },
+                                "contents": {
+                                    "direction": "unloading",
+                                    "category": "unknown",
+                                    "amount": 1000
+                                },
+                                "ID": 199,
+                                "supply_chain_ID": null,
+                                "activities_list": []
+                            }
+                        ]
+                    }, {
+                        "ID": 20180473,
+                        "handlings_list": [{
+                                "nature": "cargo",
+                                "dangerous": false,
+                                "agent": "SEAINVEST",
+                                "dock": {
+                                    "ID": 436,
+                                    "ETA": "2018-07-13T19:00:00",
+                                    "ETD": "2018-07-16T21:35:00"
+                                },
+                                "contents": {
+                                    "direction": "loading",
+                                    "category": "E.HUILE%20TOURNESOL",
+                                    "amount": 2055
+                                },
+                                "ID": 226,
+                                "supply_chain_ID": "SC_E.HUILE%20TOURNESOL",
+                                "activities_list": [{
+                                        "ID": 318,
+                                        "step_ID": "step_1",
+                                        "timespan_scheduled": {
+                                            "start": "2018-07-13T19:00:00",
+                                            "end": "2018-07-13T21:06:51.111111",
+                                            "duration": 126.85185185
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_17",
+                                                "energy_consumed": [{
+                                                        "nature": "gazol",
+                                                        "value": 48.62654320916667
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }, {
+                                        "ID": 319,
+                                        "step_ID": "step_2",
+                                        "timespan_scheduled": {
+                                            "start": "2018-07-13T21:06:51.111111",
+                                            "end": "2018-07-14T06:00:37.085137",
+                                            "duration": 533.7662337666667
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_3",
+                                                "energy_consumed": [{
+                                                        "nature": "gazol",
+                                                        "value": 204.61038961055556
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }, {
+                                        "ID": 320,
+                                        "step_ID": "step_3",
+                                        "timespan_scheduled": {
+                                            "start": "2018-07-13T21:06:51.111111",
+                                            "end": "2018-07-14T08:28:04.039288",
+                                            "duration": 681.2154696166667
+                                        },
+                                        "ressources_accounts_list": [{
+                                                "ressource_ID": "machine_34",
+                                                "energy_consumed": [{
+                                                        "nature": "electricity",
+                                                        "value": 8708.204419933058
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -1,0 +1,15 @@
+## Default Kibana configuration from kibana-docker.
+## from https://github.com/elastic/kibana-docker/blob/master/build/kibana/config/kibana.yml
+#
+server.name: kibana
+server.host: "0"
+elasticsearch.hosts: http://172.24.1.11:9200
+#elastalert-kibana-plugin.serverHost: elastalert
+#elastalert-kibana-plugin.serverPort: 3030
+#xpack.graph.enabled: true
+#xpack.ml.enabled: true
+#xpack.monitoring.enabled: true
+#xpack.reporting.enabled: true
+#xpack.security.enabled: true
+#xpack.watcher.enabled: true
+

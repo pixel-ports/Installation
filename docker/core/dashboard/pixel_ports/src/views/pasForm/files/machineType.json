@@ -1,0 +1,14 @@
+[
+	{ "label": "Fixed Crane", "value": "Fixed Crane" },
+	{ "label": "Rail Crane", "value": "Rail Crane" },
+	{ "label": "Mobile Crane", "value": "Mobile Crane" },
+	{ "label": "Fixed Arms", "value": "Fixed Arms" },
+	{ "label": "Berth Connection", "value": "Berth Connection" },
+	{ "label": "Conveyor Belt", "value": "Conveyor Belt" },
+	{ "label": "Pipeline", "value": "Pipeline" },
+	{ "label": "Flexible Hoses", "value": "Flexible Hoses" },
+	{ "label": "Terminal lighting", "value": "Terminal lighting" },
+	{ "label": "Pneumatic Conveyor", "value": "Pneumatic Conveyor" },
+	{ "label": "Screw Conveyor", "value": "Screw Conveyor" },
+	{ "label": "Hopper", "value": "Hopper" }
+]

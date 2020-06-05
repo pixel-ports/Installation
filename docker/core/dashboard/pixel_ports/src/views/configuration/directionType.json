@@ -1,0 +1,5 @@
+[
+	{ "label": "Loading", "value": "Loading" },
+	{ "label": "Unloading", "value": "Unloading" },
+	{ "label": "Other", "value": "Other" }
+]
