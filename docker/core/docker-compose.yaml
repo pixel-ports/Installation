@@ -205,6 +205,10 @@ networks:
     ipam:
       config:
         - subnet: 172.30.1.0/24
+  dash-api-db:
+    ipam:
+      config:
+        - subnet: 172.31.1.0/24
 secrets:
   idm.session.secret:
     file: ./secrets/idm.session.secret
