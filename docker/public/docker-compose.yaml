@@ -81,7 +81,7 @@ services:
         ipv4_address: 172.43.1.2
   dal-orchestrator:
     restart: always
-    image: pixelh2020/dal-orchestrator:1.1.0
+    image: pixelh2020/dal-orchestrator:1.1.1
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/pixel/Data_Models/specs:/opt/schemas
@@ -90,6 +90,8 @@ services:
     container_name: dal-orchestrator
     hostname: dal-orchestrator
     environment:
+      - SCHEMA_REPOSITORY_URL=https://schemas.${PIXEL_INTERNAL_DOMAIN}
+      - SCHEMA_REPOSITORY=/opt/schemas
       - NGSIAGENT_NETWORK=public_dal_agents
       - NGSIAGENT_KEY=pixel
       - PROXY_API_URL=http://172.41.1.2:8080
