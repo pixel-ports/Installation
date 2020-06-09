@@ -47,6 +47,7 @@ services:
       - csco.archiving.config:172.24.1.13
       - csco.archiving.sts:172.24.1.11
       - csco.archiving.lts:172.24.1.11
+      - dal-orion:172.28.1.10
     logging:
       options:
         max-size: "15m"
