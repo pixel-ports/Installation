@@ -55,6 +55,8 @@ services:
     networks:
       ih:
         ipv4_address: 172.24.1.15
+      dal:
+        ipv4_address: 172.28.1.15
   controller:
     image: docker.pixel-ports.eu/information-hub/information-hub-controller
     restart: always
