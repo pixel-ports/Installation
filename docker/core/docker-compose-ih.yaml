@@ -20,7 +20,10 @@ services:
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 172.17.0.1
+      KAFKA_LISTENERS: LISTENER_IH://172.24.1.14:9092
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_IH://172.24.1.14:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_IH:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_IH
       KAFKA_CREATE_TOPICS: "data:1:1,status:1:1,notifications:1:1"
       KAFKA_ZOOKEEPER_CONNECT: 172.24.1.13:2181
     depends_on:
@@ -45,7 +48,7 @@ services:
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
-      - csco.archiving.broker:172.17.0.1
+      - csco.archiving.broker:172.24.1.14
       - csco.archiving.config:172.24.1.13
       - csco.archiving.sts:172.24.1.11
       - csco.archiving.lts:172.24.1.11
