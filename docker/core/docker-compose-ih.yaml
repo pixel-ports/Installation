@@ -24,9 +24,9 @@ services:
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 172.24.1.1
+      KAFKA_ADVERTISED_HOST_NAME: 172.24.1.14
       KAFKA_CREATE_TOPICS: "data:1:1,status:1:1,notifications:1:1"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ZOOKEEPER_CONNECT: 172.24.1.13:2181
     depends_on:
       - zookeeper
     volumes:
@@ -49,8 +49,8 @@ services:
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
-      - csco.archiving.broker:172.24.1.1
-      - csco.archiving.config:172.24.1.1
+      - csco.archiving.broker:172.24.1.14
+      - csco.archiving.config:172.24.1.13
       - csco.archiving.sts:172.24.1.11
       - csco.archiving.lts:172.24.1.11
       - dal-orion:172.28.1.10
