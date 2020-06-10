@@ -13,6 +13,9 @@ case "$1" in
         core-ot)
             ssh -i $keypass/gpmb_private -L 127.0.0.1:8089:127.0.0.1:8080 root@212.47.227.23
             ;;
+        core-kafka)
+            ssh -i $keypass/gpmb_private -L 9092:172.24.1.14:9092 root@212.47.227.23
+            ;;
        *)
             echo "CORE    212.47.227.23   - 10.12.182.193"
             echo "PUBLIC  163.172.188.163 - 10.66.16.137"

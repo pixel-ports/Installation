@@ -14,11 +14,12 @@ services:
         ipv4_address: 172.24.1.13
   kafka:
     image: wurstmeister/kafka
+    hostname: kafka
     restart: always
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 172.24.1.14
+      KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_CREATE_TOPICS: "data:1:1,status:1:1,notifications:1:1"
       KAFKA_ZOOKEEPER_CONNECT: 172.24.1.13:2181
     depends_on:
@@ -48,6 +49,7 @@ services:
       - csco.archiving.sts:172.24.1.11
       - csco.archiving.lts:172.24.1.11
       - dal-orion:172.28.1.10
+      - kafka:172.24.1.14
     logging:
       options:
         max-size: "15m"
