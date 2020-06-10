@@ -45,12 +45,11 @@ services:
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
-      - csco.archiving.broker:172.24.1.14
+      - csco.archiving.broker:172.17.0.1
       - csco.archiving.config:172.24.1.13
       - csco.archiving.sts:172.24.1.11
       - csco.archiving.lts:172.24.1.11
       - dal-orion:172.28.1.10
-      - kafka:172.24.1.14
     logging:
       options:
         max-size: "15m"
