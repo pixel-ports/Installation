@@ -15,6 +15,7 @@ services:
   kafka:
     image: wurstmeister/kafka
     hostname: kafka
+    container_name: kafka
     restart: always
     ports:
       - "9092:9092"
