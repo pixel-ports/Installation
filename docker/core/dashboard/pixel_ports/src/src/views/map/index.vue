@@ -470,7 +470,7 @@ export default {
       var dataString =
       {
         'source': {
-          'sourceId': 'FR_BOD_TideSensor'
+          'sourceId': 'urn:pixel:DataSource:frbod:TideSensorObserved'
         },
         'filters': [
           {
@@ -709,7 +709,7 @@ export default {
       var sourceId = ''
       switch (typeSensor) {
         case 'TideSensor':
-          sourceId = 'FR_BOD_TideSensor'
+          sourceId = 'urn:pixel:DataSource:frbod:TideSensorObserved'
           break
       }
       var dataString =
@@ -803,7 +803,7 @@ export default {
       var dataString =
       {
         'source': {
-          'sourceId': 'FR_BOD_TideSensor'
+          'sourceId': 'urn:pixel:DataSource:frbod:TideSensorObserved'
         },
         'filters': [
           {
