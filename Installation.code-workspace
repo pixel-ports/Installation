@@ -5,6 +5,15 @@
 		},
 		{
 			"path": "../dashboard"
+		},
+		{
+			"path": "../pixel-data-collector"
+		},
+		{
+			"path": "../information-hub-docker"
+		},
+		{
+			"path": "../ot-install"
 		}
 	],
 	"settings": {}
