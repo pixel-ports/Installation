@@ -21,6 +21,8 @@ case "$1" in
                 iptables -F DOCKER-USER
                 iptables -I DOCKER-USER 1 -i ens2 -m conntrack --ctstate ESTABLISHED -j RETURN
                 iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -p tcp -m tcp -m conntrack --ctorigdstport 443 -s ${PUBLIC_HOST_IP} -j RETURN
+		iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -p tcp -m tcp -m conntrack --ctorigdstport 8080 -s ${PUBLIC_HOST_IP} -j RETURN
+		iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -p tcp -m tcp -m conntrack --ctorigdstport 8081 -s ${PUBLIC_HOST_IP} -j RETURN
                 iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -p tcp -m tcp -m conntrack --ctorigdstport 3080 -s ${PUBLIC_HOST_IP} -j RETURN
                 iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -p tcp -m tcp -m conntrack --ctorigdstport 3000 -s ${PUBLIC_HOST_IP} -j RETURN
                 iptables -A DOCKER-USER -i ${PUBLIC_INTERFACE} -p tcp -m tcp -m conntrack --ctorigdstport 1026 -s ${PUBLIC_HOST_IP} -j RETURN
