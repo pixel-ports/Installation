@@ -1,6 +1,6 @@
 // Define the constants needs for PIXEL
 export default {
-  baseURL_PIXEL_DATAMODEL_API: 'https://api-ot.demo.pixel-ports.eu', // sin OpenVPN
+  baseURL_PIXEL_DATAMODEL_API: 'https://api-ot.frbod.pixel-ports.eu', // sin OpenVPN
   // baseURL_PIXEL_DATAMODEL_API: 'http://192.168.0.30:8080/otpixel/api', // con OpenVPN
   APP_BASE_DATA_API_PAS: 'https://elasticsearch-proxy.pixel-ports.eu',
   // APP_BASE_DATA_API_PAS: 'http://192.168.0.3:8200/ih-api',
