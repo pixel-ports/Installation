@@ -29,6 +29,7 @@ services:
       - 5602:5601
     environment:
       - "ELASTICSEARCH_URL=http://elasticsearch:9200"
+      - "SERVER_BASEPATH=/kibana"
     depends_on:
       - elasticsearch
     logging:
