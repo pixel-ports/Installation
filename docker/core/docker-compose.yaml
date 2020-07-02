@@ -62,7 +62,7 @@ services:
       - IDM_THEME=pixel
       - IDM_PDP_LEVEL=advanced
       - IDM_AUTHZFORCE_ENABLED=true
-      - IDM_AUTHZFORCE_HOST=authzforce
+      - IDM_AUTHZFORCE_HOST=172.26.1.8
       - IDM_SESSION_SECRET_FILE=/run/secrets/idm.session.secret
       - IDM_ENCRYPTION_KEY_FILE=/run/secrets/idm.encryption.key 
       - IDM_DB_PASS_FILE=/run/secrets/idm.db.pass
