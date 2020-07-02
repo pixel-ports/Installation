@@ -20,10 +20,14 @@ services:
       - DASHBOARD_WEB_HOST=${CORE_HOST_IP}
       - DASHBOARD_BACKEND_HOST=${CORE_HOST_IP}
       - OPERATIONTOOLS_API_HOST=${CORE_HOST_IP}
+      - KIBANA_HOST=${CORE_HOST_IP}
       - PIXEL_DOMAIN=${PIXEL_DOMAIN}
       - PIXEL_INTERNAL_DOMAIN=${PIXEL_INTERNAL_DOMAIN}
+      - PIXEL_ADMIN_PASSWORD_FILE=/run/secrets/frontrp.admin.password
     depends_on: 
       - sec-wilma-pub
+    secrets:
+      - frontrp.admin.password
     networks:
       proxy:
         ipv4_address: 172.40.1.5
@@ -161,3 +165,5 @@ secrets:
     file: ./secrets/sec_wilma_pub.password
   sec_wilma_pub.proxy.username:
     file: ./secrets/sec_wilma_pub.proxy.username
+  frontrp.admin.password:
+    file: ./secrets/frontrp.admin.password
