@@ -6,6 +6,7 @@ const router = express.Router();
 
 // routes
 router.get('/filterMachineByResource/:idResource', getMachinesFilterByResource);
+router.get('/filterMachineByShiftWork/:shiftID', getMachinesFilterByShiftWork);
 router.get('/:id', getOne);
 router.put('/:id', update);
 router.post('/', create);
@@ -21,6 +22,24 @@ async function getMachinesFilterByResource(req, res) {
 
   try {
     const data = await machineService.getAll({ idResource });
+    res.json(wrapperOk(data));
+  } catch (error) {
+    logger.error(error);
+    return res.status(404).json({
+      error: {
+        code: 54910,
+        message: 'An error occurred'
+      }
+    });
+  }
+  return null;
+}
+
+async function getMachinesFilterByShiftWork(req, res) {
+  const { params: { shiftID } = { shiftID: null } } = req;
+
+  try {
+    const data = await machineService.getAll({ shiftID });
     res.json(wrapperOk(data));
   } catch (error) {
     logger.error(error);

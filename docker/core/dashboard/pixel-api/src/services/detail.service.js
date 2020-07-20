@@ -1,4 +1,4 @@
-﻿import Machine from '../models/Machine.model';
+﻿import Detail from '../models/Detail.model';
 
 const service = {};
 
@@ -16,7 +16,7 @@ export default service;
 async function getOne(id) {
   let data = [];
   try {
-    data = await Machine.findOne({ _id: id });
+    data = await Detail.findOne({ _id: id });
   } catch (error) {
     throw new Error(error);
   }
@@ -26,7 +26,7 @@ async function getOne(id) {
 async function getAll(query) {
   let data = [];
   try {
-    data = await Machine.find(query);
+    data = await Detail.find(query);
   } catch (error) {
     throw new Error(error);
   }
@@ -36,7 +36,7 @@ async function getAll(query) {
 function getAllFiltered(query) {
   let data = [];
   try {
-    data = Machine.find(query);
+    data = Detail.find(query);
   } catch (error) {
     throw new Error(error);
   }
@@ -46,7 +46,7 @@ function getAllFiltered(query) {
 async function create(query) {
   let data = null;
   try {
-    data = await new Machine(query).save();
+    data = await new Detail(query).save();
   } catch (error) {
     throw new Error(error);
   }
@@ -56,7 +56,7 @@ async function create(query) {
 async function update(id, query) {
   let data = null;
   try {
-    data = await Machine.findOneAndUpdate({ _id: id }, { $set: query }, { new: true });
+    data = await Detail.findOneAndUpdate({ _id: id }, { $set: query }, { new: true });
     if (!data) {
       throw new Error('Not exist');
     }
@@ -69,7 +69,7 @@ async function update(id, query) {
 async function deleteOne(id) {
   let data = [];
   try {
-    data = await Machine.deleteOne({ _id: id });
+    data = await Detail.deleteOne({ _id: id });
   } catch (error) {
     throw new Error(error);
   }

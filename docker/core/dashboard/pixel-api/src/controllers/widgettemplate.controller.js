@@ -13,14 +13,14 @@ router.put(
   [
     check('source')
       .optional({ checkFalsy: true })
-      .isIn(['algorithm-pa', 'model-pas', 'custom'])
+      .isIn(['real-time', 'algorithm-pa', 'model-pas', 'custom', 'external-system'])
   ],
   util.sendValidations,
   update
 );
 router.post(
   '/',
-  [check('source').isIn(['algorithm-pa', 'model-pas', 'custom'])],
+  [check('source').isIn(['real-time', 'algorithm-pa', 'model-pas', 'custom', 'external-system'])],
   util.sendValidations,
   create
 );

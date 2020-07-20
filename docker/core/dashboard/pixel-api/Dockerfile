@@ -19,4 +19,4 @@ ENV NODE_ENV production
 
 CMD ["node", "index.js"]
 
-LABEL MAINTAINER jmartinez@prodevelop.es 
+LABEL MAINTAINER jmartinez@prodevelop.es

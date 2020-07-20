@@ -22,7 +22,8 @@ const mySchema = new Schema(
     assignation_preference: [
       {
         priority: { type: 'Number' },
-        direction: { type: 'String' },
+        direction: [String],
+        //direction: { type: 'String' },
         dock_ID: { type: 'String' },
         supply_chain_ID: { type: 'String' }
       }

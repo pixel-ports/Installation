@@ -23,11 +23,17 @@ router.put(
         'echart-radar',
         'gantt-bar-etd',
         'gantt-bar-pas',
-        'table-etd'
+        'table-etd',
+        'table-sensors',
+        'table-external-system',
+        'echartBar-sensor',
+        'echartLine-sensor',
+        'echartPie-sensor',
+        'map-sensor'
       ]),
     check('source')
       .optional({ checkFalsy: true })
-      .isIn(['algorithm-pa', 'model-pas', 'custom'])
+      .isIn(['algorithm-pa', 'model-pas', 'custom', 'real-time', 'external-system'])
   ],
   util.sendValidations,
   update
@@ -44,9 +50,15 @@ router.post(
       'echart-radar',
       'gantt-bar-etd',
       'gantt-bar-pas',
-      'table-etd'
+      'table-etd',
+      'table-sensors',
+      'table-external-system',
+      'echartBar-sensor',
+      'echartLine-sensor',
+      'echartPie-sensor',
+      'map-sensor'
     ]),
-    check('source').isIn(['algorithm-pa', 'model-pas', 'custom'])
+    check('source').isIn(['algorithm-pa', 'model-pas', 'custom', 'real-time', 'external-system'])
   ],
   util.sendValidations,
   create

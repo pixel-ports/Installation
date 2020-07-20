@@ -2,15 +2,17 @@ import { model, Schema } from 'mongoose';
 
 const mySchema = new Schema(
   {
-    // idAssignment: {
-    //   type: 'String'
-    // },
-    idRule: {
+    idSC: {
       type: 'String'
     },
-
-    assignment: {
-      type: Schema.Types.Mixed
+    idDetail: {
+      type: 'String'
+    },
+    label: {
+      type: 'String'
+    },
+    comment: {
+      type: 'String'
     }
   },
   {
@@ -20,4 +22,4 @@ const mySchema = new Schema(
 
 mySchema.index({ '$**': 'text' });
 
-export default model('Assignment', mySchema);
+export default model('Detail', mySchema);

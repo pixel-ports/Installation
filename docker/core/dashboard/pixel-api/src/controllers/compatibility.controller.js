@@ -1,11 +1,11 @@
 ﻿import express from 'express';
 import logger from '../config/winston';
-import validityService from '../services/validity.service';
+import compatibilityService from '../services/compatibility.service';
 
 const router = express.Router();
 
 // routes
-router.get('/filterByRule/:idRule', getValiditiesFilterByRule);
+router.get('/filterBySC/:idSC', getCompatibilityFilterBySC);
 router.get('/:id', getOne);
 router.put('/:id', update);
 router.post('/', create);
@@ -16,11 +16,11 @@ export default router;
 
 // Implementation
 
-async function getValiditiesFilterByRule(req, res) {
-  const { params: { idRule } = { idRule: null } } = req;
+async function getCompatibilityFilterBySC(req, res) {
+  const { params: { idSC } = { idSC: null } } = req;
 
   try {
-    const data = await validityService.getAll({ idRule });
+    const data = await compatibilityService.getAll({ idSC });
     res.json(wrapperOk(data));
   } catch (error) {
     logger.error(error);
@@ -38,7 +38,7 @@ async function getOne(req, res) {
   const { params: { id } = { id: null } } = req;
 
   try {
-    const data = await validityService.getOne(id);
+    const data = await compatibilityService.getOne(id);
     res.json(wrapperOk(data));
   } catch (error) {
     logger.error(error);
@@ -55,7 +55,7 @@ async function getOne(req, res) {
 async function getAll(req, res) {
   const { query } = req;
   try {
-    const data = await validityService.getAll(query);
+    const data = await compatibilityService.getAll(query);
     res.json(wrapperOk(data));
   } catch (error) {
     logger.error(error);
@@ -72,7 +72,7 @@ async function getAll(req, res) {
 async function create(req, res) {
   const query = makeObj(req.body);
   try {
-    const data = await validityService.create(query);
+    const data = await compatibilityService.create(query);
     res.json(wrapperOk(data));
   } catch (error) {
     logger.error(error);
@@ -92,7 +92,7 @@ async function update(req, res) {
   const query = makeObj(req.body);
 
   try {
-    const data = await validityService.update(id, query);
+    const data = await compatibilityService.update(id, query);
     res.json(wrapperOk(data));
   } catch (error) {
     logger.error(error);
@@ -110,7 +110,7 @@ async function deleteNode(req, res) {
   const { params: { id } = { id: null } } = req;
 
   try {
-    const data = await validityService.deleteOne(id);
+    const data = await compatibilityService.deleteOne(id);
     res.json(wrapperOk(data));
   } catch (error) {
     logger.error(error);
@@ -128,18 +128,32 @@ function makeObj(body) {
   // const { body: { address } = { address: undefined } } = req;
   const query = {};
 
-  // if (body.idValidity) {
-  //   query.idValidity = body.idValidity;
-  // }
-
-  if (body.idRule) {
-    query.idRule = body.idRule;
+  if (body.idSC) {
+    query.idSC = body.idSC;
   }
 
-  if (body.validity) {
-    query.validity = body.validity;
+  if (body.cargoes_category) {
+    query.cargoes_category = body.cargoes_category;
   } else {
-    query.validity = {};
+    query.cargoes_category = '';
+  }
+
+  if (body.directions_Nature) {
+    query.directions_Nature = body.directions_Nature;
+  } else {
+    query.directions_Nature = '';
+  }
+
+  if (body.areas_ID) {
+    query.areas_ID = body.areas_ID;
+  } else {
+    query.areas_ID = '';
+  }
+
+  if (body.shiftworks_ID) {
+    query.shiftworks_ID = body.shiftworks_ID;
+  } else {
+    query.shiftworks_ID = '';
   }
 
   return query;

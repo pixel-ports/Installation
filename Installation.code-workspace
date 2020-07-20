@@ -14,6 +14,9 @@
 		},
 		{
 			"path": "../ot-install"
+		},
+		{
+			"path": "../dashboardPIXEL_v2.01"
 		}
 	],
 	"settings": {}

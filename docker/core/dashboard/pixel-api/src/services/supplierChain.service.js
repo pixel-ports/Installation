@@ -1,4 +1,4 @@
-﻿import Machine from '../models/Machine.model';
+﻿import SupplierChain from '../models/SupplierChain.model';
 
 const service = {};
 
@@ -7,7 +7,6 @@ service.getAll = getAll;
 service.create = create;
 service.update = update;
 service.deleteOne = deleteOne;
-service.getAllFiltered = getAllFiltered;
 
 export default service;
 
@@ -16,7 +15,7 @@ export default service;
 async function getOne(id) {
   let data = [];
   try {
-    data = await Machine.findOne({ _id: id });
+    data = await SupplierChain.findOne({ _id: id });
   } catch (error) {
     throw new Error(error);
   }
@@ -26,17 +25,7 @@ async function getOne(id) {
 async function getAll(query) {
   let data = [];
   try {
-    data = await Machine.find(query);
-  } catch (error) {
-    throw new Error(error);
-  }
-  return data;
-}
-
-function getAllFiltered(query) {
-  let data = [];
-  try {
-    data = Machine.find(query);
+    data = await SupplierChain.find(query);
   } catch (error) {
     throw new Error(error);
   }
@@ -46,7 +35,7 @@ function getAllFiltered(query) {
 async function create(query) {
   let data = null;
   try {
-    data = await new Machine(query).save();
+    data = await new SupplierChain(query).save();
   } catch (error) {
     throw new Error(error);
   }
@@ -56,7 +45,7 @@ async function create(query) {
 async function update(id, query) {
   let data = null;
   try {
-    data = await Machine.findOneAndUpdate({ _id: id }, { $set: query }, { new: true });
+    data = await SupplierChain.findOneAndUpdate({ _id: id }, { $set: query }, { new: true });
     if (!data) {
       throw new Error('Not exist');
     }
@@ -69,7 +58,7 @@ async function update(id, query) {
 async function deleteOne(id) {
   let data = [];
   try {
-    data = await Machine.deleteOne({ _id: id });
+    data = await SupplierChain.deleteOne({ _id: id });
   } catch (error) {
     throw new Error(error);
   }
