@@ -39,7 +39,7 @@ services:
       ih:
         ipv4_address: 172.24.1.14
   orion-collector:
-    image: docker.pixel-ports.eu/information-hub/orion-data-collector
+    image: pixelh2020/information-hub-orion-data-collector
     restart: always
     depends_on:
       - zookeeper
@@ -64,7 +64,7 @@ services:
       dal:
         ipv4_address: 172.28.1.15
   controller:
-    image: docker.pixel-ports.eu/information-hub/information-hub-controller
+    image: pixelh2020/information-hub-controller
     restart: always
     depends_on:
       - zookeeper
@@ -85,7 +85,7 @@ services:
       ih:
         ipv4_address: 172.24.1.16
   extractor:
-    image: docker.pixel-ports.eu/information-hub/srv-data-extractor
+    image: pixelh2020/information-hub-extractor
     restart: always
     depends_on:
       - zookeeper
@@ -108,7 +108,7 @@ services:
       ih_public:
         ipv4_address: 172.25.1.17
   monitor:
-    image: docker.pixel-ports.eu/information-hub/srv-data-monitor
+    image: pixelh2020/information-hub-monitor
     restart: always
     depends_on:
       - zookeeper
@@ -131,7 +131,7 @@ services:
         ipv4_address: 172.24.1.18
 
   writer:
-    image: docker.pixel-ports.eu/information-hub/srv-data-writer
+    image: pixelh2020/information-hub-writer
     restart: always
     depends_on:
       - zookeeper
@@ -152,7 +152,7 @@ services:
       ih:
         ipv4_address: 172.24.1.19
   elasticsearch-proxy:
-    image: docker.pixel-ports.eu/information-hub/elasticsearch-proxy
+    image: pixelh2020/information-hub-elasticsearch-proxy
     restart: always
     environment:
       - ELASTICSEARCH_ADDRESS=172.24.1.11:9200
@@ -167,7 +167,25 @@ services:
         ipv4_address: 172.24.1.20
       ih_public:
         ipv4_address: 172.25.1.20
-
+  orchestrator:
+    image: pixelh2020/information-hub-data-processor-orchestrator
+    depends_on:
+      - zookeeper
+      - kafka
+    volumes:
+      - ./ih-config:/etc/inf-hub
+    extra_hosts:
+      - csco.archiving.broker:172.24.1.14
+      - csco.archiving.config:172.24.1.13
+    logging:
+      options:
+        max-size: "15m"
+        max-file: "2"
+    networks:
+      ih:
+        ipv4_address: 172.24.1.29
+      ih_public:
+        ipv4_address: 172.25.1.29
 volumes:
   zookeeper_data:
     driver: local
