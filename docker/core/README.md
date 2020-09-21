@@ -227,7 +227,7 @@ The process is simple
 Docker compose will update the modified components
 
 ```
-git pull
+GIT_SSL_NO_VERIFY=false git pull
 ./build.sh
 ./install.sh
 ```
