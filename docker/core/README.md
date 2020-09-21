@@ -2,6 +2,13 @@
 
 ## Prepare installation
 Before installing PIXEL you have to install docker and docker-compose
+The link to install docker-compose could change, check the last version [here](https://docs.docker.com/compose/install/)
+
+### For Ubuntu OS
+
+As root
+
+
 
 ```
 apt update
@@ -19,7 +26,32 @@ apt install -y git
 echo "vm.max_map_count=262144" >> /etc/sysctl.conf
 sysctl -w vm.max_map_count=262144
 ```
+### For  CentOS
 
+As root
+```
+yum install -y yum-utils
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install docker-ce docker-ce-cli containerd.io
+```
+If you have a conflict with podman-manpages for the last commands, try
+```
+yum remove -y podman-manpages
+yum install docker-ce docker-ce-cli containerd.io
+```
+
+The continue the installation
+```
+curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+yum install git
+echo "vm.max_map_count=262144" >> /etc/sysctl.conf
+sysctl -w vm.max_map_count=262144
+```
+
+```
+systemctl status docker
+```
 ## Retrieve the Core Archive
 Install the core archive in /opt/pixel
 
@@ -37,6 +69,8 @@ then go to the Core folder
 ```
 cd /opt/pixel/Installation/docker/core
 ```
+
+A user as been created to retrieve the archive ```pixel/p1x3l```
 
 ## Configure the scripts 
 
@@ -60,7 +94,7 @@ A quicker way is to use the given docker image ```pixelh2020/secrets````
 docker run -it --rm -v ${PWD}/secrets:/app/secrets pixelh2020/secrets:1.0.0
 ```
 
-## Network security
+## Network security (if needed)
 
 Depending of your infrastructure, it could be a good idea to configure ```iptables``` to prevent unwanted network trafic.
 
@@ -124,13 +158,6 @@ update-rc.d pixel-rules defaults
 
 
 ## Installation
-
-### Private registry docker.pixel-ports.eu
-login in docker private registry !!!!
-```
-cat docker.password | docker login --username pixel --password-stdin docker.pixel-ports.eu
-```
-docker.password is not provide
 
 ### Installation process
 

@@ -1,4 +1,10 @@
 # Prepare the machine
+Before installing PIXEL you have to install docker and docker-compose
+The link to install docker-compose could change, check the last version [here](https://docs.docker.com/compose/install/)
+
+### For Ubuntu OS
+
+As root
 
 ```
 apt update
@@ -20,7 +26,34 @@ apt install -y git
 systemctl status docker
 ```
 
-# Iptables
+### For  CentOS
+
+As root
+```
+yum install -y yum-utils
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install docker-ce docker-ce-cli containerd.io
+```
+If you have a conflict with podman-manpages for the last commands, try
+```
+yum remove -y podman-manpages
+yum install docker-ce docker-ce-cli containerd.io
+```
+
+The continue the installation
+```
+curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+yum install git
+echo "vm.max_map_count=262144" >> /etc/sysctl.conf
+sysctl -w vm.max_map_count=262144
+```
+
+```
+systemctl status docker
+```
+
+# Iptables (if needed)
 
 [Doc Ubunutu](https://doc.ubuntu-fr.org/iptables)
 
