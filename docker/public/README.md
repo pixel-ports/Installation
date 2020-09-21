@@ -134,16 +134,55 @@ Here we propose to generate it using [Let's Encrypt](https://letsencrypt.org)
 
 We choose to use ```*.<un/locode>.pixel-ports.eu```
 
+### Generate a new certificate 
+
 In order to generate it, you will need to contact UPV to create a DNS TXT Entry
 Here is the process for ```*.frbod.pixel-ports.eu```
 
 ```
 cd /opt/pixel
-mkdir LetsEncrypt
-cd LetsEncrypt
-docker run -it --rm $(PwD):/etc/letsencrypt --entrypoint certbot pixelh2020/certbot certonly --manual -m infos@pixel-ports.eu -d *.frbod.pixel-ports.eu
-cp live/frbod.pixel-ports.eu/fullchain.pem Installation/docker/public/frontrp/
-cp live/frbod.pixel-ports.eu/privkey.pem Installation/docker/public/frontrp/
+mkdir -p LetsEncrypt/certbot
+cd LetsEncrypt/certbot
+docker run -it --rm -v ${PWD}:/etc/letsencrypt --entrypoint certbot pixelh2020/certbot certonly --manual -m infos@pixel-ports.eu -d *.frbod.pixel-ports.eu
+```
+You will then have to answer some question and set a TXT record on the DNS
+
+When the DNS record is set, before continuing check the information 
+
+```
+dig -t txt _acme-challenge.frbod.pixel-ports.eu
+```
+
+When you have the right data, press ```ENTER``` on certbot, it will generate the certificat
+
+```
+cp live/frbod.pixel-ports.eu/fullchain.pem ../../Installation/docker/public/frontrp/
+cp live/frbod.pixel-ports.eu/privkey.pem ../../Installation/docker/public/frontrp/
+```
+
+check the dates that the certificate is valid
+```
+openssl x509 -noout -in  /opt/pixel/LetsEncrypt/certbot/live/frbod.pixel-ports.eu/fullchain.pem -dates
+```
+When you have the right data, press ```ENTER``` on certbot, it will generate the certificat
+
+```
+cp live/frbod.pixel-ports.eu/fullchain.pem ../../Installation/docker/public/frontrp/
+cp live/frbod.pixel-ports.eu/privkey.pem ../../Installation/docker/public/frontrp/
+```
+
+### Regenerate the certificate 
+```
+cd /opt/pixel/LetsEncrypt/certbot
+
+docker run -it --rm -v ${PWD}:/etc/letsencrypt --entrypoint certbot pixelh2020/certbot certonly --manual -m infos@pixel-ports.eu -d *.frbod.pixel-ports.eu
+```
+You will then have to answer some question and set a TXT record on the DNS
+
+When the DNS record is set, before continuing check the information 
+
+```
+dig -t txt _acme-challenge.frbod.pixel-ports.eu
 ```
 
 ## Installation
