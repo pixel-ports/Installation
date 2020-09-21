@@ -54,6 +54,7 @@ services:
       - csco.archiving.sts:172.24.1.11
       - csco.archiving.lts:172.24.1.11
       - dal-orion:172.28.1.10
+      - schemas.pixel.internal:172.24.1.30
     logging:
       options:
         max-size: "15m"
