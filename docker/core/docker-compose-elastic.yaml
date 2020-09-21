@@ -30,6 +30,7 @@ services:
     environment:
       - "ELASTICSEARCH_URL=http://elasticsearch:9200"
       - "SERVER_BASEPATH=/kibana"
+      - "SERVER_MAXPAYLOADBYTES=104857600"
     depends_on:
       - elasticsearch
     logging:
