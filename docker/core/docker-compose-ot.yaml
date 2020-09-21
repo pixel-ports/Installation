@@ -22,6 +22,28 @@ services:
     secrets:
       - ot.db.root.password
       - ot.db.password
+  ot-core:
+    image: ot-core
+    restart: always
+    container_name: ot-core
+    build: ./ot-core/
+    networks:
+      ot:
+        ipv4_address: 172.30.1.31
+      ih_public:
+        ipv4_address: 172.25.1.31
+    links:
+     - otdb
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8080:8080
+    logging:
+      options:
+        max-size: "15m"
+        max-file: "2"
+    extra_hosts:
+      - elastic.pixel.internal:172.25.1.5
 secrets:
   ot.db.root.password:
     file: ./secrets/ot.db.root.password
