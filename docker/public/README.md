@@ -221,3 +221,18 @@ Creating internal-proxy             ... done
 ```
 
 And ```docker ps -a``` should show all containers 
+
+# Update the host
+
+The process is simple
+* update the git repo
+* start the build script
+* start the install script
+
+Docker compose will update the modified components
+
+```
+git pull
+./build.sh
+./install.sh
+```

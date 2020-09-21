@@ -215,3 +215,19 @@ Keyrock         .............   Done
 Subscription created            : 5ed36ccd502bffe0fedc6847
 Inquisitor      .............   Done
 ```
+
+
+# Update the host
+
+The process is simple
+* update the git repo
+* start the build script
+* start the install script
+
+Docker compose will update the modified components
+
+```
+git pull
+./build.sh
+./install.sh
+```
