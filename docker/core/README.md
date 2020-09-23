@@ -194,11 +194,11 @@ Creating dal-inquisitor             ... done
 Creating internal-proxy             ... done
 ```
 
-And ```docker ps -a``` should show all containers working excepted ```dal-provisiong``` that run only once
+And ```docker ps -a``` should show all containers working
 
 ### DAL-Provisioning
 
-```docker logs dal-provisioning``` display useful information to install ```PUBLIC``` server.
+Run ```./dal-provisioning.sh``` display useful information to install ```PUBLIC``` server.
 
 It should display something like that
 ```
