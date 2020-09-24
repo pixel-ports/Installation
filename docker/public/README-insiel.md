@@ -1,6 +1,6 @@
 # Install Pixel Public Components
 
-For ```Insiel```Installation refer to the specifics documentation : [INSIEL Process](./README-insiel.md)
+The installation on Insiel environment is a bit different because the SSL ReverseProxy is mange directly by Insiel. So they are no need of certificates and the frontrp configuration is different than other platform.
 
 ## Prepare installation
 Before installing PIXEL you have to install docker and docker-compose
@@ -49,7 +49,7 @@ Edit the ```.env``` to set the IP of the two servers.
 PUBLIC_HOST_IP=10.66.16.137
 CORE_HOST_IP=10.12.182.193
 PEP_PROXY_APP=5ff34b1c-4e41-4b2e-9085-0f52b0b1c810
-PIXEL_DOMAIN=frbod.pixel-ports.eu
+PIXEL_DOMAIN=-pixel.insiel.it
 ```
  
  Then define the value for all secrets, you have to edit each files in ```./secrets``` with strong and secure value.
@@ -128,66 +128,13 @@ if it works as expected, auto-start the script
 ```
 update-rc.d pixel-rules defaults
 ```
-## Generate Certificate
-
-We need a wildcard certificate for the choosen domain.
-
-Here we propose to generate it using [Let's Encrypt](https://letsencrypt.org)
-
-We choose to use ```*.<un/locode>.pixel-ports.eu```
-
-### Generate a new certificate 
-
-In order to generate it, you will need to contact UPV to create a DNS TXT Entry
-Here is the process for ```*.frbod.pixel-ports.eu```
-
-```
-cd /opt/pixel
-mkdir -p LetsEncrypt/certbot
-cd LetsEncrypt/certbot
-docker run -it --rm -v ${PWD}:/etc/letsencrypt --entrypoint certbot pixelh2020/certbot certonly --manual -m infos@pixel-ports.eu -d *.frbod.pixel-ports.eu
-```
-You will then have to answer some question and set a TXT record on the DNS
-
-When the DNS record is set, before continuing check the information 
-
-```
-dig -t txt _acme-challenge.frbod.pixel-ports.eu
-```
-
-When you have the right data, press ```ENTER``` on certbot, it will generate the certificat
-
-```
-cp live/frbod.pixel-ports.eu/fullchain.pem ../../Installation/docker/public/frontrp/
-cp live/frbod.pixel-ports.eu/privkey.pem ../../Installation/docker/public/frontrp/
-```
-
-check the dates that the certificate is valid
-```
-openssl x509 -noout -in  /opt/pixel/LetsEncrypt/certbot/live/frbod.pixel-ports.eu/fullchain.pem -dates
-```
-When you have the right data, press ```ENTER``` on certbot, it will generate the certificat
-
-```
-cp live/frbod.pixel-ports.eu/fullchain.pem ../../Installation/docker/public/frontrp/
-cp live/frbod.pixel-ports.eu/privkey.pem ../../Installation/docker/public/frontrp/
-```
-
-### Regenerate the certificate 
-```
-cd /opt/pixel/LetsEncrypt/certbot
-
-docker run -it --rm -v ${PWD}:/etc/letsencrypt --entrypoint certbot pixelh2020/certbot certonly --manual -m infos@pixel-ports.eu -d *.frbod.pixel-ports.eu
-```
-You will then have to answer some question and set a TXT record on the DNS
-
-When the DNS record is set, before continuing check the information 
-
-```
-dig -t txt _acme-challenge.frbod.pixel-ports.eu
-```
 
 ## Installation
+
+First replace the docker-compose file:
+```
+cp docker-compose-insiel.yaml docker-compose.yaml
+```
 
 First build the local images using the helper scripts (could take some times):
 ```
