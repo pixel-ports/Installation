@@ -41,13 +41,13 @@ services:
     environment:
       NODE_ENV: production
       MONGO_URL: "mongodb://dashboard-api-db/pixel-db"
-      IDM_URL: "https://id.${PIXEL_INTERNAL_DOMAIN}"
+      IDM_URL: "https://id${PIXEL_INTERNAL_DOMAIN}"
     depends_on:
       - dashboard-api-db
     ports:
       - "3060:3000"
     extra_hosts:
-      - "id.${PIXEL_INTERNAL_DOMAIN}:172.25.1.5"
+      - "id${PIXEL_INTERNAL_DOMAIN}:172.25.1.5"
     logging:
       driver: "json-file"
       options:

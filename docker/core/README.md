@@ -81,7 +81,7 @@ Edit the ```.env``` to set the IP of the two servers.
 PUBLIC_HOST_IP=10.66.16.137
 CORE_HOST_IP=10.12.182.193
 PIXEL_DOMAIN=.frbod.pixel-ports.eu
-PIXEL_INTERNAL_DOMAIN=pixel.internal
+PIXEL_INTERNAL_DOMAIN=.pixel.internal
 ```
 You can now run ```hosts.install.sh```to install local hostname used for configuration
 Check ```/etc/hosts```to check the result 

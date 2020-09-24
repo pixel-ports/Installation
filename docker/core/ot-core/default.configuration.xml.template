@@ -9,7 +9,7 @@
 			<header enabled="true" key="Access-Control-Allow-Methods" value="GET, POST, PUT, DELETE, OPTIONS, HEAD" />
 		</headers>
 		<!-- external hostname/IP to invoke the service (Swagger/ VUe.js UI) -->
-		<frontHost>ot.frbod.pixel-ports.eu</frontHost>
+		<frontHost>ot${PIXEL_DOMAIN}</frontHost>
 		<frontPort>8080</frontPort>
 		<dockerSubnet>ih</dockerSubnet>
 		<createDockerSubnet>no</createDockerSubnet>
@@ -18,7 +18,7 @@
 		<apikey>p1x3l</apikey>
 	</security>
 	<elastic>		
-		<host>elastic.pixel.internal</host>
+		<host>elastic${PIXEL_INTERNAL_DOMAIN}</host>
         <port>443</port>
         <scheme>https</scheme>
         <!--<username>username</username>
@@ -31,7 +31,7 @@
 	<datasource>
 		<className>eu.pixel.otpixel.datasource.impl.mongodb.MongoDBDataSource</className>
 		<!--  this will be used in docker-compose with mongo as a docker instance-->
-		<uri>mongodb://otdb:Q1Cj7RuisM82@localhost:27017/otpixel</uri>
+		<uri>mongodb://otdb:${OTDB_PASSWORD}@172.30.1.22:27017/otpixel</uri>
 		
 		<!--  this will be used in standalone installation-->   
 		<!--   <uri>mongodb://localhost:27017/otpixel</uri> --> 
