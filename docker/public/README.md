@@ -44,12 +44,17 @@ Retrieve the data from the dal-provisioning after installing the [DAL-Provisioni
 
 PEP_PROXY_APP should be filed with ```Appli DAL NGSIAGENTS PROXY```value
 
-Edit the ```.env``` to set the IP of the two servers.
+Edit the ```.env``` to set the IP of the two servers. 
+
+Set the pep proxy app id comming from the dal-provisionning process for the CORE server.
+
+Set also the DNS domain use to expose PIXEL. 
+
 ```
 PUBLIC_HOST_IP=10.66.16.137
 CORE_HOST_IP=10.12.182.193
 PEP_PROXY_APP=5ff34b1c-4e41-4b2e-9085-0f52b0b1c810
-PIXEL_DOMAIN=frbod.pixel-ports.eu
+PIXEL_DOMAIN=.frbod.pixel-ports.eu
 ```
  
  Then define the value for all secrets, you have to edit each files in ```./secrets``` with strong and secure value.
