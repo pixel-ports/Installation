@@ -48,12 +48,18 @@ yum install git
 echo "vm.max_map_count=262144" >> /etc/sysctl.conf
 sysctl -w vm.max_map_count=262144
 ```
-
+### ALL OS
 ```
-systemctl status docker
+systemctl enable docker
+systemctl start docker
 ```
 ## Retrieve the Core Archive
 Install the core archive in /opt/pixel
+
+```
+mkdir -p /opt/pixel
+cd /opt/pixel
+```
 
 Using GIT :
 ```

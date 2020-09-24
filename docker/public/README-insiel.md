@@ -3,7 +3,13 @@
 The installation on Insiel environment is a bit different because the SSL ReverseProxy is mange directly by Insiel. So they are no need of certificates and the frontrp configuration is different than other platform.
 
 ## Prepare installation
+## Prepare installation
 Before installing PIXEL you have to install docker and docker-compose
+The link to install docker-compose could change, check the last version [here](https://docs.docker.com/compose/install/)
+
+### For Ubuntu OS
+
+As root
 
 ```
 apt update
@@ -19,11 +25,43 @@ curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compo
 chmod +x /usr/local/bin/docker-compose
 apt install -y git
 ```
+### For  CentOS
+
+As root
+```
+yum install -y yum-utils
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install docker-ce docker-ce-cli containerd.io
+```
+If you have a conflict with podman-manpages for the last commands, try
+```
+yum remove -y podman-manpages
+yum install docker-ce docker-ce-cli containerd.io
+```
+
+The continue the installation
+```
+curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+yum install git
+```
+
+### ALL OS
+```
+systemctl enable docker
+systemctl start docker
+```
+
 
 ## Retrieve the Public Archive
 Install the public archive in /opt/pixel
 
-Using GIT :
+```
+mkdir -p /opt/pixel
+cd /opt/pixel
+```
+
+Using GIT with pixel/p1x3l account
 ```
 GIT_SSL_NO_VERIFY=false git clone https://gitpixel.satrdlab.upv.es/marc.despland/Installation.git
 ```
