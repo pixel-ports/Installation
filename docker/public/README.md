@@ -60,8 +60,10 @@ cd /opt/pixel
 ```
 
 Using GIT with pixel/p1x3l account
+
 ```
 GIT_SSL_NO_VERIFY=false git clone https://gitpixel.satrdlab.upv.es/marc.despland/Installation.git
+GIT_SSL_NO_VERIFY=false git clone https://gitpixel.satrdlab.upv.es/iglaub/Data_Models.git
 ```
 
 Later you can just run git pull to update
@@ -80,7 +82,13 @@ Retrieve the data from the dal-provisioning after installing the [DAL-Provisioni
 
 PEP_PROXY_APP should be filed with ```Appli DAL NGSIAGENTS PROXY```value
 
-Edit the ```.env``` to set the IP of the two servers. 
+Create the ```.env``` to set the IP of the two servers.
+
+```
+cp .env.template .env
+```
+
+Then edit ```.env```
 
 Set the pep proxy app id comming from the dal-provisionning process for the CORE server.
 

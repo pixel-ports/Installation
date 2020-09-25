@@ -82,7 +82,12 @@ A user as been created to retrieve the archive ```pixel/p1x3l```
 
 This part is easy :
 
-Edit the ```.env``` to set the IP of the two servers.
+Create the ```.env``` to set the IP of the two servers.
+```
+cp .env.template .env
+```
+
+Then edit ```.env```
 ```
 PUBLIC_HOST_IP=10.66.16.137
 CORE_HOST_IP=10.12.182.193
