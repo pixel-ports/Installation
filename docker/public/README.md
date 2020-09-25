@@ -236,6 +236,13 @@ When the DNS record is set, before continuing check the information
 dig -t txt _acme-challenge.frbod.pixel-ports.eu
 ```
 
+When you have the right data, press ```ENTER``` on certbot, it will generate the certificat
+
+```
+cp live/frbod.pixel-ports.eu/fullchain.pem ../../Installation/docker/public/frontrp/
+cp live/frbod.pixel-ports.eu/privkey.pem ../../Installation/docker/public/frontrp/
+```
+
 ## Installation
 
 First build the local images using the helper scripts (could take some times):
