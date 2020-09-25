@@ -64,6 +64,7 @@ cd /opt/pixel
 Using GIT with pixel/p1x3l account
 ```
 GIT_SSL_NO_VERIFY=false git clone https://gitpixel.satrdlab.upv.es/marc.despland/Installation.git
+GIT_SSL_NO_VERIFY=false git clone https://gitpixel.satrdlab.upv.es/iglaub/Data_Models.git
 ```
 
 Later you can just run git pull to update

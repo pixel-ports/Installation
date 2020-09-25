@@ -100,7 +100,7 @@ services:
     hostname: dal-orchestrator
     environment:
       - SCHEMA_REPOSITORY_URL=http://schemas${PIXEL_INTERNAL_DOMAIN}
-      - SCHEMA_REPOSITORY=/opt/schemas
+      - SCHEMA_REPOSITORY=/opt/pixel/Data_Models/specs
       - NGSIAGENT_NETWORK=public_dal_agents
       - NGSIAGENT_KEY=pixel
       - PROXY_API_URL=http://172.41.1.2:8080
