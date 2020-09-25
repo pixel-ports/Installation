@@ -1,0 +1,18 @@
+FROM node:lts-alpine
+
+# instalar un simple servidor http para servir nuestro contenido estático
+RUN npm install -g http-server
+
+# hacer la carpeta 'app' el directorio de trabajo actual
+WORKDIR /app
+
+# copiar 'package.json' y 'package-lock.json' (si están disponibles)
+COPY package*.json ./
+
+# instalar dependencias del proyecto
+RUN apk add --no-cache git
+
+RUN npm install
+
+
+LABEL MAINTAINER jmartinez@prodevelop.es
