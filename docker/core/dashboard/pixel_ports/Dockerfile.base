@@ -14,5 +14,12 @@ RUN apk add --no-cache git
 
 RUN npm install
 
+# copiar los archivos y carpetas del proyecto al directorio de trabajo actual (es decir, la carpeta 'app')
+COPY . .
+RUN apk add --no-cache gettext
+RUN chmod a+rx configure.sh
+
+EXPOSE 8080
+CMD [ "http-server", "dist" ]
 
 LABEL MAINTAINER jmartinez@prodevelop.es
