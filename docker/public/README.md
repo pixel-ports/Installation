@@ -257,25 +257,11 @@ Then run the installation using the helper scripts:
 
 This should end with something like that
 ```
-Creating dal-provisioning           ... done
-Creating core_zookeeper_1           ... done
-Creating sec-mysql-db               ... done
-Creating core_elasticsearch_1       ... done
-Creating dal-orion-db               ... done
-Creating nagios                     ... done
-Creating sec-authzforce             ... done
-Creating core_elasticsearch-proxy_1 ... done
-Creating core_dal-orion_1           ... done
-Creating core_kibana_1              ... done
-Creating core_kafka_1               ... done
-Creating sec-keyrock                ... done
-Creating core_writer_1              ... done
-Creating core_orion-collector_1     ... done
-Creating core_extractor_1           ... done
-Creating core_controller_1          ... done
-Creating core_monitor_1             ... done
-Creating dal-inquisitor             ... done
-Creating internal-proxy             ... done
+Creating nrpe                   ... done
+Creating dal-proxy              ... done
+Creating dal-orchestrator       ... done
+Creating sec-wilma-pub          ... done
+Creating frontrp                ... done
 ```
 
 And ```docker ps -a``` should show all containers 
