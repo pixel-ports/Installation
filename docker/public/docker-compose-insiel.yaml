@@ -90,7 +90,7 @@ services:
         ipv4_address: 172.43.1.2
   dal-orchestrator:
     restart: always
-    image: pixelh2020/dal-orchestrator:1.2.0
+    image: pixelh2020/dal-orchestrator:1.2.1
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/pixel/Data_Models/specs:/opt/schemas
