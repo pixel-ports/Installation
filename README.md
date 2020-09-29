@@ -32,6 +32,36 @@ admin.frbod.pixel-ports.eu.           A 163.172.188.163
 ```
 
 
+# Network Flow
+
+Depending of your infrastructure rules, keep ```SSH``` access to both hosts.
+All the component are manage using ```container``` the container that need to be accessible outside its hosts expose ports on the hosts.
+Most of the component, at least for installation, need to be able to access external ressources
+
+## From Internet
+
+Only the PUBLIC host need external access on port TCP ```80``` and ```443```
+The component that manage those port is ```frontrp```
+
+## From PUBLIC to CORE
+* NGSI Agents need to access
+    * ```TCP 1026```(orion)
+* FRONT RP need to access
+    * ```TCP 8081``` dashboad
+    * ```TCP 3060``` api-dashboard
+    * ```TCP 3000``` keyrock
+    * ```TCP 443``` internal-proxy
+    * ```TCP 8080``` ot-core
+    * ```TCP 5602``` kibana
+    * ```TCP 8088``` nagios
+* WILMA need access
+    * ```TCP 3000``` keyrock
+    * ```TCP 3080``` Authzforce
+
+## From CORE to PUBLIC
+* internal_proxy need to access
+    * ```TCP 8080``` dal-orchestrator
+
 # Installation process
 The installation use ```docker-compose```
 
