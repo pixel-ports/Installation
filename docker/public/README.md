@@ -90,7 +90,7 @@ cp .env.template .env
 
 Then edit ```.env```
 
-Set the pep proxy app id comming from the dal-provisionning process for the CORE server.
+Set the pep proxy app id comming from the dal-provisionning ```Appli DAL NGSIAGENTS PROXY``` process for the CORE server.
 
 Set also the DNS domain use to expose PIXEL. 
 
