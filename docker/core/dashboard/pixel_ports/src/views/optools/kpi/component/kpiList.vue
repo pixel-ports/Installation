@@ -206,6 +206,7 @@ import STATS_Output from './files/stats_output.json'
 import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import resize from '@/components/widget/mixins/resize'
+import { insertDocument } from '@/api/PAS_IH'
 
 export default {
   name: 'KPIList',
@@ -435,7 +436,7 @@ export default {
       this.listQuery.id = row.id
       var name = row.name
       // start delete
-      var trends = this.stats_output
+      /* var trends = this.stats_output
       this.minTrend = trends.min
       this.maxTrend = trends.max
       this.avgTrend = trends.mean
@@ -452,10 +453,10 @@ export default {
       this.dataY = arrY
       this.$nextTick(() => {
         this.initChart(name)
-      })
+      })*/
       // end delete
-
-      /* getStateKPIByID(this.listQuery).then(response => {
+      console.log(this.listQuery)
+      getStateKPIByID(this.listQuery).then(response => {
         console.log(response)
         var trends = response
         this.minTrend = trends.min
@@ -475,7 +476,7 @@ export default {
         this.$nextTick(() => {
           this.initChart(name)
         })
-      }).catch(err => { console.error(err) }) */
+      }).catch(err => { console.error(err) })
     },
     initChart(name) {
       this.chart = echarts.init(this.$refs['g1'], 'shine')
@@ -600,6 +601,11 @@ export default {
       }
     },
     createKPI() {
+      /* insertDocument('index_output33', STATS_Output).then(response => {
+        console.log('Hi maestro')
+        console.log(response)
+      })*/
+
       this.resetdataForm()
       this.dialogStatus = this.$t('kpi.createKPI')
       this.dialogFormVisible = true

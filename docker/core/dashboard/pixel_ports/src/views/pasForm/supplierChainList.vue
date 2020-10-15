@@ -135,7 +135,7 @@
           style="width: 100%;"
           :empty-text="$t('common.emptyTable')"
         >
-          <el-table-column :label="$t('supplierChain.cargoes_categoryHeader')" align="center" :sortable="true" sort-by="id">
+          <el-table-column :label="$t('supplierChain.contentTypeHeader')" align="center" :sortable="true" sort-by="id">
             <template slot-scope="{row}">
               <el-tag v-for="(item, index) in row.cargoes_category" :key="index" style="margin-bottom:5px;margin-right:5px;" type="info">
                 {{ index+1 }} - {{ item }}
@@ -520,8 +520,8 @@
     <div>
       <el-dialog :title="dialogTitleCompatibility" :visible.sync="dialogFormCompatibilityVisible" width="60%" hide-overlay transition="dialog-bottom-transition" :before-close="handleCloseDialog">
         <el-form ref="refDataFormCompatibility" :model="dataFormCompatibility" :label-position="labelPosition" label-width="100px">
-          <el-form-item :label="$t('supplierChain.cargoes_category')" :label-width="labelWidthCompatibility" :label-position="labelPosition">
-            <el-select v-model="dataFormCompatibility.cargoes_category" clearable multiple class="filter-item" :placeholder="$t('supplierChain.selectCargoesCategory')" style="width:100%">
+          <el-form-item :label="$t('supplierChain.contentType')" :label-width="labelWidthCompatibility" :label-position="labelPosition">
+            <el-select v-model="dataFormCompatibility.cargoes_category" clearable multiple class="filter-item" :placeholder="$t('supplierChain.selectContentType')" style="width:100%">
               <el-option
                 v-for="item in cargoCategoryList"
                 :key="item.idCargoCategory"

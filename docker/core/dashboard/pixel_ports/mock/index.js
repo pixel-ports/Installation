@@ -2,7 +2,6 @@ import Mock from 'mockjs'
 import { param2Obj } from '../src/utils'
 
 import user from './user'
-import role from './role'
 import article from './article'
 import search from './remote-search'
 import widget from './widget'
@@ -12,7 +11,6 @@ import widgetTemplate from './widget-template'
 
 const mocks = [
   ...user,
-  ...role,
   ...article,
   ...search,
   ...widget,

@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "GPS points",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Name": "[No name, ID=1414716]", "description": null, "altitudeMode": "relativeToGround" }, "geometry": { "type": "Point", "coordinates": [ 22.902069444399999, 40.632 ] } }
+]
+}

@@ -10,9 +10,15 @@
             </el-tooltip>
           </div>
           <component :is="widget.type" :definition="widget.definition" :filtered="widget.filter" style="height: 500px;" />
+          <div class="bottom  clearfix">
+            <el-button type="text" class="button" @click="showInModal(widget)">{{ $t('widget.maximize') }}</el-button>
+          </div>
         </el-card>
       </el-col>
     </el-row>
+    <el-dialog v-if="chartProperties != null" title="Title" width="85%" :visible.sync="dialogCompleteSerie" hide-overlay transition="dialog-bottom-transition">
+      <component :is="chartProperties.type" :definition="chartProperties.definition" :filtered="chartProperties.filter" style="height: 600px;" />
+    </el-dialog>
   </div>
 </template>
 
@@ -21,11 +27,21 @@ import { widgetDashboardFetchList } from '@/api/widget'
 import EchartRadar from '@/components/widget/echart/EchartRadar'
 import EchartPie from '@/components/widget/echart/EchartPie'
 import EchartBar from '@/components/widget/echart/EchartBar'
+import EchartBarSensor from '@/components/widget/echart/EchartBar_sensor'
+import EchartLineSensor from '@/components/widget/echart/EchartLine_sensor'
+import EchartLineTraffic from '@/components/widget/echart/EchartLine_traffic'
+import EchartPieSensor from '@/components/widget/echart/EchartPie_sensor'
 import GanttBarEtd from '@/components/widget/echart/GanttBarEtd'
 import GanttBarPas from '@/components/widget/echart/GanttBarPas'
 import TableEtd from '@/components/widget/custom/TableEtd'
+import TableSensors from '@/components/widget/custom/TableSensors'
+import TableTraffic from '@/components/widget/custom/TableTraffic'
+import TableExternalSystem from '@/components/widget/custom/TableExternalSystem'
+import MapSensor from '@/components/widget/custom/Map'
 import CustomIframe from '@/components/widget/custom/CustomIframe'
 import GanttElastic from '@/components/widget/custom/GanttElastic'
+import MapDispersion from '@/components/widget/custom/DispersionMap'
+import MapNoise from '@/components/widget/custom/NoiseMap'
 
 export default {
   name: 'Overview',
@@ -37,24 +53,41 @@ export default {
     GanttBarEtd,
     GanttBarPas,
     GanttElastic,
-    TableEtd
+    TableEtd,
+    TableSensors,
+    TableTraffic,
+    TableExternalSystem,
+    EchartBarSensor,
+    EchartLineSensor,
+    EchartLineTraffic,
+    EchartPieSensor,
+    MapSensor,
+    MapDispersion,
+    MapNoise
   },
   props: {},
   data() {
     return {
-      widgets: []
+      widgets: [],
+      dialogCompleteSerie: false,
+      chartProperties: null
     }
   },
   created() {},
   mounted() {
     widgetDashboardFetchList(this.listQuery).then(response => {
+      console.log(response)
       this.widgets = response.data
     }).catch(error => {
       console.log(error)
     })
   },
   methods: {
-
+    showInModal(widget) {
+      console.log(widget)
+      this.dialogCompleteSerie = true
+      this.chartProperties = widget
+    }
   }
 }
 </script>

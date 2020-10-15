@@ -42,6 +42,8 @@ services:
       NODE_ENV: production
       MONGO_URL: "mongodb://dashboard-api-db/pixel-db"
       IDM_URL: "https://id${PIXEL_INTERNAL_DOMAIN}"
+      ADMIN_EMAIL: "admin@pixel-ports.eu"
+      ADMIN_SECRET: "admin"
     depends_on:
       - dashboard-api-db
     ports:
@@ -75,7 +77,7 @@ services:
       ih_public:
         ipv4_address: 172.25.1.28
   elastalert:
-    image: "servercentral/elastalert"
+    image: "praecoapp/elastalert-server"
     volumes:
       - ./dashboard/praeco/config/elastalert.yaml:/opt/elastalert/config.yaml
       - ./dashboard/praeco/config/api.config.json:/opt/elastalert-server/config/config.json
@@ -92,11 +94,11 @@ services:
       ih:
         ipv4_address: 172.24.1.26
   webapp:
-    image: "servercentral/praeco"
+    image: "praecoapp/praeco"
     ports:
       - "8085:8080"
     volumes:
-      - ./dashboard/praeco/publi./dashboard/praeco.config.json:/var/www/htm./dashboard/praeco.config.json
+      - ./dashboard/praeco/public/praeco.config.json:/var/www/html/praeco.config.json
       - ./dashboard/praeco/nginx_config/nginx.conf:/etc/nginx/nginx.conf
       - ./dashboard/praeco/nginx_config/default.conf:/etc/nginx/conf.d/default.conf
     extra_hosts:

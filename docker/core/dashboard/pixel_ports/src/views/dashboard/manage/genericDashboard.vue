@@ -1,5 +1,6 @@
 <template>
-  <div id="app" class="app-container">
+<div class="app-container" :style="bgc">
+  <!--<div id="app" class="app-container">-->
     <div class="filter-container">
       <el-link type="primary" icon="el-icon-arrow-left" @click="gotoListOfDashboards">
         {{ $t('resources.back') }}
@@ -34,6 +35,13 @@ export default {
   components: { GridView },
   data() {
     return {
+      bgc: {
+        backgroundColor: 'rgb(240,242,245)',
+        height: '100%',
+        width: '100%',
+        overflow: 'hidden',
+        position: 'absolute'
+      },
       base64Img: null,
       margins: {
         top: 70,

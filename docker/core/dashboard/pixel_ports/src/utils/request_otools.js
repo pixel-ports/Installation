@@ -1,9 +1,10 @@
 import axios from 'axios'
-import pixelConstants from '@/utils/constants' // import class for constants
+// import pixelConstants from '@/utils/constants' // import class for constants
 
 // create an axios instance
 const service = axios.create({
-  baseURL: pixelConstants.baseURL_PIXEL_DATAMODEL_API,
+  baseURL: process.env.VUE_APP_BASE_URL_API_OTOOLS,
+  // baseURL: pixelConstants.baseURL_PIXEL_DATAMODEL_API,
   timeout: 5000 // request timeout
 })
 

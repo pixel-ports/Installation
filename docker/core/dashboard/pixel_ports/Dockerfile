@@ -1,8 +1,23 @@
-FROM pixelh2020/dashboard-base:1.0.0
+FROM node:lts-alpine
 
-#ENV PIXEL_DOMAIN .pixel-ports.eu
-ARG PIXEL_DOMAIN
-RUN ./configure.sh
-# construir aplicación para producción minificada
+RUN npm install -g http-server
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN wget http://dl-cdn.alpinelinux.org/alpine/v3.11/main/x86_64/APKINDEX.tar.gz
+
+RUN apk add git
+
+RUN npm install
+
+COPY . .
+
 RUN npm run build:prod
 
+EXPOSE 8080
+CMD [ "http-server", "dist" ]
+
+
+LABEL MAINTAINER jmartinez@prodevelop.es

@@ -1,6 +1,18 @@
 /* eslint-disable no-unused-vars */
 import axios from 'axios';
+import { setupCache } from 'axios-cache-adapter';
 import config from '../config/config';
+// TODO: Implemnent cache for request fiware keyrock
+
+// Create `axios-cache-adapter` instance
+const cache = setupCache({
+  maxAge: 15 * 60 * 1000
+});
+
+// Create `axios` instance passing the newly created `cache.adapter`
+const api = axios.create({
+  adapter: cache.adapter
+});
 
 const middleware = {};
 
@@ -9,13 +21,11 @@ middleware.authApi = authApi;
 middleware.isAuthorized = isAuthorized;
 
 async function authUser(req, res, next) {
-  req.user = { id: 'demo', name: 'demo' };
-  next();
-  /* if (process.env.NODE_ENV !== 'production') {
-    req.user = { name: 'demo' };
+  if (process.env.NODE_ENV !== 'production') {
+    req.user = { id: 'demo', name: 'demo' };
     next();
   } else {
-    if (!req.headers.token) {
+    if (!req.headers['x-token']) {
       return res.status(400).json({
         error: {
           message: 'You did not specify any token for this request'
@@ -23,33 +33,32 @@ async function authUser(req, res, next) {
       });
     }
     try {
-      const response = await axios({
+      const response = await api({
         method: 'GET',
-        headers: {
-          'X-Auth-token': req.headers.token,
-          'X-Subject-token': req.headers.token
-        },
-        url: `${config.fiware.IDM_URL}/v1/auth/tokens`
+        url: `${config.fiware.IDM_URL}/user?access_token=${req.headers['x-token']}`
       });
+      const { data } = response;
+      if (!data || data.authorization_decision !== 'Permit') {
+        throw new Error('User not permit');
+      }
+      data.name = data.username;
 
-      const { data: { User } = { User: null } } = response;
-
-      req.user = User;
+      req.user = data;
 
       next();
     } catch (error) {
-      return res.status(500).json({
+      return res.status(401).json({
         error: {
           message: 'You did not specify a valid token for this request'
         }
       });
     }
-  } */
+  }
   return null;
 }
 
 async function authApi(req, res, next) {
-  if (req.headers.token === config.auth.master) {
+  if (req.headers['x-token'] === config.auth.master) {
     next();
   } else {
     return res.status(500).json({

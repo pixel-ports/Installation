@@ -41,20 +41,6 @@
           <div :id="item.containerName" style="margin-left:25px;height: 400px; width: 400px;" />
         </el-tab-pane>
       </el-tabs>
-      <!--<el-tabs :tab-position="tabPosition" style="height: 400px;">
-        <el-tab-pane v-for="item in pointProperties.KPIs" :key="item.title" :name="item.title">
-          <span slot="label">
-            <i :class="item.icon" />
-            {{ item.title }}
-          </span>
-          <span class="negrita" style="padding-left:20px">{{ item.title }}</span>
-          <span style="padding-left:20px" />
-          <el-tooltip class="item" effect="dark" :content="$t('map.completeSerie')" placement="top-start">
-            <i class="el-icon-zoom-in" @click="showMoreData()" />
-          </el-tooltip>
-          <div :id="item.containerName" style="height: 400px; width: 100%;" />
-        </el-tab-pane>
-      </el-tabs>-->
     </el-drawer>
     <l-map
       ref="map"
@@ -75,19 +61,19 @@
         layer-type="base"
       />
       <l-feature-group
-        v-for="data in peticion1"
+        v-for="data in sensorsObject"
         :key="data.layer_id"
         :name="data.layer_name"
         layer-type="overlay"
       >
         <l-marker
-          v-for="mark in data.marks"
+          v-for="mark in data.sensors"
           :key="mark.name"
-          :lat-lng="[mark.longitude, mark.latitude]"
+          :lat-lng="[mark.location.lon, mark.location.lat]"
           @click="markClick(mark)"
         >
           <l-icon :icon-anchor="[22, 45]" :icon-size="[45, 43]">
-            <img :src="assignIconByType(mark.type)">
+            <img :src="assignIconByType(data.layer_name)">
           </l-icon>
           <l-tooltip class="tooltip-source">
             <div class="header">
@@ -105,16 +91,12 @@
                 </li>
                 <li>
                   <span>{{ $t('map.longitude') }}</span>
-                  <strong>{{ mark.longitude }}</strong>
+                  <strong>{{ mark.location.lon }}</strong>
                 </li>
                 <li>
                   <span>{{ $t('map.latitude') }}</span>
-                  <strong>{{ mark.latitude }}</strong>
+                  <strong>{{ mark.location.lat }}</strong>
                 </li>
-                <!--<li>
-                  <span>{{ $t('map.dataSampling') }}</span>
-                  <strong>{{ mark.dataSampling }}</strong>
-                </li>-->
               </ul>
             </div>
           </l-tooltip>
@@ -151,10 +133,7 @@
   </div>
 </template>
 
-<!--<script src="//unpkg.com/vue/dist/vue.js"></script>
-<script src="//unpkg.com/element-ui@2.13.0/lib/index.js"></script>-->
 <script>
-import { dataExtractor } from '@/api/dataextractor_IH'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import resize from '@/components/widget/mixins/resize'
@@ -174,12 +153,16 @@ import {
 } from 'vue2-leaflet'
 import { OpenStreetMapProvider } from 'leaflet-geosearch'
 
+import { getSourcesFromPort, ListSensorByIdSource } from '@/api/dataextractor_IH'
+
+import pixelConstants from '@/utils/constants' // import class for constants
+
+import { getSensors } from '@/api/dataextractor_IH'
+
 const provider = new OpenStreetMapProvider()
 
-// import VGeosearch from 'vue2-leaflet-geosearch'
-
 import echarts from 'echarts'
-// import leafletControl from 'leaflet-geosearch/lib/leafletControl'
+
 require('echarts/theme/macarons') // echarts theme
 
 export default {
@@ -190,7 +173,6 @@ export default {
     LMarker,
     LControlLayers,
     LFeatureGroup,
-    // VGeosearch,
     LTooltip,
     LIcon
   },
@@ -200,6 +182,7 @@ export default {
   data() {
     return {
       zoom: 13,
+      sensorsCollection: [],
       pointProperties: null,
       nameSensorAndLocation: '',
       activeName: '1',
@@ -265,152 +248,7 @@ export default {
       },
       showInfo: false,
       sitec: [],
-      peticion1: [] /* peticion1: [
-        {
-          layer_name: 'Tide Sensors',
-          layer_id: '1',
-          icon: 'icono1',
-          marks: [
-            {
-              name: 'Bordeaux',
-              longitude: 44.859981,
-              latitude: -0.552806,
-              cosa: 6,
-              tipo: 'Tide Sensor',
-              dataSampling: '60 minutes',
-              values: ['Humidity', 'Temperature', 'Pressure'],
-              manufacturer: 'Vaisala',
-              web1: 'https://www.vaisala.com/es',
-              model: 'XRT45 Quality Air',
-              web2: 'https://www.vaisala.com/es'
-            },
-            {
-              name: 'Bassens',
-              longitude: 44.904192,
-              latitude: -0.537278,
-              cosa: 6,
-              tipo: 'Tide Sensor',
-              dataSampling: '60 minutes',
-              values: ['Humidity', 'Temperature', 'Pressure'],
-              manufacturer: 'Vaisala',
-              web1: 'https://www.vaisala.com/es',
-              model: 'XRT45 Quality Air',
-              web2: 'https://www.vaisala.com/es'
-            },
-            {
-              name: 'Le Marquis',
-              longitude: 45.003120,
-              latitude: -0.559671,
-              cosa: 6,
-              tipo: 'Tide Sensor',
-              dataSampling: '60 minutes',
-              values: ['Humidity', 'Temperature', 'Pressure'],
-              manufacturer: 'Vaisala',
-              web1: 'https://www.vaisala.com/es',
-              model: 'XRT45 Quality Air',
-              web2: 'https://www.vaisala.com/es'
-            },
-            {
-              name: 'Ambes',
-              longitude: 45.040581,
-              latitude: -0.603611,
-              cosa: 6,
-              tipo: 'Tide Sensor',
-              dataSampling: '60 minutes',
-              values: ['Humidity', 'Temperature', 'Pressure'],
-              manufacturer: 'Vaisala',
-              web1: 'https://www.vaisala.com/es',
-              model: 'XRT45 Quality Air',
-              web2: 'https://www.vaisala.com/es'
-            },
-            {
-              name: 'Fort Medoc',
-              longitude: 45.117270,
-              latitude: -0.700259,
-              cosa: 6,
-              tipo: 'Tide Sensor',
-              dataSampling: '60 minutes',
-              values: ['Humidity', 'Temperature', 'Pressure'],
-              manufacturer: 'Vaisala',
-              web1: 'https://www.vaisala.com/es',
-              model: 'XRT45 Quality Air',
-              web2: 'https://www.vaisala.com/es'
-            },
-            {
-              name: 'Pauillac',
-              longitude: 45.218032,
-              latitude: -0.746079,
-              cosa: 6,
-              tipo: 'Tide Sensor',
-              dataSampling: '60 minutes',
-              values: ['Humidity', 'Temperature', 'Pressure'],
-              manufacturer: 'Vaisala',
-              web1: 'https://www.vaisala.com/es',
-              model: 'XRT45 Quality Air',
-              web2: 'https://www.vaisala.com/es'
-            },
-            {
-              name: 'LaMena',
-              longitude: 45.335732,
-              latitude: -0.795220,
-              cosa: 6,
-              tipo: 'Tide Sensor',
-              dataSampling: '60 minutes',
-              values: ['Humidity', 'Temperature', 'Pressure'],
-              manufacturer: 'Vaisala',
-              web1: 'https://www.vaisala.com/es',
-              model: 'XRT45 Quality Air',
-              web2: 'https://www.vaisala.com/es'
-            },
-            {
-              name: 'Richard',
-              longitude: 45.453666,
-              latitude: -0.923050,
-              cosa: 6,
-              tipo: 'Tide Sensor',
-              dataSampling: '60 minutes',
-              values: ['Humidity', 'Temperature', 'Pressure'],
-              manufacturer: 'Vaisala',
-              web1: 'https://www.vaisala.com/es',
-              model: 'XRT45 Quality Air',
-              web2: 'https://www.vaisala.com/es'
-            },
-            {
-              name: 'Port Bloc',
-              longitude: 45.568436,
-              latitude: -1.061534,
-              cosa: 6,
-              tipo: 'Tide Sensor',
-              dataSampling: '60 minutes',
-              values: ['Humidity', 'Temperature', 'Pressure'],
-              manufacturer: 'Vaisala',
-              web1: 'https://www.vaisala.com/es',
-              model: 'XRT45 Quality Air',
-              web2: 'https://www.vaisala.com/es'
-            }
-          ]
-        },
-        {
-          layer_name: 'Weather Sensors',
-          layer_id: '2',
-          icon: 'icono2',
-          marks: [
-            {
-              longitude: 44.8861111,
-              latitude: -0.5319444444444444,
-              name: 'Name 2',
-              cosa: 10,
-              tipo: 'Weather Sensor',
-              dataSampling: '60 minutes',
-              values: ['Dust', 'PM10', 'PM2.5', 'CO2'],
-              manufacturer: 'Vaisala',
-              web1: 'https://www.vaisala.com/es',
-              model: 'bQ90LX-007',
-              web2: 'https://www.vaisala.com/es'
-            }
-          ]
-        }
-      ] */
+      sensorsObject: []
     }
   },
   watch: {
@@ -420,9 +258,9 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      // this.initChart()
-      this.addLegend()
-      this.getData_IH()
+      this.getDevicesFromPort()
+      /* this.sensorsObject = this.sensorsCollection
+      this.addLegend()*/
     })
   },
   beforeDestroy() {
@@ -436,6 +274,83 @@ export default {
     this.setOptions()
   },
   methods: {
+    getDevicesFromPort() {
+      var features = []
+      getSourcesFromPort().then(response => {
+        // console.log(response)
+        var id_layer = 1
+        var items = {
+          layers: []
+        }
+        response.forEach(obj => {
+          if (obj.sourceTypeId.includes(pixelConstants.SENSOR)) {
+            // console.log('Es un sensor')
+            var aSensorType = obj.sourceId.split(':')
+            var itemSensors = {
+              'ID': obj.sourceTypeId,
+              'sourceId': obj.sourceId,
+              'layer_name': aSensorType[1],
+              'layer_id': id_layer,
+              'sensors': []
+            }
+            ListSensorByIdSource(obj.sourceTypeId).then(response => {
+              // console.log(response)
+              var index = 0
+              response.forEach(it => {
+                var itemSensor = {
+                  'name': it.data.name,
+                  'type': aSensorType[1],
+                  'location': it.data.location,
+                  'dataProvider': it.data.dataProvider,
+                  'observed': this.convertToDate(it.data.observed),
+                  'timestamp': this.convertToDate(it.timestamp),
+                  'index': index,
+                  'selected': false,
+                  'source': obj.sourceId,
+                  'KPIs': this.addKPIsBySensor(aSensorType[1])
+                }
+                index = index + 1
+                // sensores.push(itemSensor)
+
+                itemSensors.sensors.push(itemSensor)
+                var featuresItem = {
+                  'type': 'Feature',
+                  'properties': {
+                    'name': it.data.name
+                  },
+                  'geometry': {
+                    'type': 'Point',
+                    'coordinates': [
+                      it.data.location.lat,
+                      it.data.location.lon
+                    ]
+                  }
+                }
+                features.push(featuresItem) // Object to look for location in the map
+              })
+            })
+            id_layer = id_layer + 1
+            this.sensorsCollection.push(itemSensors)
+            this.sitec =
+            {
+              'type': 'FeatureCollection',
+              'features': features
+            }
+            // console.log(this.sitec)
+            // this.addSearchBar()
+            this.sensorsObject = this.sensorsCollection
+            items.layers = this.sensorsObject
+            this.addLegend(items)
+          }
+        })
+        // this.addSearchBar()
+      })
+    },
+    convertToDate(timestamp) {
+      var theDate = new Date(timestamp)
+      return theDate
+      // console.log(theDate)
+    },
     handleClick(tab, event) {
       console.log(tab, event)
     },
@@ -461,37 +376,6 @@ export default {
           return v[j]
         }
       }))
-    },
-    getData_IH() {
-      var fechaFinal = this.sumaFecha(0)
-      // console.log(fechaFinal)
-      var aFecha = fechaFinal.split('-')
-      var TimeStampFinal = this.toTimestamp(aFecha[0], aFecha[1], aFecha[2], 0, 0, 0)
-      var dataString =
-      {
-        'source': {
-          'sourceId': 'urn:pixel:DataSource:frbod:TideSensorObserved'
-        },
-        'filters': [
-          {
-            'fieldName': 'dataProvider',
-            'condition': 'matches',
-            'value': 'https://nami.bordeaux-port.fr/hauteurs'
-          }
-        ],
-        'timeIntervals': [
-          {
-            'start': 0,
-            'end': TimeStampFinal // 1578661926000
-          }
-        ]
-      }
-      dataExtractor(dataString).then(response => {
-        console.log('Aqui estoy')
-        console.log(response)
-        // console.log(response[0].sensors)
-        this.recoverDifferentTideSensors(response)
-      })// .catch(err => { console.log(err) })
     },
     addKPIsBySensor(type) {
       // console.log(type)
@@ -520,53 +404,6 @@ export default {
           break
       }
       return KPIs
-    },
-    recoverDifferentTideSensors(sensors) {
-      var marks = []
-      var features = []
-      for (var counter = 0; counter <= 10; counter++) {
-        // Debo excluir la ubicación B.A.F.
-        if (sensors[counter].data.name !== 'B.A.F.') {
-          var addModel = {}
-          addModel.name = sensors[counter].data.name
-          addModel.longitude = sensors[counter].data.location.lon
-          addModel.latitude = sensors[counter].data.location.lat
-          var source = sensors[counter].data.source
-          var aSensorType = source.split(':')
-          addModel.type = aSensorType[1]
-          addModel.KPIs = this.addKPIsBySensor(addModel.type)
-          marks.push(addModel) // Object to draw items in the map
-          var featuresItem = {
-            'type': 'Feature',
-            'properties': {
-              'name': sensors[counter].data.name
-            },
-            'geometry': {
-              'type': 'Point',
-              'coordinates': [
-                sensors[counter].data.location.lat,
-                sensors[counter].data.location.lon
-              ]
-            }
-          }
-          features.push(featuresItem) // Object to look for location in the map
-        }
-      }
-      this.peticion1 = [
-        {
-          layer_name: 'Tide Sensors',
-          layer_id: '1',
-          icon: 'icono1',
-          marks: marks
-        }
-      ]
-      console.log(this.peticion1)
-      this.sitec =
-      {
-        'type': 'FeatureCollection',
-        'features': features
-      }
-      this.addSearchBar()
     },
     setOptions() {
       this.longitudeToolTip = this.$t('map.longitude')
@@ -604,6 +441,7 @@ export default {
       })
 
       searchControl.on('search:locationfound', function(e) {
+        debugger
         if (e.layer._popup) { e.layer.openPopup() }
       }).on('search:collapsed', function(e) {
         poiLayers.eachLayer(function(layer) {
@@ -615,17 +453,38 @@ export default {
 
       map.addControl(searchControl)
     },
-    addLegend() {
+    loadIcons(layerName, icons) {
+      var icon = ''
+      switch (layerName) {
+        case 'TideSensor':
+          icon = 'icon_tide'
+          break
+        case 'WeatherSensor':
+          icon = 'icon_solar'
+          break
+      }
+      icons.push(icon)
+      return icons
+    },
+    addLegend(items) {
       var legendTitle = this.titleLegend
       const map = this.$refs.map.mapObject // referencia al objeto mapa de vue2-leaflet
       // Insertando una leyenda en el mapa
+      var categories = []
+      var icons = []
+      items.layers.forEach(layer => {
+        if (layer.layer_name.includes(pixelConstants.SENSOR)) {
+          categories.push(layer.layer_name)
+          icons = this.loadIcons(layer.layer_name, icons)
+        }
+      })
       var legend = new window.L.Control({ position: 'bottomright' })
       legend.onAdd = function(map) {
         var div = L.DomUtil.create('div', 'info-legend')
         var labels = ['<strong>' + legendTitle + '</strong>']
-        var categories = ['Tide Sensor'] // , 'Weather Sensor']
+        // var categories = ['Tide Sensor'] // , 'Weather Sensor']
         // 'icon_station',
-        var icons = ['icon_tide'] // , 'icon_solar']
+        // var icons = ['icon_tide'] // , 'icon_solar']
         for (var i = 0; i < categories.length; i++) {
           var im = require('../../assets/sensors/' + icons[i] + '.svg')
           div.innerHTML +=
@@ -647,108 +506,48 @@ export default {
       this.dialogTitle = this.nameSensor
       var fechaFinal = this.sumaFecha(0)
       var fechaInicial = 0
-      this.recoverSensorInformationForDrawer(this.pointProperties.type, fechaInicial, fechaFinal, true)
-      // this.recoverInformationForTideSensor(fechaInicial, fechaFinal, true)
+      this.recoverInformationFromSpecificSensor(this.pointProperties.type, this.pointProperties.source, this.name, fechaInicial, fechaFinal, true)
       this.widgetsDialog = false
       this.dialogCompleteSerie = true
-    },
-    showCompleteSerie_original() {
-      this.dialogTitle = this.nameSensor
-      var fechaFinal = this.sumaFecha(0)
-      var fechaInicial = 0
-      this.recoverInformationForTideSensor(fechaInicial, fechaFinal, true)
-      this.dialogCompleteSerie = true
-      this.showInfo = false
     },
     markClick(mark) {
       // Assign the specific POI to pointProperties
       this.pointProperties = mark
       //  Establish name
       this.name = mark.name
-      this.longitudeSensor = mark.longitude
-      this.latitudeSensor = mark.latitude
+      this.longitudeSensor = mark.location.lon
+      this.latitudeSensor = mark.location.lat
       this.nameSensorAndLocation = mark.type + ': ' + this.name + ' (' + this.longitudeSensor + ', ' + this.latitudeSensor + ')'
       // Filtering by one week
       var fechaFinal = this.sumaFecha(0)
       var fechaInicial = this.sumaFecha(-7)
-      this.recoverSensorInformationForDrawer(mark.type, fechaInicial, fechaFinal, false)
+      this.recoverInformationFromSpecificSensor(mark.type, mark.source, this.name, fechaInicial, fechaFinal, false)
       this.widgetsDialog = true
-    },
-    markClick_old(mark) {
-      //  Establish name
-      this.name = mark.name
-      this.longitudeSensor = mark.longitude
-      this.latitudeSensor = mark.latitude
-      // Filtering by one week
-      var fechaFinal = this.sumaFecha(0)
-      var fechaInicial = this.sumaFecha(-7)
-      // console.log('fecha inicial: ' + fechaInicial)
-      // console.log('fecha final: ' + fechaFinal)
-      this.recoverInformationForTideSensor(fechaInicial, fechaFinal, false)
-      this.showInfo = true
     },
     toTimestamp(year, month, day, hour, minute, second) {
       var datum = new Date(Date.UTC(year, month - 1, day, hour, minute, second))
       return datum.getTime()// / 1000
     },
-    recoverSensorInformationForDrawer(typeSensor, fechaInicial, fechaFinal, completeSerie) {
-      // Establish name of the sensor
-      this.nameSensor = this.name + ' (' + this.longitudeSensor + ', ' + this.latitudeSensor + ')'
-      //  Convert date to TimeStamp
-      var aFecha = fechaFinal.split('-')
+    recoverInformationFromSpecificSensor(typeSensor, source, name, start, end, completeSerie) {
+      var operador = pixelConstants.OPERATORS_IH_MATCHES
+
+      var aFecha = end.split('-')
       var TimeStampFinal = this.toTimestamp(aFecha[0], aFecha[1], aFecha[2], 0, 0, 0)
       var TimeStampInicial = null
       if (completeSerie) {
         TimeStampInicial = 0
       } else {
-        aFecha = fechaInicial.split('-')
+        aFecha = start.split('-')
         TimeStampInicial = this.toTimestamp(aFecha[0], aFecha[1], aFecha[2], 0, 0, 0)
       }
-      // console.log(TimeStampInicial)
-      // console.log(TimeStampFinal)
-      var sourceId = ''
-      switch (typeSensor) {
-        case 'TideSensor':
-          sourceId = 'urn:pixel:DataSource:frbod:TideSensorObserved'
-          break
-      }
-      var dataString =
-      {
-        'source': {
-          'sourceId': sourceId
-        },
-        'filters': [
-          {
-            'fieldName': 'name',
-            'condition': 'matches',
-            'value': this.name
-          },
-          {
-            'fieldName': 'observed',
-            'condition': 'greater',
-            'value': TimeStampInicial
-          },
-          {
-            'fieldName': 'observed',
-            'condition': 'lower',
-            'value': TimeStampFinal
-          }
-        ],
-        'timeIntervals': [
-          {
-            'start': 0,
-            'end': TimeStampFinal
-          }
-        ]
-      }
-      // console.log(dataString)
-      dataExtractor(dataString).then(response => {
-        // console.log('answer: ' + response)
-        // Add an if statement for each different type of sensor
+      TimeStampInicial = 1575162000
+      TimeStampFinal = 1599523200000
+      getSensors(source, operador, name, TimeStampInicial, TimeStampFinal).then(response => {
+        console.log(response)
         if (typeSensor === 'TideSensor') {
-          this.prepareDataForTideSensor(response, fechaInicial, fechaFinal, completeSerie)
+          this.prepareDataForTideSensor(response, start, end, completeSerie)
         }
-      })// .catch(err => { console.log(err) })
+      })
     },
     prepareDataForTideSensor(items, fechaInicial, fechaFinal, completeSerie) {
       var arrSensors = items
@@ -779,92 +578,10 @@ export default {
       this.dataXTideSensor = arrX
       this.dataYTideSensor = arrY
       this.listForExcel = listForExcel
-
       this.$nextTick(() => {
         this.initChartTideLevel(this.pointProperties.KPIs[0].containerName, this.pointProperties.KPIs[0].completeContainerName, this.name, fechaInicial, fechaFinal, completeSerie)
         this.initChartEfficiency(this.pointProperties.KPIs[1].containerName, this.pointProperties.KPIs[1].completeContainerName, this.name, fechaInicial, fechaFinal, completeSerie)
       })
-    },
-    recoverInformationForTideSensor(fechaInicial, fechaFinal, completeSerie) {
-      // Establish name of the sensor
-      this.nameSensor = this.name + ' (' + this.longitudeSensor + ', ' + this.latitudeSensor + ')'
-      //  Convert date to TimeStamp
-      var aFecha = fechaFinal.split('-')
-      var TimeStampFinal = this.toTimestamp(aFecha[0], aFecha[1], aFecha[2], 0, 0, 0)
-      var TimeStampInicial = null
-      if (completeSerie) {
-        TimeStampInicial = 0
-      } else {
-        aFecha = fechaInicial.split('-')
-        TimeStampInicial = this.toTimestamp(aFecha[0], aFecha[1], aFecha[2], 0, 0, 0)
-      }
-      // console.log(TimeStampInicial)
-      // console.log(TimeStampFinal)
-      var dataString =
-      {
-        'source': {
-          'sourceId': 'urn:pixel:DataSource:frbod:TideSensorObserved'
-        },
-        'filters': [
-          {
-            'fieldName': 'name',
-            'condition': 'matches',
-            'value': this.name
-          },
-          {
-            'fieldName': 'observed',
-            'condition': 'greater',
-            'value': TimeStampInicial
-          },
-          {
-            'fieldName': 'observed',
-            'condition': 'lower',
-            'value': TimeStampFinal
-          }
-        ],
-        'timeIntervals': [
-          {
-            'start': 0,
-            'end': TimeStampFinal
-          }
-        ]
-      }
-      // console.log(dataString)
-      dataExtractor(dataString).then(response => {
-        // console.log('answer: ' + response)
-        var arrSensors = response[0].records
-        var arrX = []
-        var arrY = []
-        this.divider = arrSensors.length
-        this.sumatory = 0
-        var counterError = 0
-        var listForExcel = []
-        for (var counter = 0; counter <= arrSensors.length - 1; counter++) {
-          if (parseInt(arrSensors[counter].data.water_height, 10) === 888) {
-            counterError += 1
-          } else {
-            var convertToInteger = parseInt(arrSensors[counter].data.water_height, 10)
-            var valueToSumatory = Number(convertToInteger / 100).toFixed(1)
-            this.sumatory = this.sumatory + parseFloat(valueToSumatory)
-            arrY.push(valueToSumatory)
-            arrX.push(parseTime(arrSensors[counter].data.observed))
-            // Items for Export to Excel
-            var itemForExcel = {}
-            itemForExcel.observed = parseTime(arrSensors[counter].data.observed)
-            itemForExcel.water_height = valueToSumatory + 'm'
-            itemForExcel.water_trend = arrSensors[counter].data.water_trend
-            listForExcel.push(itemForExcel)
-          }
-        }
-        this.dataError = counterError
-        this.dataXTideSensor = arrX
-        this.dataYTideSensor = arrY
-        this.listForExcel = listForExcel
-
-        this.$nextTick(() => {
-          this.initChartTideLevel(this.name, fechaInicial, fechaFinal, completeSerie)
-        })
-      })// .catch(err => { console.log(err) })
     },
     initChartEfficiency(containerName, completeContainerName, sensorName, initialDate, endDate, completeSerie) {
       var countError = this.dataError / (this.divider)

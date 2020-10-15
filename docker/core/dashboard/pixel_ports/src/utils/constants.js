@@ -1,6 +1,6 @@
 // Define the constants needs for PIXEL
 export default {
-  baseURL_PIXEL_DATAMODEL_API: 'https://api-ot.frbod.pixel-ports.eu', // sin OpenVPN
+  baseURL_PIXEL_DATAMODEL_API: 'https://api-ot.demo.pixel-ports.eu', // sin OpenVPN
   // baseURL_PIXEL_DATAMODEL_API: 'http://192.168.0.30:8080/otpixel/api', // con OpenVPN
   APP_BASE_DATA_API_PAS: 'https://elasticsearch-proxy.pixel-ports.eu',
   // APP_BASE_DATA_API_PAS: 'http://192.168.0.3:8200/ih-api',
@@ -51,6 +51,8 @@ export default {
   URL_PIXEL_UPDATE_STATUS_SCHEDULED_INSTANCE: 'scheduledInstances/updateStatus/',
   // url different methods for IH API (dataExtractor)
   URL_PIXEL_DATA_EXTRACTOR_IH: 'archivingSystem/extractor/v1/data',
+  URL_PIXEL_EXTRACTOR_SOURCES_IH: 'extractor/v1',
+  URL_PIXEL_EXTRACTOR_SOURCES_IH_LATEST_COLLAPSEBYFIELD: 'extractor/v1/query/latestCollapseByField',
   // attributes for OTools petition
   Content_Type_Application_Json: 'application/json',
   // Type of message for Modal Dialog
@@ -112,5 +114,17 @@ export default {
   ],
   // type of Models
   TYPE_MODEL: 'model',
-  TYPE_PREDICTIVE_ALGORITHM: 'pa'
+  TYPE_PREDICTIVE_ALGORITHM: 'pa',
+  PORT_INSTANCE: 'FRBOD',
+  SENSOR: 'Sensor',
+  OPERATORS_IH_MATCHES: 'matches',
+  OPERATORS_IH_ONE_OF: 'oneOf',
+  TYPE_OF_TRAFFIC_VISUALIZATION: [
+    { label: 'Max Flow', value: 'max_flow' },
+    { label: 'Unexpected Flow Impact', value: 'unexpected_flow' },
+    { label: 'Effective Flow', value: 'effective_flow' },
+    { label: 'Total Trucks Expected', value: 'total_expected' },
+    { label: 'Parking Lot Expected Occupancy', value: 'parking_expected_occupancy' }
+    // { label: 'Expected Congestion', value: 'expected_congestion' }
+  ]
 }

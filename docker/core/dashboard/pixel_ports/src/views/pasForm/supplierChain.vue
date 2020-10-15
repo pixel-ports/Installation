@@ -8,6 +8,16 @@
       <el-button v-waves class="filter-item" style="margin-left: 10px;border-color: #1890ff;color: #1890ff;backgroundColor: rgb(240,242,245);" icon="el-icon-search" @click="handleFilter">
         {{ $t('resources.search') }}
       </el-button>
+
+      <el-button
+        style="float:right;"
+        class="filter-item exportToIH"
+        :disabled="!allowExportToIH"
+        @click="newExportToIH()"
+      >
+        {{ $t("common.btnExportToIH") }}
+      </el-button>
+
       <el-button
         class="filter-item"
         style="float:right;"
@@ -43,11 +53,11 @@
             <span>{{ row.createdAt | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('resources.elasticIndex')" align="center">
+        <!--<el-table-column :label="$t('resources.elasticIndex')" align="center">
           <template slot-scope="{row}">
             <span>{{ buildIndexName(row.name) }}</span>
           </template>
-        </el-table-column>
+        </el-table-column>-->
         <el-table-column
           :label="$t('rules.actions')"
           align="center"
@@ -55,8 +65,7 @@
           min-width="100"
         >
           <template slot-scope="{ row }">
-            <!-- <el-button-group> -->
-            <el-button
+            <!--<el-button
               size="small"
               class="exportToIH"
               :disabled="!row.exportToIH_pending"
@@ -64,8 +73,7 @@
             >
               {{ $t("common.btnExportToIH") }}
             </el-button>
-            <span style="padding-left:10px" />
-            <!--<router-link :to="{name:'Resources List', params: {model: row, id: row._id}}">-->
+            <span style="padding-left:10px" />-->
             <el-button
               size="small"
               class="editBtn"
@@ -211,7 +219,8 @@ export default {
             trigger: 'blur'
           }
         ]
-      }
+      },
+      allowExportToIH: false
     }
   },
   computed: {
@@ -253,10 +262,14 @@ export default {
     getList() {
       this.listLoading = true
       // sustituirlo por "supplierChainFetchList"
+      this.allowExportToIH = false
       supplierChainFetchList(this.listQuery).then(response => {
         var data = response.data
         data.forEach(element => {
           const idSC = element._id
+          if (element.exportToIH_pending) {
+            this.allowExportToIH = true
+          }
           stepFilterBySC(idSC).then(response => {
             var stepsList = response.data
             element.steps_list = stepsList
@@ -270,6 +283,7 @@ export default {
             element.compatibility = compatibilityList
           })
         })
+        console.log('GET LIST SUPPLIER CHAIN')
         console.log(data)
         this.list = data
         this.total = data.length
@@ -335,25 +349,53 @@ export default {
       })
     },
     new_deleteRegister(SC_row) {
-      var indexName = this.buildIndexName(SC_row.name)
+      // var indexName = this.buildIndexName(SC_row.name)
       if (SC_row.steps_list.length > 0 || SC_row.details.length > 0 || SC_row.compatibility.length > 0) {
         this.$message({
           type: pixelConstants.ERROR_MESSAGE_TYPE,
           message: this.$t('common.deleteBeforeEntitiesRelated')
         })
       } else {
-        supplierChainDelete(SC_row._id)
-        this.getList()
-        this.$message({
-          type: pixelConstants.SUCCESS_MESSAGE_TYPE,
-          message: this.$t('common.deleteSucced')
-        })
-        existIndex(indexName).then(response => {
-          console.log('Obtengo un codigo 200: índice existe')
-          console.log('Tengo que borrar el indice')
-          deleteIndex(indexName).then(response => {
-            console.log('Indice borrado')
-            console.log(response)
+        supplierChainDelete(SC_row._id).then(response => {
+          this.listLoading = true
+          //
+          this.allowExportToIH = false
+          supplierChainFetchList(this.listQuery).then(response => {
+            var data = response.data
+            data.forEach(element => {
+              const idSC = element._id
+              if (element.exportToIH_pending) {
+                this.allowExportToIH = true
+              }
+              stepFilterBySC(idSC).then(response => {
+                var stepsList = response.data
+                element.steps_list = stepsList
+              })
+              detailFilterBySC(idSC).then(response => {
+                var detailsList = response.data
+                element.details = detailsList
+              })
+              compatibilityFilterBySC(idSC).then(response => {
+                var compatibilityList = response.data
+                element.compatibility = compatibilityList
+              })
+            })
+            // console.log('Obtengo la lista')
+            // console.log(data)
+            this.list = data
+            this.total = data.length
+            setTimeout(() => {
+              this.listLoading = false
+            }, 1.5 * 1000)
+            this.$message({
+              type: pixelConstants.SUCCESS_MESSAGE_TYPE,
+              message: this.$t('common.deleteSucced')
+            })
+            // this.newExportToIH()
+            setTimeout(() => { this.ExportToIH_afterDelete(this.list) }, 1000)
+          }).catch(err => {
+            console.error(err)
+            this.listLoading = false
           })
         })
       }
@@ -445,6 +487,343 @@ export default {
           })
         }
       })
+    },
+    newExportToIH() {
+      console.log('Voy a exportar el listado de filas existente')
+      var data = this.list
+
+      console.log('Numero de filas existentes: ' + data.length)
+      var indexName = 'supplier_chain'
+      var wrap_jsonFile = []
+      console.log('Construyo el json a exportar')
+
+      /* console.log('Muestro el objeto')
+      console.log(data)
+      console.log(data.details.length)*/
+      data.forEach(item => {
+        var jsonFile = {
+          'ID': '',
+          'label': '',
+          'comment': '',
+          'compatibility': {},
+          'steps_list': []
+        }
+        if (item.details.length > 0) {
+          jsonFile.ID = item.details[0].idDetail
+          jsonFile.label = item.details[0].label
+          jsonFile.comment = item.details[0].comment
+        }
+        if (item.compatibility.length > 0) {
+          jsonFile.compatibility.cargoes_category = item.compatibility[0].cargoes_category
+          jsonFile.compatibility.directions_nature = item.compatibility[0].directions_Nature
+          jsonFile.compatibility.areas_ID = item.compatibility[0].areas_ID
+          jsonFile.compatibility.shiftworks_ID = item.compatibility[0].shiftworks_ID
+        }
+
+        item.steps_list.forEach(step => {
+          var itemStep = {
+            'ID': step.idStep,
+            'label': step.label,
+            'comment': step.comment,
+            'category': step.category,
+            'scheduling': step.scheduling,
+            'work': step.work
+          }
+          jsonFile.steps_list.push(itemStep)
+        })
+        wrap_jsonFile.push(jsonFile)
+      })
+      // Show jsonFile
+      console.log('JSON FILE:  ')
+      console.log(wrap_jsonFile)
+
+      var error = false
+      var index = 1
+      wrap_jsonFile.forEach(item => {
+        if (item.steps_list.length === 0) {
+          this.$message({
+            type: pixelConstants.WARNING_MESSAGE_TYPE,
+            // steps not implemented
+            message: this.$t('common.stepsNotImplemented') + index
+          })
+          error = true
+        }
+        //
+        if (!item.ID) {
+          this.$message({
+            type: pixelConstants.WARNING_MESSAGE_TYPE,
+            // Supply Chain Name missing
+            message: this.$t('common.SC_NameNotImplemented') + index
+          })
+          error = true
+        }
+        index = index + 1
+      })
+      //
+      var schema = supplierChainSchema
+      var Validator = require('jsonschema').Validator
+      var v = new Validator()
+      if (!error) {
+        console.log('Valido mi fichero')
+        var validado = v.validate(wrap_jsonFile, schema)
+        console.log(validado)
+        if (validado.valid) {
+          // Si es valido inserto en elasticsearch en el indice correspondiente
+          // this.result = jsonFile
+          // Muestro el cuadro de dialogo
+          // this.viewResultDialog = true
+          // Si el JSON se valida correctamente. Debo comprobar que el indice exista en Elasticsearch
+          console.log('Check supply chain')
+          existIndex(indexName).then(response => {
+            console.log('Obtengo un codigo 200: índice existe')
+            console.log('Tengo que borrar el indice')
+            deleteIndex(indexName).then(response => {
+              console.log('Borro el índice')
+              console.log('Voy a crear el índice')
+              createIndex(indexName).then(response => {
+                console.log('Creo el índice')
+                console.log('Inserto el documento')
+                wrap_jsonFile = {
+                  'supplier_chain': wrap_jsonFile
+                }
+                insertDocument(indexName, wrap_jsonFile).then(response => {
+                  if (response.result === 'created') {
+                    this.result = response
+                    // Muestro el cuadro de dialogo
+                    this.viewResultDialog = true
+                    data.forEach(item => {
+                      var updatedSupplierChain = {
+                        id: item._id,
+                        name: item.name,
+                        description: item.description,
+                        creation: item.createdAt,
+                        exportToIH_pending: false
+                      }
+                      supplierChainUpdate(item._id, updatedSupplierChain).then(response => {
+                        console.log('Registro actualizado')
+                        console.log(response)
+                      })
+                    })
+                  }
+                }).catch(err => { console.log(err) })
+              }).catch(err => {
+                console.log('Error al crear el índice')
+                console.log(err)
+              })
+            }).catch(err => {
+              console.log('Error al borrar el índice')
+              console.log(err)
+            })
+          }).catch(err => {
+            console.log('Devuelve un 404. No existe el indice. Hay que crearlo')
+            console.log(err)
+            createIndex(indexName).then(response => {
+              console.log('Creo el índice')
+              console.log('Inserto el documento')
+              // console.log(wrap_jsonFile)
+              wrap_jsonFile = {
+                'supplier_chain': wrap_jsonFile
+              }
+              console.log(wrap_jsonFile)
+              insertDocument(indexName, wrap_jsonFile).then(response => {
+                if (response.result === 'created') {
+                  this.result = response
+                  // Muestro el cuadro de dialogo
+                  this.viewResultDialog = true
+                  data.forEach(item => {
+                    var updatedSupplierChain = {
+                      id: item._id,
+                      name: item.name,
+                      description: item.description,
+                      creation: item.createdAt,
+                      exportToIH_pending: false
+                    }
+                    supplierChainUpdate(item._id, updatedSupplierChain).then(response => {
+                      console.log('Registro actualizado')
+                      console.log(response)
+                    })
+                  })
+                }
+              }).catch(err => { console.log(err) })
+            }).catch(err => {
+              console.log('Error al crear el índice')
+              console.log(err)
+            })
+          })
+        } else {
+          // Si falla muestro los errores.
+          this.result = validado
+          // Muestro el cuadro de dialogo
+          this.viewResultDialog = true
+        }
+      }
+    },
+    ExportToIH_afterDelete(data) {
+      console.log('Voy a exportar el listado de filas existente after delete')
+
+      var indexName = 'supplier_chain'
+      var wrap_jsonFile = []
+
+      data.forEach(item => {
+        var jsonFile = {
+          'ID': '',
+          'label': '',
+          'comment': '',
+          'compatibility': {},
+          'steps_list': []
+        }
+
+        if (item.details.length > 0) {
+          console.log('Estoy dentro')
+          jsonFile.ID = item.details[0].idDetail
+          jsonFile.label = item.details[0].label
+          jsonFile.comment = item.details[0].comment
+        }
+        if (item.compatibility.length > 0) {
+          jsonFile.compatibility.cargoes_category = item.compatibility[0].cargoes_category
+          jsonFile.compatibility.directions_nature = item.compatibility[0].directions_Nature
+          jsonFile.compatibility.areas_ID = item.compatibility[0].areas_ID
+          jsonFile.compatibility.shiftworks_ID = item.compatibility[0].shiftworks_ID
+        }
+        console.log('Llego aqui')
+        console.log(item.steps_list)
+        item.steps_list.forEach(step => {
+          var itemStep = {
+            'ID': step.idStep,
+            'label': step.label,
+            'comment': step.comment,
+            'category': step.category,
+            'scheduling': step.scheduling,
+            'work': step.work
+          }
+          jsonFile.steps_list.push(itemStep)
+        })
+        wrap_jsonFile.push(jsonFile)
+      })
+      // Show jsonFile
+      console.log('JSON FILE:  ')
+      console.log(wrap_jsonFile)
+
+      var error = false
+      var index = 1
+      wrap_jsonFile.forEach(item => {
+        if (item.steps_list.length === 0) {
+          this.$message({
+            type: pixelConstants.WARNING_MESSAGE_TYPE,
+            // steps not implemented
+            message: this.$t('common.stepsNotImplemented') + index
+          })
+          error = true
+        }
+        //
+        if (!item.ID) {
+          this.$message({
+            type: pixelConstants.WARNING_MESSAGE_TYPE,
+            // Supply Chain Name missing
+            message: this.$t('common.SC_NameNotImplemented') + index
+          })
+          error = true
+        }
+        index = index + 1
+      })
+      //
+      var schema = supplierChainSchema
+      var Validator = require('jsonschema').Validator
+      var v = new Validator()
+      if (!error) {
+        console.log('Valido mi fichero')
+        var validado = v.validate(wrap_jsonFile, schema)
+        console.log(validado)
+        if (validado.valid) {
+          // Si es valido inserto en elasticsearch en el indice correspondiente
+          // this.result = jsonFile
+          // Muestro el cuadro de dialogo
+          // this.viewResultDialog = true
+          // Si el JSON se valida correctamente. Debo comprobar que el indice exista en Elasticsearch
+          console.log('Check supply chain')
+          existIndex(indexName).then(response => {
+            console.log('Obtengo un codigo 200: índice existe')
+            console.log('Tengo que borrar el indice')
+            deleteIndex(indexName).then(response => {
+              console.log('Borro el índice')
+              console.log('Voy a crear el índice')
+              createIndex(indexName).then(response => {
+                console.log('Creo el índice')
+                console.log('Inserto el documento')
+                wrap_jsonFile = {
+                  'supplier_chain': wrap_jsonFile
+                }
+                insertDocument(indexName, wrap_jsonFile).then(response => {
+                  if (response.result === 'created') {
+                    this.result = response
+                    // Muestro el cuadro de dialogo
+                    this.viewResultDialog = false
+                    data.forEach(item => {
+                      var updatedSupplierChain = {
+                        id: item._id,
+                        name: item.name,
+                        description: item.description,
+                        creation: item.createdAt,
+                        exportToIH_pending: false
+                      }
+                      supplierChainUpdate(item._id, updatedSupplierChain).then(response => {
+                        console.log('Registro actualizado')
+                        console.log(response)
+                      })
+                    })
+                  }
+                }).catch(err => { console.log(err) })
+              }).catch(err => {
+                console.log('Error al crear el índice')
+                console.log(err)
+              })
+            }).catch(err => {
+              console.log('Error al borrar el índice')
+              console.log(err)
+            })
+          }).catch(err => {
+            console.log('Devuelve un 404. No existe el indice. Hay que crearlo')
+            console.log(err)
+            createIndex(indexName).then(response => {
+              console.log('Creo el índice')
+              console.log('Inserto el documento')
+              // console.log(wrap_jsonFile)
+              wrap_jsonFile = {
+                'supplier_chain': wrap_jsonFile
+              }
+              console.log(wrap_jsonFile)
+              insertDocument(indexName, wrap_jsonFile).then(response => {
+                if (response.result === 'created') {
+                  this.result = response
+                  // Muestro el cuadro de dialogo
+                  this.viewResultDialog = false
+                  data.forEach(item => {
+                    var updatedSupplierChain = {
+                      id: item._id,
+                      name: item.name,
+                      description: item.description,
+                      creation: item.createdAt,
+                      exportToIH_pending: false
+                    }
+                    supplierChainUpdate(item._id, updatedSupplierChain).then(response => {
+                      console.log('Registro actualizado')
+                      console.log(response)
+                    })
+                  })
+                }
+              }).catch(err => { console.log(err) })
+            }).catch(err => {
+              console.log('Error al crear el índice')
+              console.log(err)
+            })
+          })
+        } else {
+          // Si falla muestro los errores.
+          this.result = validado
+          // Muestro el cuadro de dialogo
+          this.viewResultDialog = false
+        }
+      }
     },
     exportToIH(row) {
       // alert('Implementar exportación al IH...')

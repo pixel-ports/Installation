@@ -3,7 +3,7 @@
 #
 server.name: kibana
 server.host: "0"
-elasticsearch.hosts: http://172.24.1.11:9200
+elasticsearch.hosts: http://192.168.0.16:9200
 #elastalert-kibana-plugin.serverHost: elastalert
 #elastalert-kibana-plugin.serverPort: 3030
 #xpack.graph.enabled: true

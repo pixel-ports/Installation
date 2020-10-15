@@ -90,8 +90,8 @@
               {{ $t('models.deleteModel') }}
             </i>
           </el-button>
-          <el-row type="flex" class="row-bg" justify="center" :gutter="20">
-            <!--<el-col v-if="row.home" :span="6">
+          <!--<el-row type="flex" class="row-bg" justify="center" :gutter="20">
+            <el-col v-if="row.home" :span="6">
               <el-button size="small" type="info" @click="handleModifyStatus(row,'unpublish')">
                 {{ $t('widget.buttonDraft') }}
               </el-button>
@@ -110,15 +110,15 @@
               <el-button type="danger" size="small" @click="handleModifyStatus(row,'deleted')">
                 {{ $t('widget.buttonDelete') }}
               </el-button>
-            </el-col>-->
-          </el-row>
+            </el-col>
+          </el-row>-->
         </template>
       </el-table-column>
     </el-table>
 
     <!---<pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />-->
 
-    <el-dialog :title="$t('widget.dialogTitle')" :visible.sync="dialogFormVisible">
+    <el-dialog :title="dialogTitle" :visible.sync="dialogFormVisible">
       <el-container>
         <el-header height="100px">
           <el-steps :active="active" finish-status="success" :align-center="true" style="margin-top: 20px">
@@ -156,6 +156,58 @@
                 </el-col>
               </el-row>
             </el-col>
+
+            <el-col :span="24">
+              <el-row :gutter="20">
+                <el-col :span="8">
+                  <div @click="selectSource = 'real-time'">
+                    <el-card :header="$t('widget.real-timeFromSensors')" :class="{'selected-card': selectSource == 'real-time'}" shadow="hover" center>
+                      {{ $t('widget.realTimeDescription') }}
+                    </el-card>
+                  </div>
+                </el-col>
+
+                <el-col :span="8">
+                  <div @click="selectSource = 'external-system'">
+                    <el-card :header="$t('widget.realTimeExternalSystems')" :class="{'selected-card': selectSource == 'external-system'}" shadow="hover" center>
+                      {{ $t('widget.real-timeFromExternalSystemsDescription') }}
+                    </el-card>
+                  </div>
+                </el-col>
+
+                <el-col :span="8">
+                  <div @click="selectSource = 'noise-model'">
+                    <el-card :header="$t('widget.noiseModel')" :class="{'selected-card': selectSource == 'noise-model'}" shadow="hover" center>
+                      {{ $t('widget.noiseModelDescription') }}
+                    </el-card>
+                  </div>
+                </el-col>
+
+              </el-row>
+            </el-col>
+
+            <el-col :span="24">
+              <el-row :gutter="20">
+
+                <!--<el-col :span="8">
+                  <div @click="selectSource = 'air-model'">
+                    <el-card :header="$t('widget.airDispersionModel')" :class="{'selected-card': selectSource == 'air-model'}" shadow="hover" center>
+                      {{ $t('widget.airDispersionModelDescription') }}
+                    </el-card>
+                  </div>
+                </el-col>-->
+
+                <el-col v-if="trafficIndex" :span="8">
+                  <div @click="selectSource = 'traffic-model'">
+                    <el-card :header="$t('widget.trafficModel')" :class="{'selected-card': selectSource == 'traffic-model'}" shadow="hover" center>
+                      {{ $t('widget.trafficModelDescription') }}
+                    </el-card>
+                  </div>
+                </el-col>
+
+              </el-row>
+            </el-col>
+
           </el-row>
 
           <el-row v-if="active == 1">
@@ -197,6 +249,91 @@
               </el-col>
             </el-row>
 
+            <el-row v-if="selectSource == 'real-time'" :gutter="20">
+              <el-col :xs="24" :sm="12" :lg="8">
+                <div @click="selectTypeWidget = 'table-sensors'">
+                  <el-card header="Table" shadow="always" :class="{'selected-card': selectTypeWidget == 'table-sensors'}">
+                    <TableSensors style="height: 150px;" />
+                  </el-card>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :lg="8">
+                <div @click="selectTypeWidget = 'echartBar-sensor'">
+                  <el-card :header="$t('widget.barSimple')" shadow="always" :class="{'selected-card': selectTypeWidget == 'echartBar-sensor'}">
+                    <EchartBarSensor style="height: 150px;" />
+                  </el-card>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :lg="8">
+                <div @click="selectTypeWidget = 'echartLine-sensor'">
+                  <el-card :header="$t('widget.stepLine')" shadow="always" :class="{'selected-card': selectTypeWidget == 'echartLine-sensor'}">
+                    <EchartLineSensor style="height: 150px;" />
+                  </el-card>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :lg="8">
+                <div @click="selectTypeWidget = 'map-sensor'">
+                  <el-card :header="$t('widget.mapSensor')" shadow="always" :class="{'selected-card': selectTypeWidget == 'map-sensor'}">
+                    <MapSensor style="height: 150px;" />
+                  </el-card>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :lg="8">
+                <div @click="selectTypeWidget = 'echartPie-sensor'">
+                  <el-card :header="$t('widget.kpiPie')" shadow="always" :class="{'selected-card': selectTypeWidget == 'echartPie-sensor'}">
+                    <EchartPieSensor style="height: 150px;" />
+                  </el-card>
+                </div>
+              </el-col>
+            </el-row>
+
+            <el-row v-if="selectSource == 'external-system'" :gutter="20">
+              <el-col :xs="24" :sm="12" :lg="8">
+                <div @click="selectTypeWidget = 'table-external-system'">
+                  <el-card header="Table" shadow="always" :class="{'selected-card': selectTypeWidget == 'table-external-system'}">
+                    <TableExternalSystem style="height: 150px;" />
+                  </el-card>
+                </div>
+              </el-col>
+            </el-row>
+
+            <el-row v-if="selectSource == 'air-model'" :gutter="20">
+              <el-col :xs="24" :sm="12" :lg="8">
+                <div @click="selectTypeWidget = 'map-dispersion'">
+                  <el-card :header="$t('widget.geojsonMap')" shadow="always" :class="{'selected-card': selectTypeWidget == 'map-dispersion'}">
+                    <MapDispersion style="height: 150px;" />
+                  </el-card>
+                </div>
+              </el-col>
+            </el-row>
+
+            <el-row v-if="selectSource == 'noise-model'" :gutter="20">
+              <el-col :xs="24" :sm="12" :lg="8">
+                <div @click="selectTypeWidget = 'map-noise'">
+                  <el-card :header="$t('widget.heatMap')" shadow="always" :class="{'selected-card': selectTypeWidget == 'map-noise'}">
+                    <MapNoise style="height: 150px;" />
+                  </el-card>
+                </div>
+              </el-col>
+            </el-row>
+
+            <el-row v-if="selectSource == 'traffic-model'" :gutter="20">
+              <el-col :xs="24" :sm="12" :lg="8">
+                <div @click="selectTypeWidget = 'table-traffic'">
+                  <el-card header="Table" shadow="always" :class="{'selected-card': selectTypeWidget == 'table-traffic'}">
+                    <TableTraffic style="height: 150px;" />
+                  </el-card>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :lg="8">
+                <div @click="selectTypeWidget = 'echartLine-traffic'">
+                  <el-card :header="$t('widget.stepLine')" shadow="always" :class="{'selected-card': selectTypeWidget == 'echartLine-traffic'}">
+                    <EchartLineTraffic style="height: 150px;" />
+                  </el-card>
+                </div>
+              </el-col>
+            </el-row>
+
           </el-row>
 
           <el-row v-if="active == 2">
@@ -209,7 +346,7 @@
               </el-col>
             </el-row>
 
-            <el-row v-show="selectSource == 'model-pas'" :gutter="20">
+            <el-row v-if="selectSource == 'model-pas'" :gutter="20">
               <el-col :span="24">
                 <el-card>
                   <el-table
@@ -234,6 +371,164 @@
               </el-col>
             </el-row>
 
+            <el-row v-if="selectSource == 'external-system'" :gutter="20">
+              <el-col :span="24">
+                <el-card>
+                  <div v-if="externalSystems.length > 0">
+                    <el-select v-model="typeSource" class="filter-item" :placeholder="$t('models.selectUnit')" filterable allow-create style="width:100%">
+                      <el-option
+                        v-for="item in externalSystems"
+                        :key="item.sourceId"
+                        :label="item.sourceId"
+                        :value="item.sourceId"
+                      />
+                    </el-select>
+                  </div>
+                </el-card>
+              </el-col>
+            </el-row>
+
+            <el-row v-if="selectSource == 'air-model'" :gutter="20">
+              <el-col :span="24">
+                <el-card>
+                  <div v-if="executionsAirModel.length > 0">
+                    <div v-if="selectTypeWidget == 'map-dispersion'">
+                      <span style="color:red">
+                        {{ $t('widget.selectMandatorySource') }}
+                      </span>
+                      <el-select v-model="idForAirDispersionModel" class="filter-item" :placeholder="$t('widget.selectExecution')" filterable allow-create style="width:100%">
+                        <el-option
+                          v-for="item in executionsAirModel"
+                          :key="item.id"
+                          :label="item.id"
+                          :value="item.id"
+                        />
+                      </el-select>
+                    </div>
+                  </div>
+                </el-card>
+              </el-col>
+            </el-row>
+
+            <el-row v-if="selectSource == 'traffic-model'" :gutter="20">
+              <el-col :span="24">
+                <el-card>
+                  <div>
+                    <span v-if="executionsTrafficModel.length > 0" style="color:red">
+                      {{ $t('widget.selectMandatoryExecution') }}
+                    </span>
+                    <span v-else style="color:red">
+                      {{ $t('widget.noExecutionAvailable') }}
+                    </span>
+                    <el-select v-model="idForTrafficModel" class="filter-item" :placeholder="$t('widget.selectExecution')" filterable allow-create style="width:100%">
+                      <el-option
+                        v-for="item in executionsTrafficModel"
+                        :key="item.id"
+                        :label="item.id"
+                        :value="item.id"
+                      />
+                    </el-select>
+                  </div>
+
+                  <div v-if="selectTypeWidget !== 'table-traffic'">
+                    <span style="color:red">
+                      {{ $t('widget.selectMandatoryVisualizationType') }}
+                    </span>
+                    <el-select v-model="visualizationTypeForTrafficModel" class="filter-item" :placeholder="$t('widget.selectVisualizationType')" filterable allow-create style="width:100%">
+                      <el-option
+                        v-for="item in trafficVisualizations"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      />
+                    </el-select>
+                  </div>
+                </el-card>
+              </el-col>
+            </el-row>
+
+            <el-row v-if="selectSource == 'real-time'" :gutter="20">
+              <el-col :span="24">
+                <el-card>
+                  <div v-if="sensorsCollection.length > 0">
+                    <div v-if="selectTypeWidget != 'map-sensor'">
+                      <span style="color:red">
+                        {{ $t('widget.selectMandatorySource') }}
+                      </span>
+                      <el-select v-model="typeSource" class="filter-item" :placeholder="$t('widget.selectSource')" filterable allow-create style="width:100%" @change="selectSourceId">
+                        <el-option
+                          v-for="item in sensorsCollection"
+                          :key="item.sourceId"
+                          :label="item.sourceId"
+                          :value="item.sourceId"
+                        />
+                      </el-select>
+                      <el-table ref="sensorsTable" :data="devices" @selection-change="handleChangedSensor">
+                        <el-table-column type="selection" property="selected" />
+                        <el-table-column :label="$t('widget.Name')">
+                          <template slot-scope="scope">{{ scope.row.name }}</template>
+                        </el-table-column>
+                        <el-table-column :label="$t('widget.Longitude')">
+                          <template slot-scope="scope">{{ scope.row.location.lon }}</template>
+                        </el-table-column>
+                        <el-table-column :label="$t('widget.Latitude')">
+                          <template slot-scope="scope">{{ scope.row.location.lat }}</template>
+                        </el-table-column>
+                      </el-table>
+                      <br>
+                      <span style="color:red">
+                        {{ $t('widget.validateSelectASensor') }}
+                      </span>
+                    </div>
+                    <div v-else>
+                      <span style="color:red">
+                        {{ $t('widget.selectMandatorySourceForMapSensor') }}
+                      </span>
+                      <el-select v-model="typeSourceForMapSensor" class="filter-item" :placeholder="$t('widget.selectSource')" filterable allow-create style="width:100%" multiple @change="selectSourceForMap">
+                        <el-option
+                          v-for="item in sensorsCollection"
+                          :key="item.sourceId"
+                          :label="item.sourceId"
+                          :value="item.sourceId"
+                        />
+                      </el-select>
+                    </div>
+                  </div>
+                </el-card>
+              </el-col>
+            </el-row>
+
+            <!--<el-row v-show="selectSource == 'real-time'" :gutter="20">
+              <el-col :span="24">
+                <el-card>
+                  <div v-if="sensorsCollection.length > 0">
+                    <div v-for="(item,indexInput) in sensorsCollection" :key="indexInput">
+                      <el-collapse v-model="activeInput" accordion @change="handleChangeInputSection">
+                        <el-collapse-item :title="item.sourceId" :name="item.sourceId">
+                          <el-table ref="sensorsTable" :data="item.sensors" @selection-change="handleChangedSensor">
+                            <el-table-column type="selection" property="sensors.selected" />
+                            <el-table-column :label="$t('widget.Name')">
+                              <template slot-scope="scope">{{ scope.row.name }}</template>
+                            </el-table-column>
+                            <el-table-column :label="$t('widget.Longitude')">
+                              <template slot-scope="scope">{{ scope.row.location.lon }}</template>
+                            </el-table-column>
+                            <el-table-column :label="$t('widget.Latitude')">
+                              <template slot-scope="scope">{{ scope.row.location.lat }}</template>
+                            </el-table-column>
+                          </el-table>
+                        </el-collapse-item>
+                      </el-collapse>
+                    </div>
+                  </div>
+                </el-card>
+                <br>
+                <span style="color:red">
+                  {{ $t('widget.validateSelectASensor') }}
+                </span>
+              </el-col>
+            </el-row>-->
+
           </el-row>
         </el-main>
       </el-container>
@@ -245,7 +540,12 @@
         <el-button v-if="active<2" type="primary" :disabled=" active == 0 && !selectSource || active == 1 && !selectTypeWidget" @click="active++">
           {{ $t('widget.buttonNext') }}
         </el-button>
-        <el-button v-else type="primary" :disabled="active == 2 && selectSource == 'model-pas' && !multipleSelection.length" @click="dialogStatus==='create'?createData():updateData()">
+        <el-button
+          v-else
+          type="primary"
+          :disabled="(active == 2 && selectSource == 'model-pas' && !multipleSelection.length) || (active == 2 && selectSource == 'real-time' && selectTypeWidget !== 'map-sensor' && !multipleSensorSelected.length) || (active == 2 && selectSource == 'real-time' && selectTypeWidget === 'map-sensor' && !typeSourceForMapSensor.length) || (active == 2 && selectSource == 'air-model' && selectTypeWidget === 'map-dispersion' && !idForAirDispersionModel.length) || (active == 2 && selectSource == 'traffic-model' && (!idForTrafficModel || ( !visualizationTypeForTrafficModel && selectTypeWidget !== 'table-traffic')))"
+          @click="dialogStatus==='create'?createData():updateData()"
+        >
           {{ $t('widget.buttonDone') }}
         </el-button>
       </div>
@@ -263,12 +563,28 @@ import { getColor, unFlatten, flatten } from '@/utils/common'
 import EchartRadar from '@/components/widget/echart/EchartRadar'
 import EchartPie from '@/components/widget/echart/EchartPie'
 import EchartBar from '@/components/widget/echart/EchartBar'
+import EchartBarSensor from '@/components/widget/echart/EchartBar_sensor'
+import EchartLineSensor from '@/components/widget/echart/EchartLine_sensor'
+import EchartLineTraffic from '@/components/widget/echart/EchartLine_traffic'
+import EchartPieSensor from '@/components/widget/echart/EchartPie_sensor'
 import CustomIframe from '@/components/widget/custom/CustomIframe'
 import TableEtd from '@/components/widget/custom/TableEtd'
+import TableSensors from '@/components/widget/custom/TableSensors'
+import TableTraffic from '@/components/widget/custom/TableTraffic'
+import TableExternalSystem from '@/components/widget/custom/TableExternalSystem'
+import MapSensor from '@/components/widget/custom/Map'
 import GanttBarEtd from '@/components/widget/echart/GanttBarEtd'
 import GanttBarPas from '@/components/widget/echart/GanttBarPas'
+import MapDispersion from '@/components/widget/custom/DispersionMap'
+import MapNoise from '@/components/widget/custom/NoiseMap'
+// import AirMap from '@/components/widget/custom/AirMap'
 
 import { getModels, getInstancesByIdRef } from '@/api/otools'
+
+import { getSourcesFromPort, ListSensorByIdSource } from '@/api/dataextractor_IH'
+
+import { getIDFromAirDispersionModelExecution, getIDFromTrafficModelExecution, existIndex } from '@/api/PAS_IH' // lo encapsulo en este JS porque la requestURl es la que toca y para no crear otro JS solo con un metodo
+import pixelConstants from '@/utils/constants' // import class for constants
 
 export default {
   name: 'ComplexTable',
@@ -279,7 +595,17 @@ export default {
     CustomIframe,
     GanttBarEtd,
     GanttBarPas,
-    TableEtd
+    TableEtd,
+    TableSensors,
+    TableTraffic,
+    TableExternalSystem,
+    EchartBarSensor,
+    EchartLineSensor,
+    EchartLineTraffic,
+    EchartPieSensor,
+    MapSensor,
+    MapDispersion,
+    MapNoise
   },
   directives: { waves },
   data() {
@@ -296,7 +622,7 @@ export default {
       selectTypeWidget: null,
       tableData: [],
       multipleSelection: [],
-
+      multipleSensorSelected: [],
       formValues: null,
       formValuesDefinition: null,
       formConfig: null,
@@ -310,19 +636,167 @@ export default {
         type: undefined
       },
       dialogFormVisible: false,
-      dialogStatus: ''
+      dialogStatus: '',
+      dialogTitle: '',
+      sensorsCollection: [],
+      originalStateSensors: [],
+      externalSystems: [],
+      executionsAirModel: [],
+      executionsTrafficModel: [],
+      activeInput: ['0'],
+      typeSource: '',
+      typeSourceForMapSensor: [],
+      idForAirDispersionModel: '',
+      idForTrafficModel: '',
+      visualizationTypeForTrafficModel: '',
+      devices: [],
+      trafficVisualizations: pixelConstants.TYPE_OF_TRAFFIC_VISUALIZATION,
+      trafficIndex: false
     }
   },
   created() {
     this.getList()
     this.getWidgetTemplate()
     this.getModels()
+    this.getDifferentTypeOfSources()
+    this.getExecutionsAirDispersionModel()
+    this.getExecutionsTrafficModel()
+    // console.log(this.sensorsCollection)
+    this.existTraficIndex('trafficmodel')
   },
   methods: {
+    existTraficIndex(indexName) {
+      existIndex(indexName).then(response => {
+        this.trafficIndex = true
+        console.log('EXISTE')
+      }).catch(err => {
+        this.trafficIndex = false
+        console.log('NO EXISTE')
+      })
+    },
+    selectSourceForMap(value) {
+      // console.log('Select source for map')
+      // console.log(value)
+      // console.log(value.length)
+      this.typeSourceForMapSensor = value
+    },
+    selectSourceId(index) {
+      console.log('Source choosen: ' + index)
+      this.sensorsCollection.forEach(item => {
+        if (item.sourceId === index) {
+          this.devices = item.sensors
+        }
+      })
+      console.log(this.devices)
+    },
+    handleChangeInputSection(val) {
+      console.log('Cambio el estado del control que expande/colapsa')
+      console.log(val)
+    },
+    initializeCollapseObject() {
+      this.activeInput = ['0']
+    },
+    getExecutionsAirDispersionModel() {
+      getIDFromAirDispersionModelExecution().then(response => {
+        // console.log(response)
+        response.hits.hits.forEach(item => {
+          var itemObject = {
+            'index': item._index,
+            'type': item._type,
+            'id': item._id
+          }
+          // console.log(item._id)
+          this.executionsAirModel.push(itemObject)
+        })
+      })
+    },
+    getExecutionsTrafficModel() {
+      getIDFromTrafficModelExecution().then(response => {
+        // console.log(response)
+        response.hits.hits.forEach(item => {
+          var itemObject = {
+            'index': item._index,
+            'type': item._type,
+            'id': item._id
+          }
+          // console.log(item._id)
+          this.executionsTrafficModel.push(itemObject)
+        })
+        console.log('this.executionsTrafficModel = ', this.executionsTrafficModel)
+      })
+    },
+    getDifferentTypeOfSources() {
+      getSourcesFromPort().then(response => {
+        console.log(response)
+        response.forEach(obj => {
+          if (obj.sourceTypeId.includes(pixelConstants.SENSOR)) {
+            console.log('Es un sensor')
+            var itemSensors = {
+              'ID': obj.sourceTypeId,
+              'sourceId': obj.sourceId,
+              'sensors': []
+            }
+            ListSensorByIdSource(obj.sourceTypeId).then(response => {
+              // console.log(response)
+              var index = 0
+              response.forEach(it => {
+                var itemSensor = {
+                  'name': it.data.name,
+                  'location': it.data.location,
+                  'dataProvider': it.data.dataProvider,
+                  'observed': this.convertToDate(it.data.observed),
+                  'timestamp': this.convertToDate(it.timestamp),
+                  'index': index,
+                  'selected': false
+                }
+                index = index + 1
+                // sensores.push(itemSensor)
+                itemSensors.sensors.push(itemSensor)
+              })
+            })
+            this.sensorsCollection.push(itemSensors)
+          } else {
+            var externalSystem = {
+              'indexName': obj.indexName,
+              'sourceId': obj.sourceId,
+              'sourceTypeId': obj.sourceTypeId
+            }
+            this.externalSystems.push(externalSystem)
+          }
+        })
+        this.AddSensorToCollection()
+        this.originalStateSensors = this.sensorsCollection// Almaceno la disposición original de los sensores
+      })
+    },
+    AddSensorToCollection() {
+      var itemSensors = {
+        'ID': 'ID2',
+        'sourceId': 'sourceTest',
+        'sensors': []
+      }
+      var itemSensor = {
+        'name': 'name1',
+        'location': 45,
+        'dataProvider': 'provider1',
+        'observed': 25,
+        'timestamp': 63,
+        'index': 'index1',
+        'selected': false
+      }
+      itemSensors.sensors.push(itemSensor)
+      this.sensorsCollection.push(itemSensors)
+    },
+    convertToDate(timestamp) {
+      var theDate = new Date(timestamp)
+      return theDate
+      // console.log(theDate)
+    },
     getModels() {
       getModels().then(response => {
+        console.log(response)
         response.forEach(data => {
-          if (data.category === 'energy') {
+          // if (data.category === 'energy') {
+          if (data.generalInfo.category === 'energy') {
             this.getInstances(data.id)
           }
         })
@@ -348,24 +822,24 @@ export default {
         })
       })
     },
+    handleChangedSensor(val) {
+      this.multipleSensorSelected = []
+      // this.multipleSelection = val
+      val.forEach(element => {
+        this.multipleSensorSelected.push({ name: element.name, index: element.index })
+      })
+    },
     handleSelectionChange(val) {
+      console.log(val)
       this.multipleSelection = []
       // this.multipleSelection = val
       val.forEach(element => {
         this.multipleSelection.push({ modelId: element.modelId, executionId: element.executionId })
       })
     },
-    /* handlesetSelectionChange(val) {
-      this.multipleSelection = val
-
-      this.tableData.forEach((element, key) => {
-        if (this.multipleSelection.includes(element.id)) {
-          this.$refs.multipleTable.toggleRowSelection(key)
-        }
-      })
-    },*/
     dataChanged(data) {
       this.formValues = data
+      console.log(this.formValues)
       // this.formValuesDefinition = data.definition
     },
     getList() {
@@ -490,41 +964,128 @@ export default {
       this.selectSource = ''
       this.selectTypeWidget = ''
       this.multipleSelection = []
+      this.multipleSensorSelected = []
       this.formValues = null
+      // added by Nacho
+      this.typeSource = ''
+      this.visualizationTypeForTrafficModel = ''
+      this.idForTrafficModel = ''
+      this.typeSourceForMapSensor = []
+      this.idForAirDispersionModel = ''
     },
     handleCreate() {
+      console.log('ORIGINAL')
+      console.log(this.originalStateSensors)
       this.resetTemp()
+      this.sensorsCollection = this.originalStateSensors
       this.dialogStatus = 'create'
+      this.dialogTitle = this.$t('widget.createVisualization')
       this.dialogFormVisible = true
     },
     createData() {
       var values = unFlatten(this.formValues)
-      values.source = this.selectSource
-      values.type = this.selectTypeWidget
+      console.log('CREATE DATA')
+      console.log(this.formValues)
+      var error = false
+      if (this.formValues.title) {
+        values.source = this.selectSource
+        values.type = this.selectTypeWidget
 
-      if (values.source === 'model-pas') {
-        values.filter = {}
-        values.filter.id = this.multipleSelection
-      }
-      console.log('values: ' + JSON.stringify(values))
-      widgetCreate(values).then((data) => {
-        this.dialogFormVisible = false
-        this.resetTemp()
-        this.list.push(data.data)
-        this.$notify({
-          title: 'Success',
-          message: 'Created Successfully',
-          type: 'success',
-          duration: 2000
+        if (values.source === 'model-pas') {
+          values.filter = {}
+          values.filter.id = this.multipleSelection
+        }
+
+        if (values.source === 'real-time' && values.type !== 'map-sensor') {
+          values.filter = {}
+          values.filter.id = this.multipleSensorSelected
+          values.filter.start = this.formValues.filter$start
+          values.filter.end = this.formValues.filter$end
+          values.filter.source = this.typeSource
+        }
+
+        if (values.source === 'traffic-model') {
+          values.filter = {}
+          // Aquí hay que ver que le pasamos como idForTrafficModel: el que seleccione el usuario o siempre la última ejecución del modelo...
+          values.filter.trafficType = this.visualizationTypeForTrafficModel
+          values.filter.trafficId = this.idForTrafficModel
+        }
+
+        if (values.type === 'echartPie-sensor') {
+          values.filter.wrongValue = this.formValues.wrongValue
+        }
+
+        if (values.source === 'external-system') {
+          values.filter.sourceId = this.typeSource
+        }
+
+        if (values.type === 'map-sensor') {
+          values.filter = {}
+          values.filter.source = this.typeSourceForMapSensor
+        }
+
+        if (values.source === 'air-model' && values.type === 'map-dispersion') {
+          values.filter = {}
+          values.filter.source = this.idForAirDispersionModel
+        }
+
+        if (values.source === 'noise-model' && values.type === 'map-noise') {
+          if (this.formValues.definition$url === null) {
+            error = true
+            this.$message({
+              type: pixelConstants.WARNING_MESSAGE_TYPE,
+              message: this.$t('widget.urlMandatory')
+            })
+          } else {
+            values.filter = {}
+            values.filter.source = this.formValues.definition$url
+          }
+        }
+
+        if (!error) {
+          console.log('values: ' + JSON.stringify(values))
+          widgetCreate(values).then((data) => {
+            this.dialogFormVisible = false
+            this.resetTemp()
+            this.list.push(data.data)
+            this.$notify({
+              title: 'Success',
+              message: 'Created Successfully',
+              type: 'success',
+              duration: 2000
+            })
+          }).catch(console.error)
+        }
+      } else {
+        this.$message({
+          type: pixelConstants.WARNING_MESSAGE_TYPE,
+          message: this.$t('widget.titleMandatory')
         })
-      }).catch(console.error)
+      }
     },
     handleUpdate(row) {
+      // console.log(row)
+      // console.log(this.sensorsCollection)
+      if (row.source === 'real-time') {
+        this.sensorsCollection = this.originalStateSensors
+        this.sensorsCollection.forEach(sensor => {
+          sensor.sensors.forEach(element => {
+            row.filter.id.forEach(item => {
+              // console.log(element.name + '-' + item.name)
+              if (element.name === item.name) {
+                element.selected = true
+              }
+            })
+          })
+        })
+      }
+      console.log(this.sensorsCollection)
       this.active = 2
       this.selectSource = row.source
       this.selectTypeWidget = row.type
       this.formValues = flatten(Object.assign({}, row)) // copy obj
       this.dialogStatus = 'update'
+      this.dialogTitle = this.$t('widget.updateVisualization')
       this.dialogFormVisible = true
     },
     updateData() {
@@ -535,6 +1096,22 @@ export default {
       if (values.source === 'model-pas') {
         values.filter = {}
         values.filter.id = this.multipleSelection
+      }
+
+      if (values.source === 'real-time') {
+        values.filter = {}
+        values.filter.id = this.multipleSensorSelected
+        values.filter.start = this.formValues.filter$start
+        values.filter.end = this.formValues.filter$end
+        values.filter.source = this.typeSource
+      }
+
+      if (values.type === 'echartPie-sensor') {
+        values.filter.wrongValue = this.formValues.wrongValue
+      }
+
+      if (values.source === 'external-system') {
+        values.filter.sourceId = this.typeSource
       }
 
       widgetUpdate(values._id, values).then((data) => {

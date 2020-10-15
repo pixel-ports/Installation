@@ -1,6 +1,7 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
+import { md5 } from 'md5js'
 
 const state = {
   token: getToken(),
@@ -34,11 +35,11 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+        commit('SET_TOKEN', response.access_token)
+        setToken(response.access_token)
         resolve()
       }).catch(error => {
+        console.log(error)
         reject(error)
       })
     })
@@ -48,10 +49,32 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
-        const { data } = response
-
-        if (!data) {
+        if (!response) {
           reject('Verification failed, please Login again.')
+        }
+
+        if (response.app_id !== process.env.VUE_APP_BASE_ID_CLIENT_ID) {
+          reject('Your user exists but does not have permission to access this application')
+        }
+        const data = {}
+
+        data.roles = response.roles.map(function(x) {
+          return x.name
+        })
+
+        if (data.roles.length < 1) {
+          reject('You need at least 1 role.')
+        }
+
+        data.name = response.displayName || response.username
+        data.introduction = null
+
+        if (response.isGravatarEnabled) {
+          const emailTrim = response.email.trim()
+          const emailTrimLower = emailTrim.toLowerCase()
+          data.avatar = 'https://www.gravatar.com/avatar/' + md5(emailTrimLower, 32)
+        } else {
+          data.avatar = 'https://picsum.photos/500'
         }
 
         const { roles, name, avatar, introduction } = data
@@ -60,11 +83,11 @@ const actions = {
         if (!roles || roles.length <= 0) {
           reject('getInfo: roles must be a non-null array!')
         }
-
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
         commit('SET_INTRODUCTION', introduction)
+
         resolve(data)
       }).catch(error => {
         reject(error)

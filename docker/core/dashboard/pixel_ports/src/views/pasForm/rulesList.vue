@@ -11,9 +11,9 @@
     <!-- TABLE FOR CARGO_CATEGORIES -->
     <div>
       <el-row class="rules-subheader">
-        <span class="subTitle">{{ $t('rules.cargo_categoryHeader') }}</span>
+        <span class="subTitle">{{ $t('rules.contentType_Header') }}</span>
         <el-button class="filter-item" style="float:right;" type="primary" icon="el-icon-plus" @click="addCargoCategory">
-          {{ $t('rules.btnAddCargoCategory') }}
+          {{ $t('rules.btnAddContentType') }}
         </el-button>
       </el-row>
       <el-row style="background:#fff;margin-bottom:3px;">
@@ -108,9 +108,9 @@
     <!-- TABLE FOR PRIORITY -->
     <div>
       <el-row class="rules-subheader">
-        <span class="subTitle">{{ $t('rules.priorityHeader') }}</span>
+        <span class="subTitle">{{ $t('rules.vesselPriorityHeader') }}</span>
         <el-button :disabled="listPriority.length > 0" class="filter-item" style="float:right;" type="primary" icon="el-icon-plus" @click="addPriority">
-          {{ $t('rules.btnAddPriority') }}
+          {{ $t('rules.btnAddVesselPriority') }}
         </el-button>
       </el-row>
       <el-row style="background:#fff;margin-bottom:30px;">
@@ -197,7 +197,7 @@
                     :label-position="labelPosition"
                     prop="idCargoCategory"
                   >
-                    <el-input v-if="dialogTitleCargoCategory === $t('rules.createCargoesCategory')" v-model="dataFormCargoCategory.idCargoCategory" />
+                    <el-input v-if="dialogTitleCargoCategory === $t('rules.createContentType')" v-model="dataFormCargoCategory.idCargoCategory" />
 
                     <el-input v-else v-model="dataFormCargoCategory.idCargoCategory" :disabled="true" />
 
@@ -264,9 +264,9 @@
                       :label-position="labelPosition"
                       prop="direction"
                     >
-                      <el-select v-model="dataFormPreference.direction" clearable class="filter-item" :placeholder="$t('rules.selectDirection')" style="width:100%">
+                      <el-select v-model="dataFormPreference.direction" clearable multiple class="filter-item" :placeholder="$t('rules.selectDirection')" style="width:100%">
                         <el-option
-                          v-for="direction in directions"
+                          v-for="direction in directionsNature"
                           :key="direction.value"
                           :label="direction.label"
                           :value="direction.value"
@@ -334,11 +334,20 @@
                         <span>{{ row.priority }}</span>
                       </template>
                     </el-table-column>
+                    <!-- //// -->
                     <el-table-column :label="$t('rules.direction')" align="center">
+                      <template slot-scope="{row}">
+                        <el-tag v-for="(item, index) in row.direction" :key="index" style="margin-bottom:5px;margin-right:5px;" type="info">
+                          {{ index+1 }} - {{ item }}
+                        </el-tag>
+                      </template>
+                    </el-table-column>
+                    <!-- //// -->
+                    <!--<el-table-column :label="$t('rules.direction')" align="center">
                       <template slot-scope="{row}">
                         <span>{{ row.direction }}</span>
                       </template>
-                    </el-table-column>
+                    </el-table-column>-->
                     <el-table-column :label="$t('rules.dock_ID')" align="center">
                       <template slot-scope="{row}">
                         <span>{{ row.dock_ID }}</span>
@@ -435,7 +444,7 @@
             type="success"
             style="float:right;"
             @click="
-              dialogTitleCargoCategory === $t('rules.createCargoesCategory')
+              dialogTitleCargoCategory === $t('rules.createContentType')
                 ? preValidateNameCargoCategory('refDataFormCargoCategory')
                 : updateCargoCategory()
             "
@@ -655,6 +664,7 @@ import { supplierChainFetchList } from '@/api/supplierChain'
 import pixelConstants from '@/utils/constants' // import class for constants
 import waves from '@/directive/waves' // waves directive
 import segmentType from './files/segmentType.json'
+import directions_Nature from './files/directions_nature.json'
 import Pagination from '@/components/Pagination'
 import Sortable from 'sortablejs'
 export default {
@@ -671,20 +681,6 @@ export default {
         position: 'absolute'
       },
       active: 0,
-      directions: [
-        {
-          value: 'loading',
-          label: 'loading'
-        },
-        {
-          value: 'unloading',
-          label: 'unloading'
-        },
-        {
-          value: 'other',
-          label: 'other'
-        }
-      ],
       labelPosition: 'left',
       dialogFormCargoCategoryVisible: false,
       dialogFormShiftWorkVisible: false,
@@ -706,14 +702,14 @@ export default {
         typical_amount_range: [],
         assignation_preference: {
           priority: '',
-          direction: '',
+          direction: [], // antes era un string
           dock_ID: '',
           supply_chain_ID: ''
         }
       },
       dataFormPreference: {
         priority: '',
-        direction: '',
+        direction: [], // antes era un string
         dock_ID: '',
         supply_chain_ID: ''
       },
@@ -925,6 +921,11 @@ export default {
     }
   },
   computed: {
+    directionsNature() {
+      console.log('directions nature')
+      console.log(directions_Nature)
+      return directions_Nature
+    },
     getNextAvailablePreference() {
       if (this.listPreference && this.listPreference.length > 0) {
         return this.listPreference.length + 1
@@ -1453,7 +1454,7 @@ export default {
     addCargoCategory() {
       // Debo comprobar antes si hay una SupplierChain dada de alta.
       if (this.supplierChainList.length > 0) {
-        this.dialogTitleCargoCategory = this.$t('rules.createCargoesCategory')
+        this.dialogTitleCargoCategory = this.$t('rules.createContentType')
         this.dialogFormCargoCategoryVisible = true
         this.listPreference = []
         this.resetdataFormCargoCategory()
@@ -1601,7 +1602,7 @@ export default {
     resetdataFormPreference() {
       this.dataFormPreference = {
         priority: this.getNextAvailablePreference,
-        direction: '',
+        direction: [], // antes era un string
         dock_ID: '',
         supply_chain_ID: ''
       }
@@ -1616,7 +1617,7 @@ export default {
       this.editPreference = false
     },
     editCargoCategory(row) {
-      this.dialogTitleCargoCategory = this.$t('rules.editCargoesCategory')
+      this.dialogTitleCargoCategory = this.$t('rules.editContentType')
       console.log(row)
       // we need to deep copy the value of "row" into "dataFormCargoCategory"
       this.dataFormCargoCategory = JSON.parse(JSON.stringify(row)) // deep copy
@@ -1657,7 +1658,10 @@ export default {
       console.log(this.sortable)
     },
     editItemPreference(rowPreference) {
+      console.log('EDIT PREFERENCE')
+      console.log(rowPreference)
       this.indexPreference = this.listPreference.indexOf(rowPreference)
+      console.log('dataFormPreference')
       this.dataFormPreference = Object.assign({}, rowPreference) // copy object
       this.editPreference = true
     },
@@ -1729,7 +1733,7 @@ export default {
     editPriority(row) {
       // console.log(row)
       this.dialogFormPriorityVisible = true
-      this.dialogTitlePriority = this.$t('rules.choosePriorities')
+      this.dialogTitlePriority = this.$t('rules.chooseVesselPriorities')
       this.dataFormPriority._id = row._id
       // setting an array where to store our selection of Priorities (dataFormPriority.priority) as indexes (i.e.[0, 1, 4])
       this.dataFormSelectedPriority.priority = this.getSelectedPriorities(row)

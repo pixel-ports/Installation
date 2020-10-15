@@ -1,9 +1,11 @@
 import axios from 'axios'
-import pixelConstants from '@/utils/constants' // import class for constants
+// import pixelConstants from '@/utils/constants' // import class for constants
+// import { isElementInViewport } from '@amcharts/amcharts4/.internal/core/utils/DOM'
 
 // create an axios instance
 const service = axios.create({
-  baseURL: pixelConstants.APP_BASE_DATA_API_PAS,
+  baseURL: process.env.VUE_APP_BASE_DATA_API_PAS,
+  // baseURL: pixelConstants.APP_BASE_DATA_API_PAS,
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })

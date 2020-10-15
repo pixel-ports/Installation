@@ -19,6 +19,15 @@ import TableEtd from '@/components/widget/custom/TableEtd'
 import CustomIframe from '@/components/widget/custom/CustomIframe'
 import GanttElastic from '@/components/widget/custom/GanttElastic'
 import resize from '@/components/widget/mixins/resize'
+import EchartBarSensor from '@/components/widget/echart/EchartBar_sensor'
+import EchartLineSensor from '@/components/widget/echart/EchartLine_sensor'
+import EchartLineTraffic from '@/components/widget/echart/EchartLine_traffic'
+import EchartPieSensor from '@/components/widget/echart/EchartPie_sensor'
+import TableSensors from '@/components/widget/custom/TableSensors'
+import TableExternalSystem from '@/components/widget/custom/TableExternalSystem'
+import MapSensor from '@/components/widget/custom/Map'
+import MapDispersion from '@/components/widget/custom/DispersionMap'
+import MapNoise from '@/components/widget/custom/NoiseMap'
 export default {
   name: 'VisualizationWidget',
   components: {
@@ -29,7 +38,16 @@ export default {
     GanttBarEtd,
     GanttBarPas,
     GanttElastic,
-    TableEtd
+    TableEtd,
+    EchartBarSensor,
+    EchartLineSensor,
+    EchartLineTraffic,
+    EchartPieSensor,
+    TableSensors,
+    TableExternalSystem,
+    MapSensor,
+    MapDispersion,
+    MapNoise
   },
   mixins: [resize],
   /*eslint-disable */
