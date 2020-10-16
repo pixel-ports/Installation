@@ -38,7 +38,7 @@ async function authUser(req, res, next) {
         url: `${config.fiware.IDM_URL}/user?access_token=${req.headers['x-token']}`
       });
       const { data } = response;
-      if (!data || data.authorization_decision !== 'Permit') {
+      if (!data) {
         throw new Error('User not permit');
       }
       data.name = data.username;
