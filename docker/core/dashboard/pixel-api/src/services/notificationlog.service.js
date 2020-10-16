@@ -15,7 +15,7 @@ export default service;
 async function getOne(id) {
   let data = [];
   try {
-    data = await NotificationLog.findOne({ _id: id }).populate('notification');
+    data = await NotificationLog.findOne({ _id: id });
   } catch (error) {
     throw new Error(error);
   }
@@ -25,7 +25,7 @@ async function getOne(id) {
 async function getAll() {
   let data = [];
   try {
-    data = await NotificationLog.find().populate('notification');
+    data = await NotificationLog.find();
   } catch (error) {
     throw new Error(error);
   }

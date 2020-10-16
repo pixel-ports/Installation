@@ -97,13 +97,21 @@
                                 },
                                 "direction": {
                                     "$id": "#/properties/cargoes_categories/items/properties/assignation_preference/items/properties/direction",
-                                    "type": "string",
-                                    "title": "The Direction Schema",
-                                    "default": "",
-                                    "examples": [
-                                        "unloading"
-                                    ],
-                                    "pattern": "^(.*)$"
+                                    "type": "array",
+                                    "description": "List compatible handlings' directions.",
+                                    "items": {
+                                        "$id": "#/properties/cargoes_categories/items/properties/assignation_preference/items/properties/direction/items",
+                                        "type": "string",
+                                        "description": "A direction.",
+                                        "enum": [
+                                            "loading",
+                                            "unloading",
+                                            "other"
+                                        ],
+                                        "examples": [
+                                            "loading"
+                                        ]
+                                    }
                                 },
                                 "dock_ID": {
                                     "$id": "#/properties/cargoes_categories/items/properties/assignation_preference/items/properties/dock_ID",

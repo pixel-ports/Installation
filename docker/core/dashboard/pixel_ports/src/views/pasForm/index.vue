@@ -377,6 +377,7 @@ export default {
       row.machines.forEach(machine => {
         var itemMachine = {
           'ID': machine.idMachine,
+          // 'machine.idMachine': {
           'label': machine.label,
           'type': machine.type,
           'group': [machine.group],
@@ -387,6 +388,7 @@ export default {
             'Unit': machine.throughput.unit
           },
           'consumptions': []
+          // }
         }
         machine.consumptions.forEach(consumption => {
           var consumptionItem = {

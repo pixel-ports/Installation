@@ -60,7 +60,6 @@
           min-width="100"
         >
           <template slot-scope="{ row }">
-            <!-- <el-button-group> -->
             <el-button
               size="small"
               class="exportToIH"
@@ -70,7 +69,6 @@
               {{ $t("common.btnExportToIH") }}
             </el-button>
             <span style="padding-left:10px" />
-            <!--<router-link :to="{name:'Resources List', params: {model: row, id: row._id}}">-->
             <el-button
               size="small"
               class="editBtn"

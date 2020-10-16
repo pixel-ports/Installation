@@ -1,5 +1,4 @@
 import request from '@/utils/request_dashboard'
-// TODO: Cambair ruta a donde toca
 
 export function resourceFetchList(query) {
   return request({

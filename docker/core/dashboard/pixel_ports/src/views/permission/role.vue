@@ -5,23 +5,13 @@
     </el-button>
 
     <el-table :data="rolesList" style="width: 100%;margin-top:30px;" border>
-      <el-table-column align="center" label="Role Key" width="220">
-        <template slot-scope="scope">
-          {{ scope.row.key }}
-        </template>
-      </el-table-column>
       <el-table-column align="center" label="Role Name" width="220">
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column align="header-center" label="Description">
-        <template slot-scope="scope">
-          {{ scope.row.description }}
-        </template>
-      </el-table-column>
       <el-table-column align="center" label="Operations">
-        <template slot-scope="scope">
+        <template v-if="scope.row.id !== 'purchaser' && scope.row.id !== 'provider'" slot-scope="scope">
           <el-button type="primary" size="small" @click="handleEdit(scope)">
             {{ $t('permission.editPermission') }}
           </el-button>
@@ -37,17 +27,6 @@
         <el-form-item label="Name">
           <el-input v-model="role.name" placeholder="Role Name" />
         </el-form-item>
-        <el-form-item label="Desc">
-          <el-input
-            v-model="role.description"
-            :autosize="{ minRows: 2, maxRows: 4}"
-            type="textarea"
-            placeholder="Role Description"
-          />
-        </el-form-item>
-        <el-form-item label="Menus">
-          <el-tree ref="tree" :check-strictly="checkStrictly" :data="routesData" :props="defaultProps" show-checkbox node-key="path" class="permission-tree" />
-        </el-form-item>
       </el-form>
       <div style="text-align:right;">
         <el-button type="danger" @click="dialogVisible=false">
@@ -62,16 +41,14 @@
 </template>
 
 <script>
+import checkPermission from '@/utils/permission'
 import path from 'path'
 import { deepClone } from '@/utils'
-import { getRoutes, getRoles, addRole, deleteRole, updateRole } from '@/api/role'
-import i18n from '@/lang'
+import { getRoles, createRoles, updateRoles, deleteRoles } from '@/api/role'
 
 const defaultRole = {
-  key: '',
-  name: '',
-  description: '',
-  routes: []
+  id: '',
+  name: ''
 }
 
 export default {
@@ -97,71 +74,13 @@ export default {
     }
   },
   created() {
-    // Mock: get all routes and roles list from server
-    this.getRoutes()
     this.getRoles()
   },
   methods: {
-    async getRoutes() {
-      const res = await getRoutes()
-      this.serviceRoutes = res.data
-      const routes = this.generateRoutes(res.data)
-      this.routes = this.i18n(routes)
-    },
+    checkPermission,
     async getRoles() {
       const res = await getRoles()
-      this.rolesList = res.data
-    },
-    i18n(routes) {
-      const app = routes.map(route => {
-        route.title = i18n.t(`route.${route.title}`)
-        if (route.children) {
-          route.children = this.i18n(route.children)
-        }
-        return route
-      })
-      return app
-    },
-    // Reshape the routes structure so that it looks the same as the sidebar
-    generateRoutes(routes, basePath = '/') {
-      const res = []
-
-      for (let route of routes) {
-        // skip some route
-        if (route.hidden) { continue }
-
-        const onlyOneShowingChild = this.onlyOneShowingChild(route.children, route)
-
-        if (route.children && onlyOneShowingChild && !route.alwaysShow) {
-          route = onlyOneShowingChild
-        }
-
-        const data = {
-          path: path.resolve(basePath, route.path),
-          title: route.meta && route.meta.title
-
-        }
-
-        // recursive child routes
-        if (route.children) {
-          data.children = this.generateRoutes(route.children, data.path)
-        }
-        res.push(data)
-      }
-      return res
-    },
-    generateArr(routes) {
-      let data = []
-      routes.forEach(route => {
-        data.push(route)
-        if (route.children) {
-          const temp = this.generateArr(route.children)
-          if (temp.length > 0) {
-            data = [...data, ...temp]
-          }
-        }
-      })
-      return data
+      this.rolesList = res.data.roles
     },
     handleAddRole() {
       this.role = Object.assign({}, defaultRole)
@@ -177,9 +96,6 @@ export default {
       this.checkStrictly = true
       this.role = deepClone(scope.row)
       this.$nextTick(() => {
-        const routes = this.generateRoutes(this.role.routes)
-        this.$refs.tree.setCheckedNodes(this.generateArr(routes))
-        // set checked state of a node not affects its father and child nodes
         this.checkStrictly = false
       })
     },
@@ -190,7 +106,7 @@ export default {
         type: 'warning'
       })
         .then(async() => {
-          await deleteRole(row.key)
+          await deleteRoles(row.id)
           this.rolesList.splice($index, 1)
           this.$message({
             type: 'success',
@@ -199,40 +115,20 @@ export default {
         })
         .catch(err => { console.error(err) })
     },
-    generateTree(routes, basePath = '/', checkedKeys) {
-      const res = []
-
-      for (const route of routes) {
-        const routePath = path.resolve(basePath, route.path)
-
-        // recursive child routes
-        if (route.children) {
-          route.children = this.generateTree(route.children, routePath, checkedKeys)
-        }
-
-        if (checkedKeys.includes(routePath) || (route.children && route.children.length >= 1)) {
-          res.push(route)
-        }
-      }
-      return res
-    },
     async confirmRole() {
       const isEdit = this.dialogType === 'edit'
 
-      const checkedKeys = this.$refs.tree.getCheckedKeys()
-      this.role.routes = this.generateTree(deepClone(this.serviceRoutes), '/', checkedKeys)
-
       if (isEdit) {
-        await updateRole(this.role.key, this.role)
+        await updateRoles(this.role, this.role.id,)
         for (let index = 0; index < this.rolesList.length; index++) {
-          if (this.rolesList[index].key === this.role.key) {
+          if (this.rolesList[index].id === this.role.id) {
             this.rolesList.splice(index, 1, Object.assign({}, this.role))
             break
           }
         }
       } else {
-        const { data } = await addRole(this.role)
-        this.role.key = data.key
+        const { data } = await createRoles(this.role)
+        this.role.id = data.id
         this.rolesList.push(this.role)
       }
 

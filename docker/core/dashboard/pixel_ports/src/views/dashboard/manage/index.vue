@@ -115,9 +115,8 @@ export default {
         console.log(response.data)
         this.list = response.data
         this.total = response.data.length
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1.5 * 1000)
+
+        this.listLoading = false
       }).catch(() => {
         this.listLoading = false
       })

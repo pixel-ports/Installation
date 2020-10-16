@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm run clean && babel src -d dist --source-maps",
     "start": "nodemon --inspect src/index.js --config  nodemon.json --exec babel-node",
-    "serve": "cross-env NODE_ENV=production npm run clean && npm run build && node --inspect=0.0.0.0 dist/index.js",
+    "serve": "npm run clean && npm run build && cross-env NODE_ENV=production node --inspect=0.0.0.0 dist/index.js",
     "clean": "rimraf dist logs",
     "lint": "eslint 'src/**/*.js' --fix",
     "format": "prettier-eslint 'src/**/*.{js,json}' --write",
@@ -34,12 +34,14 @@
     "rimraf": "^3.0.0"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.19.2",
+    "axios-cache-adapter": "^2.5.0",
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "express-validator": "^6.3.0",
     "mongoose": "^5.7.12",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "yaml": "^1.10.0"
   }
 }
