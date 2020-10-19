@@ -669,7 +669,7 @@ export default {
       existIndex(indexName).then(response => {
         this.trafficIndex = true
         console.log('EXISTE')
-      }).catch(err => {
+      }).catch(() => {
         this.trafficIndex = false
         console.log('NO EXISTE')
       })
@@ -740,18 +740,20 @@ export default {
               // console.log(response)
               var index = 0
               response.forEach(it => {
-                var itemSensor = {
-                  'name': it.data.name,
-                  'location': it.data.location,
-                  'dataProvider': it.data.dataProvider,
-                  'observed': this.convertToDate(it.data.observed),
-                  'timestamp': this.convertToDate(it.timestamp),
-                  'index': index,
-                  'selected': false
+                if (it.data.location) {
+                  var itemSensor = {
+                    'name': it.data.name,
+                    'location': it.data.location,
+                    'dataProvider': it.data.dataProvider,
+                    'observed': this.convertToDate(it.data.observed),
+                    'timestamp': this.convertToDate(it.timestamp),
+                    'index': index,
+                    'selected': false
+                  }
+                  index = index + 1
+                  // sensores.push(itemSensor)
+                  itemSensors.sensors.push(itemSensor)
                 }
-                index = index + 1
-                // sensores.push(itemSensor)
-                itemSensors.sensors.push(itemSensor)
               })
             })
             this.sensorsCollection.push(itemSensors)
