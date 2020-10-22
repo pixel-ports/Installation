@@ -294,39 +294,40 @@ export default {
               'sensors': []
             }
             ListSensorByIdSource(obj.sourceTypeId).then(response => {
-              // console.log(response)
               var index = 0
               response.forEach(it => {
-                var itemSensor = {
-                  'name': it.data.name,
-                  'type': aSensorType[1],
-                  'location': it.data.location,
-                  'dataProvider': it.data.dataProvider,
-                  'observed': this.convertToDate(it.data.observed),
-                  'timestamp': this.convertToDate(it.timestamp),
-                  'index': index,
-                  'selected': false,
-                  'source': obj.sourceId,
-                  'KPIs': this.addKPIsBySensor(aSensorType[1])
-                }
-                index = index + 1
-                // sensores.push(itemSensor)
-
-                itemSensors.sensors.push(itemSensor)
-                var featuresItem = {
-                  'type': 'Feature',
-                  'properties': {
-                    'name': it.data.name
-                  },
-                  'geometry': {
-                    'type': 'Point',
-                    'coordinates': [
-                      it.data.location.lat,
-                      it.data.location.lon
-                    ]
+                if (it.data.location) {
+                  var itemSensor = {
+                    'name': it.data.name,
+                    'type': aSensorType[1],
+                    'location': it.data.location,
+                    'dataProvider': it.data.dataProvider,
+                    'observed': this.convertToDate(it.data.observed),
+                    'timestamp': this.convertToDate(it.timestamp),
+                    'index': index,
+                    'selected': false,
+                    'source': obj.sourceId,
+                    'KPIs': this.addKPIsBySensor(aSensorType[1])
                   }
+                  index = index + 1
+                  // sensores.push(itemSensor)
+
+                  itemSensors.sensors.push(itemSensor)
+                  var featuresItem = {
+                    'type': 'Feature',
+                    'properties': {
+                      'name': it.data.name
+                    },
+                    'geometry': {
+                      'type': 'Point',
+                      'coordinates': [
+                        it.data.location.lat,
+                        it.data.location.lon
+                      ]
+                    }
+                  }
+                  features.push(featuresItem) // Object to look for location in the map
                 }
-                features.push(featuresItem) // Object to look for location in the map
               })
             })
             id_layer = id_layer + 1
@@ -743,12 +744,20 @@ export default {
         case 'Complex Station':
           icon = require('../../assets/sensors/icon_station.svg')
           break
+        case 'TideSensorObserved':
+          icon = require('../../assets/sensors/icon_tide_green.svg')
+          break
         case 'TideSensor':
+          icon = require('../../assets/sensors/icon_tide.svg')
+          break
+        case 'pixel':
           icon = require('../../assets/sensors/icon_tide.svg')
           break
         case 'Weather Sensor':
           icon = require('../../assets/sensors/icon_solar.svg')
           break
+        default:
+          icon = require('../../assets/sensors/icon_tide.svg')
       }
       return icon
     },
