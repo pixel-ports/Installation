@@ -5,6 +5,7 @@ RUN openssl dhparam -out /etc/ssl/dhparam.pem 2048
 COPY default.conf /etc/nginx/conf.d/default.conf.template
 COPY cors.conf /etc/nginx/conf.d/cors.include
 COPY docker_entrypoint.sh /docker_entrypoint.sh
+COPY nginx.conf /etc/nginx/nginx.conf
 COPY pixel.internal.crt /etc/ssl/fullchain.pem
 COPY pixel.privatekey.pem /etc/ssl/privkey.pem
 RUN chmod u+rx /docker_entrypoint.sh

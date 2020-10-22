@@ -238,6 +238,43 @@ Inquisitor      .............   Done
 ```
 
 
+
+#### Dashboard config
+
+Now you must create the OAUTH APP, the user and roles that will use the dashboard. This has to be done manually for now, it is expected to be automated in the future. To create these applications you must access to KeyRock so you can access directly if you have access to the IP and KeyRock port of the CORE machine or if not you must start and finish the installation of [Public Components](../public/README.md) and continue here (this way we can access to https://id.EXAMPLE.pixel-ports.eu and create the dashboard configuration correctly)
+
+1 - We created the new application from the KeyRock interface
+
+![1](../../dashboard-config-1.png)
+
+2 - We fill out the form as shown in the image substituting our domain
+
+![2](../../dashboard-config-2.png)
+
+3 - We give you to add roles
+
+![3](../../dashboard-config-3.png)
+
+4 - We add the roles `viewer` and `admin` 
+
+![4](../../dashboard-config-4.png)
+
+5 - We create the admin user for the API and give him administration permissions
+
+![5](../../dashboard-config-5.png)
+
+![5.2](../../dashboard-config-5.2.png)
+
+6 - We set the client OAUTH as you see in the image and note Client_ID and Client_SECRET
+
+![6](../../dashboard-config-6.png)
+
+7 - We added the admin user to the app with all roles
+
+![7](../../dashboard-config-7.png)
+
+Edit `.env` again with the client_ID and CLient_KEY from step 6 and the user PIXEL_DASHBOARD_ADMIN_EMAIL from step 5. Edit `./secrets/dashboard.admin.secret` with the password from step 5 and run `./build.sh` and `./install.sh`
+
 # Update the host
 
 The process is simple

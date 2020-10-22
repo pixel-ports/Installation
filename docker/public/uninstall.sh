@@ -1,10 +1,10 @@
-read -p "Are you sure ? Everything will be unistall (Y)es / (N)o : " -n 1 -r
+read -p "Are you sure ? Everything will be uninstall (Y)es / (N)o : " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    echo unistall will start in 10s (Ctrl+C to cancel)
+    echo 'uninstall will start in 10s (Ctrl+C to cancel)'
     sleep 10
-    echo Unistall ...
+    echo Uninstall ...
     echo ... Stoping containers
     docker-compose -f docker-compose.yaml stop
     echo ... Removing containers

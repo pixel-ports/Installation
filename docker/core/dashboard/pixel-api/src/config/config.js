@@ -1,4 +1,6 @@
 const config = {};
+const fs = require('fs'); 
+const ADMIN_SECRET_FILE = fs.readFileSync(process.env.ADMIN_SECRET_FILE, {encoding:'utf8', flag:'r'}); 
 
 config.LOGS_DIR = process.env.LOGS_DIR || 'logs';
 config.PORT = process.env.PORT || 3000;
@@ -18,7 +20,7 @@ config.fiware = {};
 config.fiware.IDM_URL = process.env.IDM_URL || 'https://id.pixel-ports.eu';
 config.fiware.KEYROCK_CLIENT_ID =
   process.env.KEYROCK_CLIENT_ID || '820c5bce-b85f-465f-8523-2926b27c10d7';
-config.fiware.ADMIN_SECRET = process.env.ADMIN_SECRET || 'admin';
+config.fiware.ADMIN_SECRET = ADMIN_SECRET_FILE || 'admin';
 config.fiware.ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@pixel-ports.eu';
 
 /**

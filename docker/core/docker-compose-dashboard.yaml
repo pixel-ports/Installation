@@ -42,10 +42,12 @@ services:
       NODE_ENV: production
       MONGO_URL: "mongodb://dashboard-api-db/pixel-db"
       IDM_URL: "https://id${PIXEL_INTERNAL_DOMAIN}"
-      KEYROCK_CLIENT_ID: "9acce31d-ad4d-41eb-ad42-8ccdd4d32999"
+      KEYROCK_CLIENT_ID: "${PIXEL_CLIENT_ID}"
       NODE_TLS_REJECT_UNAUTHORIZED: 0
-      ADMIN_EMAIL: "dashboard-admin-api@pixel-ports.eu"
-      ADMIN_SECRET: "8ccdd4d32999"
+      ADMIN_EMAIL: "${PIXEL_DASHBOARD_ADMIN_EMAIL}"
+      ADMIN_SECRET_FILE: "/run/secrets/dashboard.admin.secret"
+    secrets:
+      - dashboard.admin.secret
     depends_on:
       - dashboard-api-db
     ports:
@@ -116,3 +118,6 @@ services:
         ipv4_address: 172.24.1.27
 volumes:
   dashboard-api-db:
+secrets:
+  dashboard.admin.secret:
+    file: ./secrets/dashboard.admin.secret
