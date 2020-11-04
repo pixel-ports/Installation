@@ -22,6 +22,7 @@ config.fiware.KEYROCK_CLIENT_ID =
   process.env.KEYROCK_CLIENT_ID || '820c5bce-b85f-465f-8523-2926b27c10d7';
 config.fiware.ADMIN_SECRET = ADMIN_SECRET_FILE || 'admin';
 config.fiware.ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@pixel-ports.eu';
+config.fiware.ADMIN_SECRET = config.fiware.ADMIN_SECRET.trim()
 
 /**
  * alerts
