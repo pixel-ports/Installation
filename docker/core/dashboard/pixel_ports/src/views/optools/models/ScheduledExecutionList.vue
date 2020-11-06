@@ -529,80 +529,84 @@ export default {
       this.initialDataForm.user = null
       // Start input section
       this.modelRef.generalInfo.input.forEach(input => {
-        var itemInput = {
-          'name': input.name,
-          'category': input.supportedConnectors[0],
-          'type': input.type,
-          'description': input.description,
-          'metadata': {},
-          'options': []
-        }
-        this.initialDataForm.input.push(itemInput)
-        var connectors = this.AddElementConnectors(input.supportedConnectors[0])
+        var itemInput = JSON.parse(JSON.stringify(input));
+		var cat = input.supportedConnectors && input.supportedConnectors.length ? input.supportedConnectors[0] : null
+		itemInput.category = cat
+		itemInput.metadata = {}
+		itemInput.metadata.usage = "optional, future use or extra logic for each model, no specific structure"
+		itemInput.options = []
+
+
+        input.options.forEach(options => {
+		          var itemOption = options
+                  itemOption.value = ''
+          itemInput.options.push(itemOption)
+        })
+		
+	    var connectors = this.AddElementConnectors(cat)
         connectors.forEach(conn => {
           itemInput.options.push(conn)
         })
-        input.options.forEach(options => {
-          var itemOption = {
-            'name': options.name,
-            'type': options.type,
-            'description': options.description,
-            'value': ''
-          }
-          itemInput.options.push(itemOption)
-        })
+		
+		this.initialDataForm.input.push(itemInput)
       })
       // End input section
       // Start output section
       this.modelRef.generalInfo.output.forEach(output => {
-        var itemOutput = {
-          'name': output.name,
-          'category': output.supportedConnectors[0],
-          'type': output.type,
-          'description': output.description,
-          'metadata': {},
-          'options': []
-        }
-        this.initialDataForm.output.push(itemOutput)
-        var connectors = this.AddElementConnectors(output.supportedConnectors[0])
+
+			  var itemOutput = JSON.parse(JSON.stringify(output));
+
+			  var cat = output.supportedConnectors && output.supportedConnectors.length ? output.supportedConnectors[0] : null
+		
+	  		itemOutput.category = cat
+		itemOutput.metadata = {}
+		itemOutput.metadata.usage = "optional, future use or extra logic for each model, no specific structure"
+		itemOutput.options = []
+	  
+	  
+
+
+        output.options.forEach(options => {
+		          var itemOption = options
+                  itemOption.value = ''
+  
+          itemOutput.options.push(itemOption)
+        })
+		
+		var connectors = this.AddElementConnectors(cat)
         connectors.forEach(conn => {
           itemOutput.options.push(conn)
         })
-        output.options.forEach(options => {
-          var itemOption = {
-            'name': options.name,
-            'type': options.type,
-            'description': options.description,
-            'value': ''
-          }
-          itemOutput.options.push(itemOption)
-        })
+		
+		this.initialDataForm.output.push(itemOutput)
       })
       // End output section
       // Start logging section
+	  	  if(!this.modelRef.generalInfo.logging){
+	  this.modelRef.generalInfo.logging = []
+	  }
       this.modelRef.generalInfo.logging.forEach(logging => {
-        var itemLogging = {
-          'name': logging.name,
-          'category': logging.supportedConnectors[0],
-          'type': logging.type,
-          'description': logging.description,
-          'metadata': {},
-          'options': []
-        }
-        this.initialDataForm.logging.push(itemLogging)
-        var connectors = this.AddElementConnectors(logging.supportedConnectors[0])
+	    var itemLogging = JSON.parse(JSON.stringify(logging));
+	
+		var cat = logging.supportedConnectors && logging.supportedConnectors.length ? logging.supportedConnectors[0] : null
+		itemLogging.category = cat
+		itemLogging.metadata = {}
+		itemLogging.metadata.usage = "optional"
+		itemLogging.options = []
+
+
+        logging.options.forEach(options => {
+		          var itemOption = options
+                  itemOption.value = ''
+          itemLogging.options.push(itemOption)
+        })
+		
+		var connectors = this.AddElementConnectors(cat)
         connectors.forEach(conn => {
           itemLogging.options.push(conn)
         })
-        logging.options.forEach(options => {
-          var itemOption = {
-            'name': options.name,
-            'type': options.type,
-            'description': options.description,
-            'value': ''
-          }
-          itemLogging.options.push(itemOption)
-        })
+		
+		this.initialDataForm.logging.push(itemLogging)
       })
       // End logging section
       this.initialDataForm.creation = 0
@@ -620,13 +624,8 @@ export default {
       this.modelRef.generalInfo.system.connectors.forEach(connector => {
         if (connector.type === itemConnector) {
           connector.options.forEach(option => {
-            var item = {
-              'name': option.name,
-              'type': option.type,
-              'description': option.description,
-              'required': option.required,
-              'value': ''
-            }
+		          var item = option
+                  item.value = ''
             connectors.push(item)
           })
         }
