@@ -21,7 +21,8 @@ router.put(
         'external-system',
         'air-model',
         'noise-model',
-        'traffic-model'
+        'traffic-model',
+        'traffic-model-upv'
       ])
   ],
   util.sendValidations,
@@ -38,7 +39,8 @@ router.post(
       'external-system',
       'air-model',
       'noise-model',
-      'traffic-model'
+      'traffic-model',
+      'traffic-model-upv'
     ])
   ],
   util.sendValidations,

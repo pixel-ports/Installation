@@ -16,7 +16,7 @@
         </el-card>
       </el-col>
     </el-row>
-    <el-dialog v-if="chartProperties != null" title="Title" width="85%" :visible.sync="dialogCompleteSerie" hide-overlay transition="dialog-bottom-transition">
+    <el-dialog v-if="chartProperties != null" :title="chartProperties.title" width="85%" :visible.sync="dialogCompleteSerie" hide-overlay transition="dialog-bottom-transition">
       <component :is="chartProperties.type" :definition="chartProperties.definition" :filtered="chartProperties.filter" style="height: 600px;" />
     </el-dialog>
   </div>
@@ -42,6 +42,8 @@ import CustomIframe from '@/components/widget/custom/CustomIframe'
 import GanttElastic from '@/components/widget/custom/GanttElastic'
 import MapDispersion from '@/components/widget/custom/DispersionMap'
 import MapNoise from '@/components/widget/custom/NoiseMap'
+import TrafficMapUpv from '@/components/widget/custom/TrafficMapUpv'
+import EchartLineTrafficUpv from '@/components/widget/echart/EchartLine_trafficUpv'
 
 export default {
   name: 'Overview',
@@ -63,7 +65,9 @@ export default {
     EchartPieSensor,
     MapSensor,
     MapDispersion,
-    MapNoise
+    MapNoise,
+    TrafficMapUpv: TrafficMapUpv,
+    EchartLineTrafficUpv
   },
   props: {},
   data() {

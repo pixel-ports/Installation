@@ -85,7 +85,9 @@
     "vuedraggable": "2.20.0",
     "vuex": "3.1.0",
     "xlsx": "0.14.1",
-    "xml2js": "^0.4.23"
+    "xml2js": "^0.4.23",
+    "leaflet.markercluster": "^1.4.1",
+    "leaflet.markercluster.layersupport": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "7.0.0",
