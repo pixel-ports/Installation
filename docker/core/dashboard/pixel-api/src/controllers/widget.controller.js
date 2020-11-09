@@ -33,7 +33,10 @@ router.put(
         'echartPie-sensor',
         'map-sensor',
         'map-dispersion',
-        'map-noise'
+        'map-noise',
+        'echartLine-traffic-upv',
+        'table-traffic-upv',
+        'traffic-map-upv'
       ]),
     check('source')
       .optional({ checkFalsy: true })
@@ -45,7 +48,8 @@ router.put(
         'external-system',
         'air-model',
         'noise-model',
-        'traffic-model'
+        'traffic-model',
+        'traffic-model-upv'
       ])
   ],
   util.sendValidations,
@@ -73,7 +77,10 @@ router.post(
       'echartPie-sensor',
       'map-sensor',
       'map-dispersion',
-      'map-noise'
+      'map-noise',
+      'echartLine-traffic-upv',
+      'table-traffic-upv',
+      'traffic-map-upv'
     ]),
     check('source').isIn([
       'algorithm-pa',
@@ -83,7 +90,8 @@ router.post(
       'external-system',
       'air-model',
       'noise-model',
-      'traffic-model'
+      'traffic-model',
+      'traffic-model-upv'
     ])
   ],
   util.sendValidations,

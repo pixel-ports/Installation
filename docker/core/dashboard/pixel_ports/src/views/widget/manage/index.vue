@@ -196,11 +196,17 @@
                     </el-card>
                   </div>
                 </el-col>-->
-
                 <el-col v-if="trafficIndex" :span="8">
                   <div @click="selectSource = 'traffic-model'">
                     <el-card :header="$t('widget.trafficModel')" :class="{'selected-card': selectSource == 'traffic-model'}" shadow="hover" center>
                       {{ $t('widget.trafficModelDescription') }}
+                    </el-card>
+                  </div>
+                </el-col>
+                <el-col :span="8">
+                  <div @click="selectSource = 'traffic-model-upv'">
+                    <el-card :header="$t('widget.trafficModelUPV')" :class="{'selected-card': selectSource == 'traffic-model-upv'}" shadow="hover" center>
+                      {{ $t('widget.trafficModelDescriptionUPV') }}
                     </el-card>
                   </div>
                 </el-col>
@@ -243,7 +249,7 @@
               <el-col v-for="widget in widgetTemplateTypeOptions" :key="widget.key" :xs="24" :sm="12" :lg="8">
                 <div @click="selectTypeWidget = widget.key">
                   <el-card :header="widget.key" shadow="always" :class="{'selected-card': selectTypeWidget == widget.key}">
-                    <component :is="widget.key" style="height: 150px;" />
+                    <component :is="widget.key" style="height: 150px" />
                   </el-card>
                 </div>
               </el-col>
@@ -334,6 +340,30 @@
               </el-col>
             </el-row>
 
+            <el-row v-if="selectSource == 'traffic-model-upv'" :gutter="20">
+              <!-- <el-col :xs="24" :sm="12" :lg="8">
+                <div @click="selectTypeWidget = 'table-traffic-upv'">
+                  <el-card :header="$t('table')" shadow="always" :class="{'selected-card': selectTypeWidget == 'table-traffic-upv'}">
+                    <TableTrafficUPV style="height: 150px;" />
+                  </el-card>
+                </div>
+              </el-col> -->
+              <el-col :xs="24" :sm="12" :lg="8">
+                <div @click="selectTypeWidget = 'echartLine-traffic-upv'">
+                  <el-card :header="$t('widget.lineChart')" shadow="always" :class="{'selected-card': selectTypeWidget == 'echartLine-traffic-upv'}">
+                    <EchartLineTrafficUpv style="height: 150px;" />
+                  </el-card>
+                </div>
+              </el-col>
+              <el-col :xs="24" :sm="12" :lg="8">
+                <div @click="selectTypeWidget = 'traffic-map-upv'">
+                  <el-card :header="$t('widget.mapGates')" shadow="always" :class="{'selected-card': selectTypeWidget == 'traffic-map-upv'}">
+                    <TrafficMapUpv style="height: 150px;" />
+                  </el-card>
+                </div>
+              </el-col>
+            </el-row>
+
           </el-row>
 
           <el-row v-if="active == 2">
@@ -349,6 +379,14 @@
             <el-row v-if="selectSource == 'model-pas'" :gutter="20">
               <el-col :span="24">
                 <el-card>
+                  <!-- <el-radio v-model="showRowsAs" border label="ships">Ships</el-radio>
+                  <el-radio v-model="showRowsAs" border label="docks">Docks</el-radio> -->
+                  <span style="padding-right: 10px">{{ $t('widget.rowsAs') }}</span>
+                  <el-radio-group v-model="showRowsAs" size="medium">
+                    <el-radio-button label="docks" />
+                    <el-radio-button label="ships" />
+                  </el-radio-group>
+                  <el-divider />
                   <el-table
                     ref="multipleTable"
                     :data="tableData"
@@ -443,6 +481,36 @@
                       />
                     </el-select>
                   </div>
+                </el-card>
+              </el-col>
+            </el-row>
+
+            <el-row v-if="selectSource == 'traffic-model-upv'" :gutter="20">
+              <el-col :span="24">
+                <el-card>
+                  <el-form ref="formTrafficUPV" :model="formTrafficUPV" label-position="left" label-width="200px">
+                    <div v-if="selectTypeWidget === 'table-traffic-upv' || selectTypeWidget === 'echartLine-traffic-upv'">
+                      <el-form-item :label="$t('widget.numOfGates')">
+                        <el-input-number v-model="formTrafficUPV.numOfGates" :min="0" size="medium" @change="handleNumOfGatesChange" />
+                      </el-form-item>
+                    </div>
+                    <div v-if="selectTypeWidget === 'traffic-map-upv' || selectTypeWidget === 'echartLine-traffic-upv'">
+                      <el-form-item :label="$t('widget.lowerThreshold')">
+                        <el-input-number v-model="formTrafficUPV.lowerThreshold" :min="0" size="medium" @change="handleLowerThresholdChange" />
+                      </el-form-item>
+                      <el-form-item :label="$t('widget.upperThreshold')">
+                        <el-input-number v-model="formTrafficUPV.upperThreshold" :min="formTrafficUPV.lowerThreshold" size="medium" @change="handleUpperThresholdChange" />
+                      </el-form-item>
+                    </div>
+                    <div v-if="selectTypeWidget === 'echartLine-traffic-upv'">
+                      <el-form-item :label="$t('widget.trafficParam')">
+                        <el-radio-group v-model="formTrafficUPV.trafficParam" size="medium">
+                          <el-radio-button label="speed">{{ $t('widget.speed') }}</el-radio-button>
+                          <el-radio-button label="intensity">{{ $t('widget.intensity') }}</el-radio-button>
+                        </el-radio-group>
+                      </el-form-item>
+                    </div>
+                  </el-form>
                 </el-card>
               </el-col>
             </el-row>
@@ -543,7 +611,7 @@
         <el-button
           v-else
           type="primary"
-          :disabled="(active == 2 && selectSource == 'model-pas' && !multipleSelection.length) || (active == 2 && selectSource == 'real-time' && selectTypeWidget !== 'map-sensor' && !multipleSensorSelected.length) || (active == 2 && selectSource == 'real-time' && selectTypeWidget === 'map-sensor' && !typeSourceForMapSensor.length) || (active == 2 && selectSource == 'air-model' && selectTypeWidget === 'map-dispersion' && !idForAirDispersionModel.length) || (active == 2 && selectSource == 'traffic-model' && (!idForTrafficModel || ( !visualizationTypeForTrafficModel && selectTypeWidget !== 'table-traffic')))"
+          :disabled="keepDisabled"
           @click="dialogStatus==='create'?createData():updateData()"
         >
           {{ $t('widget.buttonDone') }}
@@ -566,13 +634,16 @@ import EchartBar from '@/components/widget/echart/EchartBar'
 import EchartBarSensor from '@/components/widget/echart/EchartBar_sensor'
 import EchartLineSensor from '@/components/widget/echart/EchartLine_sensor'
 import EchartLineTraffic from '@/components/widget/echart/EchartLine_traffic'
+import EchartLineTrafficUpv from '@/components/widget/echart/EchartLine_trafficUpv'
 import EchartPieSensor from '@/components/widget/echart/EchartPie_sensor'
 import CustomIframe from '@/components/widget/custom/CustomIframe'
 import TableEtd from '@/components/widget/custom/TableEtd'
 import TableSensors from '@/components/widget/custom/TableSensors'
 import TableTraffic from '@/components/widget/custom/TableTraffic'
+import TableTrafficUpv from '@/components/widget/custom/TableTrafficUpv'
 import TableExternalSystem from '@/components/widget/custom/TableExternalSystem'
 import MapSensor from '@/components/widget/custom/Map'
+import TrafficMapUpv from '@/components/widget/custom/TrafficMapUpv'
 import GanttBarEtd from '@/components/widget/echart/GanttBarEtd'
 import GanttBarPas from '@/components/widget/echart/GanttBarPas'
 import MapDispersion from '@/components/widget/custom/DispersionMap'
@@ -598,13 +669,16 @@ export default {
     TableEtd,
     TableSensors,
     TableTraffic,
+    TableTrafficUpv,
     TableExternalSystem,
     EchartBarSensor,
     EchartLineSensor,
     EchartLineTraffic,
+    EchartLineTrafficUpv,
     EchartPieSensor,
     MapSensor,
     MapDispersion,
+    TrafficMapUpv,
     MapNoise
   },
   directives: { waves },
@@ -624,7 +698,7 @@ export default {
       multipleSelection: [],
       multipleSensorSelected: [],
       formValues: null,
-      formValuesDefinition: null,
+      // formValuesDefinition: null,
       formConfig: null,
       widgetTemplateTypeOptions: null,
       widgetTemplateSourceOptions: null,
@@ -651,7 +725,23 @@ export default {
       visualizationTypeForTrafficModel: '',
       devices: [],
       trafficVisualizations: pixelConstants.TYPE_OF_TRAFFIC_VISUALIZATION,
-      trafficIndex: false
+      trafficIndex: false,
+      showRowsAs: 'docks',
+      formTrafficUPV: {
+        numOfGates: null,
+        lowerThreshold: 0,
+        upperThreshold: 0,
+        trafficParam: null
+      }
+    }
+  },
+  computed: {
+    keepDisabled() {
+      if ((this.selectSource === 'model-pas' && !this.multipleSelection.length) || (this.selectSource === 'real-time' && this.selectTypeWidget !== 'map-sensor' && !this.multipleSensorSelected.length) || (this.selectSource === 'real-time' && this.selectTypeWidget === 'map-sensor' && !this.typeSourceForMapSensor.length) || (this.selectSource === 'air-model' && this.selectTypeWidget === 'map-dispersion' && !this.idForAirDispersionModel.length) || (this.selectSource === 'traffic-model' && (!this.idForTrafficModel || (!this.visualizationTypeForTrafficModel && this.selectTypeWidget !== 'table-traffic'))) || (this.selectSource === 'traffic-model-upv' && (this.selectTypeWidget === 'traffic-map-upv' && (!this.formTrafficUPV.lowerThreshold || !this.formTrafficUPV.upperThreshold))) || (this.selectTypeWidget === 'echartLine-traffic-upv' && (!this.formTrafficUPV.numOfGates || !this.formTrafficUPV.lowerThreshold || !this.formTrafficUPV.upperThreshold || !this.formTrafficUPV.trafficParam)) || (this.selectTypeWidget === 'table-traffic-upv' && !this.formTrafficUPV.trafficParam)) {
+        return true
+      } else {
+        return false
+      }
     }
   },
   created() {
@@ -665,13 +755,27 @@ export default {
     this.existTraficIndex('trafficmodel')
   },
   methods: {
+    handleNumOfGatesChange(val) {
+      this.formTrafficUPV.numOfGates = val
+    },
+    handleLowerThresholdChange(val) {
+      this.formTrafficUPV.lowerThreshold = val
+      if (this.formTrafficUPV.upperThreshold < val) {
+        this.formTrafficUPV.upperThreshold = val
+      }
+    },
+    handleUpperThresholdChange(val) {
+      if (this.formTrafficUPV.lowerThreshold <= val) {
+        this.formTrafficUPV.upperThreshold = val
+      }
+    },
     existTraficIndex(indexName) {
       existIndex(indexName).then(response => {
         this.trafficIndex = true
         console.log('EXISTE')
-      }).catch(() => {
+      }).catch(err => {
         this.trafficIndex = false
-        console.log('NO EXISTE')
+        console.log('NO EXISTE', err)
       })
     },
     selectSourceForMap(value) {
@@ -740,20 +844,18 @@ export default {
               // console.log(response)
               var index = 0
               response.forEach(it => {
-                if (it.data.location) {
-                  var itemSensor = {
-                    'name': it.data.name,
-                    'location': it.data.location,
-                    'dataProvider': it.data.dataProvider,
-                    'observed': this.convertToDate(it.data.observed),
-                    'timestamp': this.convertToDate(it.timestamp),
-                    'index': index,
-                    'selected': false
-                  }
-                  index = index + 1
-                  // sensores.push(itemSensor)
-                  itemSensors.sensors.push(itemSensor)
+                var itemSensor = {
+                  'name': it.data.name,
+                  'location': it.data.location,
+                  'dataProvider': it.data.dataProvider,
+                  'observed': this.convertToDate(it.data.observed),
+                  'timestamp': this.convertToDate(it.timestamp),
+                  'index': index,
+                  'selected': false
                 }
+                index = index + 1
+                // sensores.push(itemSensor)
+                itemSensors.sensors.push(itemSensor)
               })
             })
             this.sensorsCollection.push(itemSensors)
@@ -802,13 +904,20 @@ export default {
             this.getInstances(data.id)
           }
         })
+        // this.tableData.push({
+        //   modelId: 'hard1',
+        //   executionId: 'hard1',
+        //   date: new Date(),
+        //   name: 'Valid data'
+        // })
+      }).catch(
         this.tableData.push({
           modelId: 'hard1',
           executionId: 'hard1',
           date: new Date(),
-          name: 'Valid data'
+          name: 'Invalid data(catch loop)'
         })
-      })
+      )
     },
     getInstances(modelId) {
       getInstancesByIdRef({
@@ -859,6 +968,7 @@ export default {
       widgetTemplateFetchList().then(response => {
         this.formConfig = response.data
         this.widgetTemplateTypeOptions = this.formatTypeWidgetTemplate()
+        // console.log(this.widgetTemplateTypeOptions)
         this.widgetTemplateSourceOptions = this.formatSourceWidgetTemplate()
       })
     },
@@ -931,7 +1041,7 @@ export default {
 
         this.$notify({
           title: 'Success',
-          message: 'Update Successfully',
+          message: this.$t('common.updateSuccessfull'),
           type: 'success',
           duration: 2000
         })
@@ -955,7 +1065,7 @@ export default {
 
         this.$notify({
           title: 'Success',
-          message: 'Update Successfully',
+          message: this.$t('common.updateSuccessfull'),
           type: 'success',
           duration: 2000
         })
@@ -968,16 +1078,21 @@ export default {
       this.multipleSelection = []
       this.multipleSensorSelected = []
       this.formValues = null
-      // added by Nacho
       this.typeSource = ''
       this.visualizationTypeForTrafficModel = ''
       this.idForTrafficModel = ''
       this.typeSourceForMapSensor = []
       this.idForAirDispersionModel = ''
+      this.formTrafficUPV = {
+        numOfGates: null,
+        lowerThreshold: 0,
+        upperThreshold: 0,
+        trafficParam: null
+      }
     },
     handleCreate() {
       console.log('ORIGINAL')
-      console.log(this.originalStateSensors)
+      // console.log(this.originalStateSensors)
       this.resetTemp()
       this.sensorsCollection = this.originalStateSensors
       this.dialogStatus = 'create'
@@ -996,13 +1111,16 @@ export default {
         if (values.source === 'model-pas') {
           values.filter = {}
           values.filter.id = this.multipleSelection
+          values.filter.showRowsAs = this.showRowsAs
         }
 
         if (values.source === 'real-time' && values.type !== 'map-sensor') {
           values.filter = {}
           values.filter.id = this.multipleSensorSelected
           values.filter.start = this.formValues.filter$start
+          console.log(this.formValues.filter$start)
           values.filter.end = this.formValues.filter$end
+          console.log(this.formValues.filter$end)
           values.filter.source = this.typeSource
         }
 
@@ -1012,6 +1130,17 @@ export default {
           values.filter.trafficType = this.visualizationTypeForTrafficModel
           values.filter.trafficId = this.idForTrafficModel
         }
+
+        if (values.source === 'traffic-model-upv') {
+          values.filter = {}
+          values.filter.formTrafficUPV = this.formTrafficUPV
+        }
+
+        // if (values.source === 'traffic-model-upv' && values.type === 'echartLine-traffic-upv') {
+        //   console.log(this.formTrafficUPV)
+        //   values.filter = {}
+        //   values.filter.formTrafficUPV = this.formTrafficUPV
+        // }
 
         if (values.type === 'echartPie-sensor') {
           values.filter.wrongValue = this.formValues.wrongValue
@@ -1052,7 +1181,7 @@ export default {
             this.list.push(data.data)
             this.$notify({
               title: 'Success',
-              message: 'Created Successfully',
+              message: this.$t('common.createdSuccessfully'),
               type: 'success',
               duration: 2000
             })
@@ -1125,7 +1254,7 @@ export default {
 
         this.$notify({
           title: 'Success',
-          message: 'Update Successfully',
+          message: this.$t('common.updateSuccessfull'),
           type: 'success',
           duration: 2000
         })
@@ -1138,7 +1267,7 @@ export default {
         this.list.splice(index, 1)
         this.$notify({
           title: 'Success',
-          message: 'Delete Successfully',
+          message: this.$t('common.deleteSucced'),
           type: 'success',
           duration: 2000
         })

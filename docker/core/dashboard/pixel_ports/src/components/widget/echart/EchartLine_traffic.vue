@@ -6,12 +6,12 @@
 <script>
 import echarts from 'echarts'
 import pixelConstants from '@/utils/constants' // import
-import { getSensors } from '@/api/dataextractor_IH'
-import { drawTitleForCharts } from '@/utils/common'
+// import { getSensors } from '@/api/dataextractor_IH'
+// import { drawTitleForCharts } from '@/utils/common'
 import { getTrafficExecutionById } from '@/api/PAS_IH'
 require('echarts/theme/macarons') // echarts theme
 import resize from '../mixins/resize'
-import { debounce } from '@/utils'
+// import { debounce } from '@/utils'
 // const animationDuration = 6000
 export default {
   mixins: [resize],
@@ -414,6 +414,7 @@ export default {
         ]
       }
       if (hasColorGradient) {
+        // adding color gradient to the chart with "visualMap"
         option.visualMap = [{
           show: false,
           type: 'piecewise',
