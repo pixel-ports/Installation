@@ -67,7 +67,7 @@ services:
       - sec_wilma_pub.proxy.username
   dal-proxy:
     restart: always
-    image: pixelh2020/dal-proxy:1.0.1
+    image: pixelh2020/dal-proxy:1.0.2
     container_name: dal-proxy
     hostname: dal-proxy
     environment:
