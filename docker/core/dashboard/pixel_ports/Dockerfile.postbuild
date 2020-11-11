@@ -1,0 +1,6 @@
+FROM pixelh2020/dashboard-pixel-ports:2.0.0
+
+COPY . .
+RUN npm run build:prod
+
+LABEL MAINTAINER jmartinez@prodevelop.es
