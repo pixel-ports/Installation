@@ -1,4 +1,4 @@
-FROM pixelh2020/dashboard-pixel-ports:2.0.0
+FROM pixelh2020/dashboard-pixel-ports:2.0.mde
 
 COPY . .
 RUN npm run build:prod
