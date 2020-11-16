@@ -11,6 +11,11 @@ RUN npm run build
 #ADD dist /api/dist
 #ADD node_modules /api/dist/node_modules
 
+RUN apk add mongodb-tools
+
+# Uncomment to init (seed) mongo database
+#RUN npm run init
+
 WORKDIR /api/dist
 
 EXPOSE 3000/tcp

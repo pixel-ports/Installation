@@ -11,7 +11,8 @@
     "lint": "eslint 'src/**/*.js' --fix",
     "format": "prettier-eslint 'src/**/*.{js,json}' --write",
     "docker-build": "npm run clean && npm run build && docker build -t pixel-api .",
-    "docker-up-dev": "npm run clean && npm run build && docker-compose up -d"
+    "docker-up-dev": "npm run clean && npm run build && docker-compose up -d",
+    "init": "mongorestore -h mongo -p 27017 seed"
   },
   "keywords": [],
   "author": "Jmartinez - ProDevelop S.L",
