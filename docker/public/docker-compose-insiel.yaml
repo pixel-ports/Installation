@@ -37,7 +37,7 @@ services:
     image: marcdespland/fiware-pep-proxy
     container_name: sec-wilma-pub
     hostname: sec-wilma-pub
-    port:
+    ports:
       - 8080:8080
     environment:
       - PEP_PROXY_AUTH_ENABLED=true
@@ -101,7 +101,7 @@ services:
     container_name: dal-orchestrator
     hostname: dal-orchestrator
     environment:
-      - SCHEMA_REPOSITORY_URL=http://schemas${PIXEL_INTERNAL_DOMAIN}
+      - SCHEMA_REPOSITORY_URL=http://schemas${PXEL_INTERNAL_DOMAIN}
       - SCHEMA_REPOSITORY=/opt/schemas
       - NGSIAGENT_NETWORK=public_dal_agents
       - NGSIAGENT_KEY=pixel
