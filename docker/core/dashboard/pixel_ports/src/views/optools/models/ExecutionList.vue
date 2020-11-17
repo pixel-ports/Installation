@@ -54,14 +54,14 @@
                 </i>
               </el-button>
             </router-link>-->
-            <router-link v-if="$route.name.includes('Predictive Algorithm')" :to="{name:'opToolsView', params: {id: refId, executionId: row.id}}">
+            <!--<router-link v-if="$route.name.includes('Predictive Algorithm')" :to="{name:'opToolsView', params: {id: refId, executionId: row.id}}">
               <el-button size="small" class="viewBtn">
                 <i class="el-icon-view">
                   {{ $t('executionsList.viewResult') }}
                 </i>
               </el-button>
             </router-link>
-            <span style="padding-left:10px" />
+            <span style="padding-left:10px" />-->
             <el-button size="small" class="deleteBtn" :disabled="row.otStatus=='running'" @click="deleteExecution(row.id)">
               <i class="el-icon-delete-solid">
                 {{ $t('models.deleteModel') }}
@@ -409,10 +409,17 @@ export default {
 		itemInput.metadata.usage = "optional, future use or extra logic for each model, no specific structure"
 		itemInput.options = []
 
-
         input.options.forEach(options => {
-		          var itemOption = options
-                  itemOption.value = ''
+		          //var itemOption = options
+              //  itemOption.value = ''
+          //Corrijo esto despues de mi vuelta.
+          var itemOption = {
+            'name': options.name,
+            'type': options.type,
+            'description': options.description,
+            'required': options.required,
+            'value': ''
+          }
           itemInput.options.push(itemOption)
         })
 		
@@ -441,9 +448,16 @@ export default {
 
 
         output.options.forEach(options => {
-		          var itemOption = options
-                  itemOption.value = ''
-  
+		          //var itemOption = options
+              //    itemOption.value = ''
+          //Corrijo esto despues de mi vuelta.
+          var itemOption = {
+            'name': options.name,
+            'type': options.type,
+            'description': options.description,
+            'required': options.required,
+            'value': ''
+          }
           itemOutput.options.push(itemOption)
         })
 		
@@ -470,8 +484,17 @@ export default {
 
 
         logging.options.forEach(options => {
-		          var itemOption = options
-                  itemOption.value = ''
+          //Corregido a mi vuelta
+          var itemOption = {
+            'name': options.name,
+            'type': options.type,
+            'description': options.description,
+            'required': options.required,
+            // 'pattern': options.pattern,
+            'value': ''
+          }
+		          //var itemOption = options
+                //  itemOption.value = ''
           itemLogging.options.push(itemOption)
         })
 		
@@ -496,8 +519,16 @@ export default {
       this.modelRef.generalInfo.system.connectors.forEach(connector => {
         if (connector.type === itemConnector) {
           connector.options.forEach(option => {
-		          var item = option
-                  item.value = ''
+		          //var item = option
+              //    item.value = ''
+            //Corrijo esto despues de mi vuelta.
+            var item = {
+              'name': option.name,
+              'type': option.type,
+              'description': option.description,
+              'required': option.required,
+              'value': ''
+            }
             connectors.push(item)
           })
         }
@@ -652,6 +683,21 @@ export default {
         })
       })
     },
+    deleteSupportedConnectors_And_Required() {
+      this.dataForm.input.forEach(input => {
+        delete input['supportedConnectors']
+        delete input['required']
+      })
+      this.dataForm.output.forEach(output => {
+        delete output['supportedConnectors']
+        delete output['required']
+      })
+      this.dataForm.logging.forEach(logging => {
+        delete logging['supportedConnectors']
+        delete logging['required']
+        delete logging['verbose']//only for logging
+      })
+    },
     deleteRequired() {
       this.dataForm.input.forEach(input => {
         input.options.forEach(option => {
@@ -677,6 +723,7 @@ export default {
           this.convertNumber()
           // this.convertHeaders()
           this.deleteRequired()
+          this.deleteSupportedConnectors_And_Required()//added
           console.log('Instance')
           console.log(this.dataForm)
           addInstance(this.dataForm).then(response => {

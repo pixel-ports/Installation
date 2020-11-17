@@ -538,8 +538,15 @@ export default {
 
 
         input.options.forEach(options => {
-		          var itemOption = options
-                  itemOption.value = ''
+          //Corregido a mi vuelta
+          var itemOption = {
+            'name': options.name,
+            'type': options.type,
+            'description': options.description,
+            'value': ''
+          }
+		          //var itemOption = options
+                //  itemOption.value = ''
           itemInput.options.push(itemOption)
         })
 		
@@ -567,8 +574,15 @@ export default {
 
 
         output.options.forEach(options => {
-		          var itemOption = options
-                  itemOption.value = ''
+          //Corregido a mi vuelta
+          var itemOption = {
+            'name': options.name,
+            'type': options.type,
+            'description': options.description,
+            'value': ''
+          }
+		          //var itemOption = options
+                //  itemOption.value = ''
   
           itemOutput.options.push(itemOption)
         })
@@ -596,8 +610,15 @@ export default {
 
 
         logging.options.forEach(options => {
-		          var itemOption = options
-                  itemOption.value = ''
+          //Corregido a mi vuelta
+          var itemOption = {
+            'name': options.name,
+            'type': options.type,
+            'description': options.description,
+            'value': ''
+          }
+		          //var itemOption = options
+                //  itemOption.value = ''
           itemLogging.options.push(itemOption)
         })
 		
@@ -624,8 +645,16 @@ export default {
       this.modelRef.generalInfo.system.connectors.forEach(connector => {
         if (connector.type === itemConnector) {
           connector.options.forEach(option => {
-		          var item = option
-                  item.value = ''
+            //Corrijo a mi vuelta
+            var item = {
+              'name': option.name,
+              'type': option.type,
+              'description': option.description,
+              'required': option.required,
+              'value': ''
+            }
+		          //var item = option
+                //  item.value = ''
             connectors.push(item)
           })
         }
@@ -717,6 +746,21 @@ export default {
       delete this.dataForm.date
       delete this.dataForm.time
     },
+    deleteSupportedConnectors_And_Required() {
+      this.dataForm.input.forEach(input => {
+        delete input['supportedConnectors']
+        delete input['required']
+      })
+      this.dataForm.output.forEach(output => {
+        delete output['supportedConnectors']
+        delete output['required']
+      })
+      this.dataForm.logging.forEach(logging => {
+        delete logging['supportedConnectors']
+        delete logging['required']
+        delete logging['verbose']//only for logging
+      })
+    },
     deleteRequired() {
       this.dataForm.input.forEach(input => {
         input.options.forEach(option => {
@@ -770,6 +814,7 @@ export default {
           console.log(this.dataForm)
           // this.convertNumber()
           this.deleteRequired()
+          this.deleteSupportedConnectors_And_Required()
           // this.deleteScheduledInfo()
           addScheduledInstance(this.dataForm).then(response => {
             this.scheduledExecutionDialog = false
