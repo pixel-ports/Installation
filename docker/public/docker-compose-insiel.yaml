@@ -37,6 +37,8 @@ services:
     image: marcdespland/fiware-pep-proxy
     container_name: sec-wilma-pub
     hostname: sec-wilma-pub
+    port:
+      - 8080:8080
     environment:
       - PEP_PROXY_AUTH_ENABLED=true
       - PEP_PROXY_PUBLIC_PATHS=/public
@@ -90,12 +92,12 @@ services:
         ipv4_address: 172.43.1.2
   dal-orchestrator:
     restart: always
-    image: pixelh2020/dal-orchestrator:1.2.2
+    image: pixelh2020/dal-orchestrator:1.2.4
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/pixel/Data_Models/specs:/opt/schemas
     ports:
-      - 8080:8080
+      - 8081:8080
     container_name: dal-orchestrator
     hostname: dal-orchestrator
     environment:
