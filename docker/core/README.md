@@ -97,12 +97,20 @@ PIXEL_INTERNAL_DOMAIN=.pixel.internal
 You can now run ```hosts.install.sh```to install local hostname used for configuration
 Check ```/etc/hosts```to check the result 
 
-Then define the value for all secrets, you have to edit each files in ```./secrets``` with strong and secure value.
+ Then define the value for all secrets, 
 
-A quicker way is to use the given docker image ```pixelh2020/secrets````
+ First copy the ```secrets.template``` folder to create the ```secrets````
 
 ```
-docker run -it --rm -v ${PWD}/secrets:/app/secrets pixelh2020/secrets:1.0.0
+cp -R ./secrets.template ./secrets
+```
+ 
+ You have to edit each files in ```./secrets``` with strong and secure value.
+
+ A quicker way is to use the given docker image ```pixelh2020/secrets```` on the secrets.template folder
+
+```
+docker run -it --rm -v ${PWD}/secrets.template:/app/secrets pixelh2020/secrets:1.0.0
 ```
 
 ## Network security (if needed)

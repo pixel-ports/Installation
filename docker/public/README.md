@@ -101,12 +101,20 @@ PEP_PROXY_APP=5ff34b1c-4e41-4b2e-9085-0f52b0b1c810
 PIXEL_DOMAIN=.frbod.pixel-ports.eu
 ```
  
- Then define the value for all secrets, you have to edit each files in ```./secrets``` with strong and secure value.
+ Then define the value for all secrets, 
 
- A quicker way is to use the given docker image ```pixelh2020/secrets````
+ First copy the ```secrets.template``` folder to create the ```secrets````
 
 ```
-docker run -it --rm -v ${PWD}/secrets:/app/secrets pixelh2020/secrets:1.0.0
+cp -R ./secrets.template ./secrets
+```
+ 
+ You have to edit each files in ```./secrets``` with strong and secure value.
+
+ A quicker way is to use the given docker image ```pixelh2020/secrets```` on the secrets.template folder
+
+```
+docker run -it --rm -v ${PWD}/secrets.template:/app/secrets pixelh2020/secrets:1.0.0
 ```
 
 But some secrets need a specifics value from [DAL-Provisioning](../core/README.md#DAL-Provisioning)
