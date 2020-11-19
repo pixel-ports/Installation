@@ -1,23 +1,4 @@
-FROM node:lts-alpine
-
-RUN npm install -g http-server
-
-WORKDIR /app
-
-COPY package*.json ./
-
-RUN wget http://dl-cdn.alpinelinux.org/alpine/v3.11/main/x86_64/APKINDEX.tar.gz
-
-RUN apk add git
-
-RUN npm install
-
-COPY . .
-
+FROM pixelh2020/dashboard-pixel-ports:2.0.1
+COPY .env.production .
 RUN npm run build:prod
-
-EXPOSE 8080
-CMD [ "http-server", "dist" ]
-
-
 LABEL MAINTAINER jmartinez@prodevelop.es

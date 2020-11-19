@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_"},{"v":2,"key":{"_fts":"text","_ftsx":1},"name":"$**_text","language_override":"language","background":true,"weights":{"$**":1},"default_language":"english","textIndexVersion":3}],"uuid":"39049f9249ef4707bdfa68ca68fba016"}
