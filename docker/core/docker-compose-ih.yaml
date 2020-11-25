@@ -49,10 +49,6 @@ services:
     volumes:
       - ./ih-config:/etc/inf-hub
     extra_hosts:
-      - csco.archiving.broker:172.24.1.14
-      - csco.archiving.config:172.24.1.13
-      - csco.archiving.sts:172.24.1.11
-      - csco.archiving.lts:172.24.1.11
       - dal-orion:172.28.1.10
       - schemas.pixel.internal:172.24.1.30
     logging:
@@ -73,11 +69,6 @@ services:
       - elasticsearch
     volumes:
       - ./ih-config:/etc/inf-hub
-    extra_hosts:
-      - csco.archiving.broker:172.24.1.14
-      - csco.archiving.config:172.24.1.13
-      - csco.archiving.sts:172.24.1.11
-      - csco.archiving.lts:172.24.1.11
     logging:
       options:
         max-size: "15m"
@@ -94,11 +85,6 @@ services:
       - elasticsearch
     volumes:
       - ./ih-config:/etc/inf-hub
-    extra_hosts:
-      - csco.archiving.broker:172.24.1.14
-      - csco.archiving.config:172.24.1.13
-      - csco.archiving.sts:172.24.1.11
-      - csco.archiving.lts:172.24.1.11
     logging:
       options:
         max-size: "15m"
@@ -118,11 +104,6 @@ services:
       - elasticsearch
     volumes:
       - ./ih-config:/etc/inf-hub
-    extra_hosts:
-      - csco.archiving.broker:172.24.1.14
-      - csco.archiving.config:172.24.1.13
-      - csco.archiving.sts:172.24.1.11
-      - csco.archiving.lts:172.24.1.11
     logging:
       options:
         max-size: "15m"
@@ -140,11 +121,6 @@ services:
       - elasticsearch
     volumes:
       - ./ih-config:/etc/inf-hub
-    extra_hosts:
-      - csco.archiving.broker:172.24.1.14
-      - csco.archiving.config:172.24.1.13
-      - csco.archiving.sts:172.24.1.11
-      - csco.archiving.lts:172.24.1.11
     logging:
       options:
         max-size: "15m"
@@ -175,9 +151,6 @@ services:
       - kafka
     volumes:
       - ./ih-config:/etc/inf-hub
-    extra_hosts:
-      - csco.archiving.broker:172.24.1.14
-      - csco.archiving.config:172.24.1.13
     logging:
       options:
         max-size: "15m"
