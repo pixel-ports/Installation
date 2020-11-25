@@ -11,7 +11,7 @@
 		<!-- external hostname/IP to invoke the service (Swagger/ VUe.js UI) -->
 		<frontHost>ot${PIXEL_DOMAIN}</frontHost>
 		<frontPort>8080</frontPort>
-		<dockerSubnet>ih</dockerSubnet>
+		<dockerSubnet>core_ih</dockerSubnet>
 		<createDockerSubnet>no</createDockerSubnet>
 	</server>
 	<security>
