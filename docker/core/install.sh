@@ -12,7 +12,7 @@ wait_for_orion() {
   echo
 }
 
-docker-compose -f docker-compose.yaml -f docker-compose-elastic.yaml -f docker-compose-ih.yaml -f docker-compose-tools.yaml -f docker-compose-ot.yaml  -f docker-compose-dashboard.yaml up -d
+docker-compose -f docker-compose.yaml -f docker-compose-security.yaml -f docker-compose-elastic.yaml -f docker-compose-ih.yaml -f docker-compose-tools.yaml -f docker-compose-ot.yaml  -f docker-compose-dashboard.yaml up -d
 
 curl -s -o /dev/null http://127.0.0.1:1026/version
 if [ $? -ne 0 ]; then
