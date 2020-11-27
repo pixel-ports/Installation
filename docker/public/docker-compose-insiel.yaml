@@ -9,6 +9,8 @@ services:
     ports:
       - 80:80
       - 443:443
+      - 8090:8090
+      - 8091:8091
     extra_hosts:
       - ih.pixel.internal:10.12.182.193
     environment:
