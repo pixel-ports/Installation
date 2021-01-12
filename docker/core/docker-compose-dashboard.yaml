@@ -67,6 +67,7 @@ services:
   dashboard:
     restart: always
     container_name: dashboard
+    container_name: dashboard-alert-elastalert
     build: ./dashboard/pixel_ports/
     depends_on:
       - dashboard-api
@@ -99,8 +100,7 @@ services:
         ipv4_address: 172.24.1.26
   webapp:
     image: "praecoapp/praeco"
-    ports:
-      - "8085:8080"
+    container_name: dashboard-alert-webapp
     volumes:
       - ./dashboard/praeco/public/praeco.config.json:/var/www/html/praeco.config.json
       - ./dashboard/praeco/nginx_config/nginx.conf:/etc/nginx/nginx.conf
@@ -116,6 +116,8 @@ services:
     networks:
       ih:
         ipv4_address: 172.24.1.27
+      dash-api-db:
+        ipv4_address: 172.31.1.26
 volumes:
   dashboard-api-db:
 secrets:
