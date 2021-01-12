@@ -36,7 +36,7 @@ services:
   dashboard-api:
     restart: always
     container_name: dashboard-api
-    image: pixelh2020/dashboard-pixel-ports-api:2.0.1
+    image: pixelh2020/dashboard-pixel-ports-api:2.0.2
     command: node index.js
     environment:
       NODE_ENV: production
@@ -67,7 +67,6 @@ services:
   dashboard:
     restart: always
     container_name: dashboard
-    container_name: dashboard-alert-elastalert
     build: ./dashboard/pixel_ports/
     depends_on:
       - dashboard-api
@@ -83,6 +82,7 @@ services:
         ipv4_address: 172.25.1.28
   elastalert:
     image: "praecoapp/elastalert-server"
+    container_name: dashboard-alert-elastalert
     volumes:
       - ./dashboard/praeco/config/elastalert.yaml:/opt/elastalert/config.yaml
       - ./dashboard/praeco/config/api.config.json:/opt/elastalert-server/config/config.json
@@ -116,8 +116,8 @@ services:
     networks:
       ih:
         ipv4_address: 172.24.1.27
-      dash-api-db:
-        ipv4_address: 172.31.1.26
+      ih_public:
+        ipv4_address: 172.25.1.26
 volumes:
   dashboard-api-db:
 secrets:
