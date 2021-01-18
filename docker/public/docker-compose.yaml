@@ -90,7 +90,7 @@ services:
         ipv4_address: 172.43.1.2
   dal-orchestrator:
     restart: always
-    image: pixelh2020/dal-orchestrator:1.2.2
+    image: pixelh2020/dal-orchestrator:1.3.2
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /opt/pixel/Data_Models/specs:/opt/schemas
@@ -112,6 +112,10 @@ services:
     secrets:
       - dal.proxy.api.token
       - dal.orchestrator.api.token
+    logging:
+      options:
+        max-size: "15m"
+        max-file: "2"
     networks:
       dal:
         ipv4_address: 172.41.1.3
