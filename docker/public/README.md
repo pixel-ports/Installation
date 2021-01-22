@@ -20,7 +20,7 @@ add-apt-repository \
    $(lsb_release -cs) \
    stable"
 apt-get install -y docker-ce docker-ce-cli containerd.io
-curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+curl -L "https://github.com/docker/compose/releases/download/1.28.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 apt install -y git
 ```
@@ -215,19 +215,13 @@ dig -t txt _acme-challenge.frbod.pixel-ports.eu
 When you have the right data, press ```ENTER``` on certbot, it will generate the certificat
 
 ```
-cp live/frbod.pixel-ports.eu/fullchain.pem ../../Installation/docker/public/frontrp/
-cp live/frbod.pixel-ports.eu/privkey.pem ../../Installation/docker/public/frontrp/
+cp live/*.pixel-ports.eu/fullchain.pem ../../Installation/docker/public/frontrp/
+cp live/*.pixel-ports.eu/privkey.pem ../../Installation/docker/public/frontrp/
 ```
 
 check the dates that the certificate is valid
 ```
-openssl x509 -noout -in  /opt/pixel/LetsEncrypt/certbot/live/frbod.pixel-ports.eu/fullchain.pem -dates
-```
-When you have the right data, press ```ENTER``` on certbot, it will generate the certificat
-
-```
-cp live/frbod.pixel-ports.eu/fullchain.pem ../../Installation/docker/public/frontrp/
-cp live/frbod.pixel-ports.eu/privkey.pem ../../Installation/docker/public/frontrp/
+openssl x509 -noout -in  /opt/pixel/LetsEncrypt/certbot/live/*.pixel-ports.eu/fullchain.pem -dates
 ```
 
 ### Regenerate the certificate 
@@ -247,11 +241,15 @@ dig -t txt _acme-challenge.frbod.pixel-ports.eu
 When you have the right data, press ```ENTER``` on certbot, it will generate the certificat
 
 ```
-cp live/frbod.pixel-ports.eu/fullchain.pem ../../Installation/docker/public/frontrp/
-cp live/frbod.pixel-ports.eu/privkey.pem ../../Installation/docker/public/frontrp/
+cp live/*.pixel-ports.eu/fullchain.pem ../../Installation/docker/public/frontrp/
+cp live/*.pixel-ports.eu/privkey.pem ../../Installation/docker/public/frontrp/
 ```
 
 ## Installation
+
+```
+cd ../../Installation/docker/public/
+```
 
 First build the local images using the helper scripts (could take some times):
 ```

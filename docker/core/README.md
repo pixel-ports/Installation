@@ -20,7 +20,7 @@ add-apt-repository \
    $(lsb_release -cs) \
    stable"
 apt-get install -y docker-ce docker-ce-cli containerd.io
-curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+curl -L "https://github.com/docker/compose/releases/download/1.28.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 apt install -y git
 echo "vm.max_map_count=262144" >> /etc/sysctl.conf
@@ -42,7 +42,7 @@ yum install docker-ce docker-ce-cli containerd.io
 
 The continue the installation
 ```
-curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+curl -L "https://github.com/docker/compose/releases/download/1.28.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 yum install git
 echo "vm.max_map_count=262144" >> /etc/sysctl.conf
@@ -62,6 +62,7 @@ cd /opt/pixel
 ```
 
 Using GIT :
+A user as been created to retrieve the archive ```pixel/p1x3l```
 ```
 GIT_SSL_NO_VERIFY=false git clone https://gitpixel.satrdlab.upv.es/marc.despland/Installation.git
 ```
@@ -76,7 +77,7 @@ then go to the Core folder
 cd /opt/pixel/Installation/docker/core
 ```
 
-A user as been created to retrieve the archive ```pixel/p1x3l```
+
 
 ## Configure the scripts 
 
