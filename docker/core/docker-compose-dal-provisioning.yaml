@@ -10,7 +10,7 @@ services:
       - KEYROCK_API=http://172.26.1.6:3000
       - ORION_API=http://172.28.1.10:1026
       - DAL_INQUISITOR_API=http://172.28.1.201:8080
-      - DASHBOARD_ADMIN_PASSWORD=run/secrets/dashboard.admin.secret
+      - DASHBOARD_ADMIN_PASSWORD_FILE=/run/secrets/dashboard.admin.secret
       - PIXEL_DASHBOARD_ADMIN_EMAIL=${PIXEL_DASHBOARD_ADMIN_EMAIL}
     networks:
       dal:
