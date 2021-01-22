@@ -10,6 +10,7 @@ services:
       - KEYROCK_API=http://172.26.1.6:3000
       - ORION_API=http://172.28.1.10:1026
       - DAL_INQUISITOR_API=http://172.28.1.201:8080
+      - DASHBOARD_ADMIN_PASSWORD=run/secrets/dashboard.admin.secret
     networks:
       dal:
         ipv4_address: 172.28.1.201
@@ -17,6 +18,7 @@ services:
         ipv4_address: 172.26.1.201
     secrets:
       - idm.admin.pass
+      - dashboard.admin.secret
     logging:
       options:
         max-size: "15m"
