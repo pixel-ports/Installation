@@ -39,7 +39,7 @@ services:
       ih:
         ipv4_address: 172.24.1.14
   orion-collector:
-    image: pixelh2020/information-hub-orion-data-collector
+    image: pixelh2020/information-hub-orion-data-collector:1.5.1
     restart: always
     depends_on:
       - zookeeper
@@ -61,7 +61,7 @@ services:
       dal:
         ipv4_address: 172.28.1.15
   controller:
-    image: pixelh2020/information-hub-controller
+    image: pixelh2020/information-hub-controller:1.2.0
     restart: always
     depends_on:
       - zookeeper
@@ -77,7 +77,7 @@ services:
       ih:
         ipv4_address: 172.24.1.16
   extractor:
-    image: pixelh2020/information-hub-extractor
+    image: pixelh2020/information-hub-extractor:1.2.0
     restart: always
     depends_on:
       - zookeeper
@@ -95,7 +95,7 @@ services:
       ih_public:
         ipv4_address: 172.25.1.17
   monitor:
-    image: pixelh2020/information-hub-monitor
+    image: pixelh2020/information-hub-monitor:1.2.0
     restart: always
     depends_on:
       - zookeeper
@@ -113,7 +113,7 @@ services:
         ipv4_address: 172.24.1.18
 
   writer:
-    image: pixelh2020/information-hub-writer
+    image: pixelh2020/information-hub-writer:1.2.1
     restart: always
     depends_on:
       - zookeeper
@@ -129,7 +129,7 @@ services:
       ih:
         ipv4_address: 172.24.1.19
   elasticsearch-proxy:
-    image: pixelh2020/information-hub-elasticsearch-proxy
+    image: pixelh2020/information-hub-elasticsearch-proxy:1.2.0
     restart: always
     environment:
       - ELASTICSEARCH_ADDRESS=172.24.1.11:9200
@@ -145,7 +145,7 @@ services:
       ih_public:
         ipv4_address: 172.25.1.20
   orchestrator:
-    image: pixelh2020/information-hub-data-processor-orchestrator
+    image: pixelh2020/information-hub-data-processor-orchestrator:1.2.0
     depends_on:
       - zookeeper
       - kafka
