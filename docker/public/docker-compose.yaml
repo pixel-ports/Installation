@@ -9,8 +9,6 @@ services:
     ports:
       - 80:80
       - 443:443
-    extra_hosts:
-      - ih.pixel.internal:10.12.182.193
     environment:
       - NGINX_PORT=80
       - NGINX_TLS_PORT=443
