@@ -11,3 +11,4 @@
 | 2.0.5    | 09/03/2021 | Marc + Damjan       | Modification of Elasticsearch to install ingest-attachment |
 | 2.0.6    | 09/03/2021 | Marc Despland       | Change build order of FRONTRP to prevent apt issue with renew certificat |
 | 2.0.7    | 09/03/2021 | J Martinez          | Update dashboard to version 2.1.5 |
+| 2.0.8    | 09/03/2021 | J Martinez          | Update dashboard to version 2.1.6 |
