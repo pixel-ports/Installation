@@ -36,7 +36,7 @@ services:
   dashboard-api:
     restart: always
     container_name: dashboard-api
-    image: pixelh2020/dashboard-pixel-ports-api:2.0.8
+    image: pixelh2020/dashboard-pixel-ports-api:2.1.5
     command: node index.js
     environment:
       NODE_ENV: production
@@ -65,6 +65,8 @@ services:
         ipv4_address: 172.31.1.25
       ih_public:
         ipv4_address: 172.25.1.25
+      ih:
+        ipv4_address: 172.24.1.25
   dashboard:
     restart: always
     container_name: dashboard
