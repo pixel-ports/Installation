@@ -8,4 +8,5 @@
 |          |            |                     | remove core/docker-compose-ih-stop.yaml, rewrite stop-ih.sh |
 |          |            |                     | fix nagios tests for frontrp (public host) |
 |          |            |                     | remove exposition of data.xxxx.pixel-ports.eu on frontrp |
+| 2.0.5    | 09/03/2021 | Marc + Damjan       | Modification of Elasticsearch to install ingest-attachment |
 
