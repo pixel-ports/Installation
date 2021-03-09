@@ -245,6 +245,15 @@ cp live/*.pixel-ports.eu/fullchain.pem ../../Installation/docker/public/frontrp/
 cp live/*.pixel-ports.eu/privkey.pem ../../Installation/docker/public/frontrp/
 ```
 
+
+And update the platform
+```
+cd /opt/pixel/Installation/docker/public
+./build.sh
+./install.sh
+```
+
+
 ## Installation
 
 ```

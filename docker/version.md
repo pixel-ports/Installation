@@ -9,4 +9,5 @@
 |          |            |                     | fix nagios tests for frontrp (public host) |
 |          |            |                     | remove exposition of data.xxxx.pixel-ports.eu on frontrp |
 | 2.0.5    | 09/03/2021 | Marc + Damjan       | Modification of Elasticsearch to install ingest-attachment |
+| 2.0.6    | 09/03/2021 | Marc Despland       | Change build order of FRONTRP to prevent apt issue with renew certificat |
 
