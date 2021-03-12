@@ -39,7 +39,7 @@ services:
       ih:
         ipv4_address: 172.24.1.14
   orion-collector:
-    image: pixelh2020/information-hub-orion-data-collector:1.5.1
+    image: pixelh2020/information-hub-orion-data-collector:1.5.2
     restart: always
     depends_on:
       - zookeeper
