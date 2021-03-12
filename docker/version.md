@@ -13,3 +13,4 @@
 | 2.0.7    | 09/03/2021 | J Martinez          | Update dashboard to version 2.1.5 |
 | 2.0.8    | 09/03/2021 | J Martinez          | Update dashboard to version 2.1.6 |
 | 2.0.9    | 10/03/2021 | Marc Despland       | Update DAL-Proxy to 1.1.1 to solve routes issue without end / |
+| 2.0.10    | 12/03/2021 | J Martinez          | Update dashboard to version 2.2.0 and init all ports  |
