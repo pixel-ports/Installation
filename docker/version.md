@@ -1,5 +1,5 @@
 | Version  | Date       | Author              | Description                                                                         |
-|:---------:|:----------:|:-------------------:|-----------------------------------------------------------------------------------|
+|:--------:|:----------:|:-------------------:|-----------------------------------------------------------------------------------|
 | 2.0.0    | 01/01/2021 | Marc Despland       | Initial Release   |
 | 2.0.1    | 01/03/2021 | Marc Despland       | Add restart core_monitor_1 core_controller_1 in core install scripts   |
 | 2.0.2    | 03/03/2021 | Marc Despland       | Add backup scripts for core and public   |
@@ -13,6 +13,7 @@
 | 2.0.7    | 09/03/2021 | J Martinez          | Update dashboard to version 2.1.5 |
 | 2.0.8    | 09/03/2021 | J Martinez          | Update dashboard to version 2.1.6 |
 | 2.0.9    | 10/03/2021 | Marc Despland       | Update DAL-Proxy to 1.1.1 to solve routes issue without end / |
-| 2.0.10    | 12/03/2021 | J Martinez          | Update dashboard to version 2.2.0 and init all ports  |
+| 2.0.10    | 12/03/2021 | J Martinez         | Update dashboard to version 2.2.0 and init all ports  |
 | 2.0.11   | 12/03/2021 | Damjan Murn         | Update orion-data-collector to 1.5.2 - change text type to KEYWORD |
 | 2.0.12   | 15/03/2021 | Marc Despland       | Update NAGIOS request to prevent wrong log |
+| 2.0.13   | 23/03/2021 | J Martinez          | Update dashboard widgets |
