@@ -17,3 +17,4 @@
 | 2.0.11   | 12/03/2021 | Damjan Murn         | Update orion-data-collector to 1.5.2 - change text type to KEYWORD |
 | 2.0.12   | 15/03/2021 | Marc Despland       | Update NAGIOS request to prevent wrong log |
 | 2.0.13   | 23/03/2021 | J Martinez          | Update dashboard widgets |
+| 2.0.14   | 24/03/2021 | Damjan Murn         | Update writer to 1.2.2 to solve issue when reseting source |
