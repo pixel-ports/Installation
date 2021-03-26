@@ -13,8 +13,9 @@
 | 2.0.7    | 09/03/2021 | J Martinez          | Update dashboard to version 2.1.5 |
 | 2.0.8    | 09/03/2021 | J Martinez          | Update dashboard to version 2.1.6 |
 | 2.0.9    | 10/03/2021 | Marc Despland       | Update DAL-Proxy to 1.1.1 to solve routes issue without end / |
-| 2.0.10    | 12/03/2021 | J Martinez         | Update dashboard to version 2.2.0 and init all ports  |
+| 2.0.10   | 12/03/2021 | J Martinez          | Update dashboard to version 2.2.0 and init all ports  |
 | 2.0.11   | 12/03/2021 | Damjan Murn         | Update orion-data-collector to 1.5.2 - change text type to KEYWORD |
 | 2.0.12   | 15/03/2021 | Marc Despland       | Update NAGIOS request to prevent wrong log |
 | 2.0.13   | 23/03/2021 | J Martinez          | Update dashboard widgets |
 | 2.0.14   | 24/03/2021 | Damjan Murn         | Update writer to 1.2.2 to solve issue when reseting source |
+| 2.0.15   | 26/03/2021 | Benjamin Molina     | Update ot-core to 0.3 to solve bug detected with scheduledInstances |
