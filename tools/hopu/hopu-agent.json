@@ -1,0 +1,55 @@
+{
+    "name": "/hopu-proxy",
+    "image": "pixelh2020/ngsiagent-orion:1.0.0",
+    "type": "daemon",
+    "daemon": {
+        "internal_port": "80",
+        "internal_path": "/orion",
+        "external_path": "/hopu/orion"
+    },
+    "datasources": [
+        "urn:pixel:DataSource:hopu:raw"
+    ],
+    "datamodels": [
+        "/Dummies/minimal-schema.json"
+    ],
+    "mode": "update",
+    "environment": [
+        {
+            "key": "NGINX_HOST",
+            "value": "0.0.0.0"
+        },
+        {
+            "key": "NGINX_PORT",
+            "value": "80"
+        },
+        {
+            "key": "TARGET",
+            "value": "${CORE_HOST_IP}:1026"
+        },
+        {
+            "key": "FIWARE_SERVICE_PATH",
+            "value": "/"
+        },
+        {
+            "key": "FIWARE_SERVICE",
+            "value": "hopu"
+        },
+        {
+            "key": "PATH",
+            "value": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+        },
+        {
+            "key": "NGINX_VERSION",
+            "value": "1.17.10"
+        },
+        {
+            "key": "NJS_VERSION",
+            "value": "0.3.9"
+        },
+        {
+            "key": "PKG_RELEASE",
+            "value": "1~buster"
+        }
+    ]
+}

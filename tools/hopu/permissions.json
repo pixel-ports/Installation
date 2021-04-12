@@ -1,0 +1,77 @@
+{
+    "applications": [
+        {
+            "details": {
+                "name": "DAL NGSIAGENTS PROXY",
+                "description": "Access point for the NGSIAgents (daemon)",
+                "redirect_uri": "http://localhost/login",
+                "url": "http://localhost",
+                "grant_type": [
+                    "authorization_code",
+                    "implicit",
+                    "password"
+                ],
+                "token_types": [
+                    "permanent"
+                ]
+            },
+            "permissions": [
+                {
+                    "name": "HOPU GET entities",
+                    "action": "GET",
+                    "resource": "/hopu/orion/v2/entities.*",
+                    "is_regex": true
+                },
+                {
+                    "name": "HOPU PUT entities",
+                    "action": "PUT",
+                    "resource": "/hopu/orion/v2/entities.*",
+                    "is_regex": true
+                },
+                {
+                    "name": "HOPU POST entities",
+                    "action": "POST",
+                    "resource": "/hopu/orion/v2/entities.*",
+                    "is_regex": true
+                },
+                {
+                    "name": "HOPU PATCH entities",
+                    "action": "PATCH",
+                    "resource": "/hopu/orion/v2/entities.*",
+                    "is_regex": true
+                }
+            ],
+            "roles": [
+                {
+                    "name": "hopu",
+                    "permissions": [
+                        "HOPU GET entities",
+                        "HOPU PUT entities",
+                        "HOPU POST entities",
+                        "HOPU PATCH entities"
+                    ]
+                }
+            ],
+            "users" : [
+                {
+                    "username": "hopu",
+                    "email": "hopu@pixel-ports.eu",
+                    "enabled": true,
+                    "admin": false,
+                    "password": "changeit",
+                    "roles": [
+                    
+                        "hopu"
+                    ],
+                    "organisations": []
+                  }
+            ],
+            "organisations" : [
+                {
+                    "name": "PIXEL",
+                    "description": "The main PIXEL Organization"
+                }
+            ]
+        }
+    ]
+}
