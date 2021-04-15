@@ -16,4 +16,4 @@ PASSWORD=`cat $SECRETS/idm.admin.pass`
 
 cp $PERMISSIONS.json $DATA
 
-docker run -it --rm --network $NETWORK -v $(PWD)/$DATA:/app/data/$DATA -v $(PWD)/$PERMISSIONS.json:/app/data/$PERMISSIONS.json pixelh2020/keyrock-manager:0.1.0 --keyrock $KEYROCK --admin $ADMIN --password $PASSWORD --data /app/data/$DATA --output /app/data/$PERMISSIONS.json
+docker run -it --rm --network $NETWORK -v $PWD/$DATA:/app/data/$DATA -v $PWD/$PERMISSIONS.json:/app/data/$PERMISSIONS.json pixelh2020/keyrock-manager:0.1.0 --keyrock $KEYROCK --admin $ADMIN --password $PASSWORD --data /app/data/$DATA --output /app/data/$PERMISSIONS.json
