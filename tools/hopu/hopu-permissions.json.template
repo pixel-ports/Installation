@@ -1,7 +1,7 @@
 {
     "applications": [
         {
-            "details": {
+            "application": {
                 "name": "DAL NGSIAGENTS PROXY",
                 "description": "Access point for the NGSIAgents (daemon)",
                 "redirect_uri": "http://localhost/login",
@@ -15,63 +15,75 @@
                     "permanent"
                 ]
             },
-            "permissions": [
-                {
+            "permissions": {
+                "HOPU GET version": {
+                    "name": "HOPU GET entities",
+                    "action": "GET",
+                    "resource": "/hopu/orion/version",
+                    "is_regex": false
+                },
+                "HOPU GET entities": {
                     "name": "HOPU GET entities",
                     "action": "GET",
                     "resource": "/hopu/orion/v2/entities.*",
                     "is_regex": true
                 },
-                {
+                "HOPU PUT entities": {
                     "name": "HOPU PUT entities",
                     "action": "PUT",
                     "resource": "/hopu/orion/v2/entities.*",
                     "is_regex": true
                 },
-                {
+                "HOPU POST entities": {
                     "name": "HOPU POST entities",
                     "action": "POST",
                     "resource": "/hopu/orion/v2/entities.*",
                     "is_regex": true
                 },
-                {
+                "HOPU PATCH entities": {
                     "name": "HOPU PATCH entities",
                     "action": "PATCH",
                     "resource": "/hopu/orion/v2/entities.*",
                     "is_regex": true
+                },
+                "HOPU DELETE entities": {
+                    "name": "HOPU DELETE entities",
+                    "action": "DELETE",
+                    "resource": "/hopu/orion/v2/entities.*",
+                    "is_regex": true
                 }
-            ],
-            "roles": [
-                {
+            },
+            "roles": {
+                "hopu": {
                     "name": "hopu",
                     "permissions": [
+                        "HOPU GET version",
                         "HOPU GET entities",
                         "HOPU PUT entities",
                         "HOPU POST entities",
-                        "HOPU PATCH entities"
+                        "HOPU PATCH entities",
+                        "HOPU DELETE entities"
                     ]
                 }
-            ],
-            "users" : [
-                {
+            },
+            "users": {
+                "hopu": {
                     "username": "hopu",
                     "email": "hopu@pixel-ports.eu",
                     "enabled": true,
                     "admin": false,
-                    "password": "changeit",
                     "roles": [
-                    
                         "hopu"
                     ],
                     "organisations": []
-                  }
-            ],
-            "organisations" : [
-                {
+                }
+            },
+            "organisations": {
+                "PIXEL": {
                     "name": "PIXEL",
                     "description": "The main PIXEL Organization"
                 }
-            ]
+            }
         }
     ]
 }
