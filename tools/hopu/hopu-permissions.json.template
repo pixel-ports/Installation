@@ -17,7 +17,7 @@
             },
             "permissions": {
                 "HOPU GET version": {
-                    "name": "HOPU GET entities",
+                    "name": "HOPU GET version",
                     "action": "GET",
                     "resource": "/hopu/orion/version",
                     "is_regex": false
