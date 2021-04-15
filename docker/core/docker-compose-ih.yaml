@@ -160,6 +160,28 @@ services:
         ipv4_address: 172.24.1.29
       ih_public:
         ipv4_address: 172.25.1.29
+  ih-health-probe:
+    image: pixelh2020/ih-health-probe:v0.2.1
+    depends_on:
+      - zookeeper
+      - kafka
+      - orchestrator
+      - writer
+      - monitor
+      - extractor
+      - controller
+      - orion-collector
+    volumes:
+      - /opt/pixel/kpi/ih:/output
+    logging:
+      options:
+        max-size: "15m"
+        max-file: "2"
+    networks:
+      ih:
+        ipv4_address: 172.24.1.32
+      ih_public:
+        ipv4_address: 172.25.1.32
 volumes:
   zookeeper_data:
     driver: local

@@ -1,4 +1,5 @@
 #!/bin/bash
+mkdir -p /opt/pixel/kpi/ih
 
 wait_for_orion() {
   while true

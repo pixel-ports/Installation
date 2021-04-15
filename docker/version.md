@@ -20,3 +20,4 @@
 | 2.0.14   | 24/03/2021 | Damjan Murn         | Update writer to 1.2.2 to solve issue when reseting source |
 | 2.0.15   | 26/03/2021 | Benjamin Molina     | Update ot-core to 0.3 to solve bug detected with scheduledInstances |
 | 2.0.16   | 7/04/2021  | J Martinez          | Update dashboard widgets table and map |
+| 2.0.17   | 15/04/2021 | Marc Despland       | Add configuration to deploy ih-health-probe |
