@@ -52,21 +52,21 @@ The file ```hopu-permisionns.json``` will be updated with the key informations
 "users": {
                 "hopu@pixel-ports.eu": {
                     "scope": [],
-                    "id": "ef243a5c-a7a3-4bd6-a4e1-03df68572010",
+                    "id": "48c32491-3fd7-4a47-9f40-2a8e0b566ccf",
                     "username": "hopu",
                     "email": "hopu@pixel-ports.eu",
                     "enabled": true,
                     "admin": false,
                     "image": "default",
                     "gravatar": false,
-                    "date_password": "2021-04-15T09:15:16.000Z",
+                    "date_password": "2021-04-15T12:51:00.000Z",
                     "description": null,
                     "website": null,
-                    "password": "UeBBEHB4LjyHwuQz",
+                    "password": "hk0dnY3G5BYyrNQP",
                     "roles": [
                         "hopu"
                     ],
-                    "token": "886b52d83ba725a7463890c2b153d359579fde27"
+                    "token": "8d288a94a5278b50dbf0b9c35503c46d6afad678"
                 }
             }
 (...)
@@ -74,13 +74,12 @@ The file ```hopu-permisionns.json``` will be updated with the key informations
 
 You will retreive here :
 * user login  : hopu@pixel-ports.eu
-* user password (will be set automatically with random value): (here : UeBBEHB4LjyHwuQz)
-* access_token (permanent): 886b52d83ba725a7463890c2b153d359579fde27
+* user password (will be set automatically with random value): (here : hk0dnY3G5BYyrNQP)
+* access_token (permanent): 8d288a94a5278b50dbf0b9c35503c46d6afad678
 
 You will be then be able to make a simple 
 
 ```
-curl -H "X-Auth-Token: " https://dal.int2.pixel-ports.eu/hopu/orion/version
+curl -H "X-Auth-Token: 8d288a94a5278b50dbf0b9c35503c46d6afad678" https://dal.int2.pixel-ports.eu/hopu/orion/version
 ```
-
 
