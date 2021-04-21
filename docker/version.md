@@ -21,3 +21,4 @@
 | 2.0.15   | 26/03/2021 | Benjamin Molina     | Update ot-core to 0.3 to solve bug detected with scheduledInstances |
 | 2.0.16   | 7/04/2021  | J Martinez          | Update dashboard widgets table and map |
 | 2.0.17   | 15/04/2021 | Marc Despland       | Add configuration to deploy ih-health-probe |
+| 2.0.18   | 21/04/2021 | J Martinez          | Update dashboard widgets table and map |
