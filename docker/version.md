@@ -22,3 +22,4 @@
 | 2.0.16   | 7/04/2021  | J Martinez          | Update dashboard widgets table and map |
 | 2.0.17   | 15/04/2021 | Marc Despland       | Add configuration to deploy ih-health-probe |
 | 2.0.18   | 21/04/2021 | J Martinez          | Update dashboard widgets table and map |
+| 2.0.19   | 27/04/2021 | J Martinez          | Update dashboard widgets |
