@@ -23,3 +23,4 @@
 | 2.0.17   | 15/04/2021 | Marc Despland       | Add configuration to deploy ih-health-probe |
 | 2.0.18   | 21/04/2021 | J Martinez          | Update dashboard widgets table and map |
 | 2.0.19   | 27/04/2021 | J Martinez          | Update dashboard widgets |
+| 2.0.20   | 28/04/2021 | Marc Despland       | Change dal-proxy to 1.1.1 to solve WasteTerminal bug |
