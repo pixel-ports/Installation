@@ -1,0 +1,14 @@
+version: "3.3"
+services:
+  mosquitto:
+    restart: always
+    build: ./mosquitto
+    image: mosquitto:latest
+    container_name: mosquitto
+    hostname: mosquitto
+    ports:
+      - 8883:8883
+    networks:
+      dal_agents:
+        external:
+          name: public_dal_agents
