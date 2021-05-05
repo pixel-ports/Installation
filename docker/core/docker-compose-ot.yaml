@@ -36,6 +36,7 @@ services:
      - otdb
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/pixel/data/filesUp:/usr/local/tomcat/filesUp
     ports:
       - 8080:8080
     logging:
