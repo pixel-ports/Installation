@@ -10,5 +10,8 @@ services:
       - 8883:8883
     networks:
       dal_agents:
-        external:
-          name: public_dal_agents
+        ipv4_address: 172.42.1.250
+networks:
+  dal_agents:
+    external:
+      name: public_dal_agents
