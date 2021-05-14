@@ -24,3 +24,4 @@
 | 2.0.18   | 21/04/2021 | J Martinez          | Update dashboard widgets table and map |
 | 2.0.19   | 27/04/2021 | J Martinez          | Update dashboard widgets |
 | 2.0.20   | 28/04/2021 | Marc Despland       | Change dal-proxy to 1.1.1 to solve WasteTerminal bug |
+| 2.0.21   | 14/05/2021 | Marc Despland       | Expose ES on admin host for INSIEL installation |
