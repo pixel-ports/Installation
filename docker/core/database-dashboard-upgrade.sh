@@ -8,7 +8,7 @@ PORT=$(echo $PIXEL_DOMAIN| cut -d'.' -f 2)
 
 if [ -z "$PORT" ]
 then
-      PORT="develop"
+      PORT=""
 	  echo "Updating Dashboard database with default values"
 else
 	  echo "Updating Dashboard database for the port: $PORT"
