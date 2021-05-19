@@ -28,3 +28,4 @@
 | 2.0.22   | 16/04/2021 | J Martinez          | Update dashboard to 2.8.0 and database of dashboard |
 | 2.0.23   | 19/04/2021 | J Martinez          | Update dashboard to 2.8.1 and database of dashboard with backups |
 | 2.0.24   | 19/04/2021 | J Martinez          | Update dashboard to 2.8.2 and database of dashboard with backups and fixes|
+| 2.0.25   | 19/04/2021 | J Martinez          | Update dashboard to 2.8.3 renamed insiel and fix op tools menu|

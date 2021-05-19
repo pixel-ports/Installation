@@ -36,7 +36,7 @@ services:
   dashboard-api:
     restart: always
     container_name: dashboard-api
-    image: pixelh2020/dashboard-pixel-ports-api:2.8.2
+    image: pixelh2020/dashboard-pixel-ports-api:2.8.3
     command: node index.js
     environment:
       NODE_ENV: production
