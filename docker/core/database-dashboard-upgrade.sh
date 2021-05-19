@@ -14,7 +14,6 @@ else
 	  echo "Updating Dashboard database for the port: $PORT"
 fi
 
-docker-compose -f docker-compose.yaml -f docker-compose-dashboard.yaml exec dashboard-api-db /bin/sh -c "/usr/bin/mongo pixel-db --eval 'db.dropDatabase()'"
 docker-compose -f docker-compose.yaml -f docker-compose-dashboard.yaml exec dashboard-api /bin/sh -c "/api/seed/insert.sh $PORT" 
 
 echo 'seed complete'
