@@ -25,7 +25,8 @@
 | 2.0.19   | 27/04/2021 | J Martinez          | Update dashboard widgets |
 | 2.0.20   | 28/04/2021 | Marc Despland       | Change dal-proxy to 1.1.1 to solve WasteTerminal bug |
 | 2.0.21   | 14/05/2021 | Marc Despland       | Expose ES on admin host for INSIEL installation |
-| 2.0.22   | 16/04/2021 | J Martinez          | Update dashboard to 2.8.0 and database of dashboard |
-| 2.0.23   | 19/04/2021 | J Martinez          | Update dashboard to 2.8.1 and database of dashboard with backups |
-| 2.0.24   | 19/04/2021 | J Martinez          | Update dashboard to 2.8.2 and database of dashboard with backups and fixes|
-| 2.0.25   | 19/04/2021 | J Martinez          | Update dashboard to 2.8.3 renamed insiel and fix op tools menu|
+| 2.0.22   | 16/05/2021 | J Martinez          | Update dashboard to 2.8.0 and database of dashboard |
+| 2.0.23   | 19/05/2021 | J Martinez          | Update dashboard to 2.8.1 and database of dashboard with backups |
+| 2.0.24   | 19/05/2021 | J Martinez          | Update dashboard to 2.8.2 and database of dashboard with backups and fixes|
+| 2.0.25   | 19/05/2021 | J Martinez          | Update dashboard to 2.8.3 renamed insiel and fix op tools menu|
+| 2.0.26   | 25/05/2021 | Damjan Murn         | Update writer to 1.2.3 to solve loop issue, update proxy to 1.2.1 to solve INSIEL request |

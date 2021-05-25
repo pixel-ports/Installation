@@ -7,6 +7,15 @@ case "$1" in
         public)
             exec ssh -i $keypass/gpmb_private -p 66 root@163.172.188.163
             ;;
+        bastion)
+            exec ssh -i $keypass/pixel-ec-mde.pem cloud@90.84.185.88
+            ;;
+        insiel-core)
+            exec ssh ced.adds\\e_despland_m@10.128.138.4
+            ;;
+        insiel-public)
+            exec ssh ced.adds\\e_despland_m@10.128.138.5
+            ;;        
         public-nagios)
             ssh -i $keypass/gpmb_private -L 127.0.0.1:8088:10.12.182.193:8088 root@163.172.188.163
             ;;
