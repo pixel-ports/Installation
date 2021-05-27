@@ -5,8 +5,10 @@ mkdir -p /opt/pixel/backup/dal-orion-db
 mkdir -p /opt/pixel/backup/otdb
 mkdir -p /opt/pixel/backup/dashboarddb
 mkdir -p /opt/pixel/backup/secrets
+mkdir -p /opt/pixel/backup/env
 
 cp -R secrets /opt/pixel/backup/secrets/`date +%Y%m%d-%H%M%S`/
+cp .env /opt/pixel/backup/env/env.`date +%Y%m%d-%H%M%S`
 docker exec -it sec-mysql-db mysqldump -u root -p`cat ./secrets/idm.db.pass` idm >/opt/pixel/backup/sec-mysql-db/sec-mysql-db-`date +%Y%m%d-%H%M%S`.sql
 docker exec -it dal-orion-db mongodump -u mongo -p `cat ./secrets/orion.db.root.password`  mongodb://127.0.0.1 -o /tmp/backup-orion
 docker cp dal-orion-db:/tmp/backup-orion /opt/pixel/backup/dal-orion-db/mongo-`date +%Y%m%d-%H%M%S`
