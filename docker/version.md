@@ -33,3 +33,4 @@
 | 2.0.27   | 26/05/2021 | Damjan Murn         | Update collector to 1.6 for geo:json and orion id management |
 | 2.0.28   | 27/05/2021 | Marc Despland       | Update Orchestrator to 1.3.3 to manage extrahosts |
 | 2.0.29   | 27/05/2021 | J Martinez          | Add CORS to fronrp - api-dahsboard and max_size_upload_file |
+| 2.0.30   | 27/05/2021 | J Martinez          | Updated dashbaord to 2.8.7 |
