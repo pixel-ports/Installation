@@ -31,3 +31,4 @@
 | 2.0.25   | 19/05/2021 | J Martinez          | Update dashboard to 2.8.3 renamed insiel and fix op tools menu|
 | 2.0.26   | 25/05/2021 | Damjan Murn         | Update writer to 1.2.3 to solve loop issue, update proxy to 1.2.1 to solve INSIEL request |
 | 2.0.27   | 26/05/2021 | Damjan Murn         | Update collector to 1.6 for geo:json and orion id management |
+| 2.0.28   | 27/05/2021 | Marc Despland       | Update Orchestrator to 1.3.3 to manage extrahosts |
