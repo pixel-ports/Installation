@@ -1,7 +1,7 @@
 FROM nginx
 RUN echo update full image 1.0.0
 RUN apt -y update && apt -y upgrade
-RUN apt-get -y install certbot python-certbot-nginx
+RUN apt-get -y install certbot python-certbot-nginx nginx-extras
 RUN apt-get -y install apache2-utils
 RUN openssl dhparam -out /etc/ssl/dhparam.pem 2048
 COPY docker_entrypoint.sh /docker_entrypoint.sh
