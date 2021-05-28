@@ -34,3 +34,4 @@
 | 2.0.28   | 27/05/2021 | Marc Despland       | Update Orchestrator to 1.3.3 to manage extrahosts |
 | 2.0.29   | 27/05/2021 | J Martinez          | Add CORS to fronrp - api-dahsboard and max_size_upload_file |
 | 2.0.30   | 27/05/2021 | J Martinez          | Updated dashbaord to 2.8.7 |
+| 2.0.31   | 28/05/2021 | Marc Despland       | Allow access to ES from admin |
