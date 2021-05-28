@@ -113,7 +113,7 @@ services:
         ipv4_address: 172.24.1.18
 
   writer:
-    image: pixelh2020/information-hub-writer:1.2.3
+    image: pixelh2020/information-hub-writer:1.2.4
     restart: always
     depends_on:
       - zookeeper
