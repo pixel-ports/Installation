@@ -37,3 +37,20 @@
 | 2.0.31   | 28/05/2021 | Marc Despland       | Allow access to ES from admin |
 | 2.0.32   | 28/05/2021 | Marc Despland       | Update dal-orchestrator and writer |
 | 2.0.33   | 31/05/2021 | J Martinez            | Updated dashboard to 2.9.0 |
+| 2.0.34   | 31/05/2021 | J Martinez   -> 
+
+Updated dashboard to 2.9.5
+Fix eslint
+Add new Gant Bar for FRBOD
+Rename Gantt-Bar-Pas
+elastic index fixed
+Changes in PEI latest executions and default tree
+Update COVID visualization
+Gantt-ETD for FRBOD
+Update functions for OTools (Dates management)	
+Update PEI visualization
+Noise Model Visualization from kml files UPV
+added aermod map
+added photovoltaic widget
+New widgets congestion
+Fix lintern
