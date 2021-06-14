@@ -54,3 +54,24 @@ added aermod map
 added photovoltaic widget
 New widgets congestion
 Fix lintern
+| 2.0.35   | 14/06/2021 | J Martinez   -> 
+
+Translations
+Fix sslint
+Model traffic visualization [WIP]
+Merge remote-tracking branch 'origin/UPV'
+removed .env.development
+bug in SelectIndexAndCopy.vue
+GanttBarPas connected to index
+EchartLine-traffic connected to Elastic index
+Gant-Bar-Pas-Colors labels and fonts fixed	
+Update PEI forms and minor changes
+update aermod added
+Several map & charts improvements
+Fix lint
+Integrate sensors in map
+Integrate map with sensors data [WIP]
+widget photovoltaic balance added
+Merge branch 'UPV'
+Eslint fix and Dockerfile edit	
+Solve PEI - IH API url issue

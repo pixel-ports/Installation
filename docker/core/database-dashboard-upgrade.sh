@@ -14,7 +14,7 @@ else
 	  echo "Updating Dashboard database for the port: $PORT"
 fi
 
-docker-compose -f docker-compose.yaml -f docker-compose-dashboard.yaml exec dashboard-api /bin/sh -c "/api/seed/insert.sh $PORT" 
+docker-compose -f docker-compose.yaml -f docker-compose-dashboard.yaml exec dashboard-api /bin/sh -c "/api/seed/upgrade.sh $PORT" 
 
 echo 'seed complete'
 
