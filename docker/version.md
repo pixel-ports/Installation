@@ -93,3 +93,5 @@ Updated seeds develop
 Update DDBB and Upgrade system
 Monfalcone photovoltaic-measurement added
 Added photovoltaic-consumptions and aermod-map
+| 2.0.37   | 21/06/2021 | J Martinez   -> 
+Sort time range
