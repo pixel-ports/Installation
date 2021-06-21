@@ -55,7 +55,6 @@ added photovoltaic widget
 New widgets congestion
 Fix lintern
 | 2.0.35   | 14/06/2021 | J Martinez   -> 
-
 Translations
 Fix sslint
 Model traffic visualization [WIP]
@@ -75,3 +74,22 @@ widget photovoltaic balance added
 Merge branch 'UPV'
 Eslint fix and Dockerfile edit	
 Solve PEI - IH API url issue
+| 2.0.36   | 21/06/2021 | J Martinez   -> 
+Update PEI visualizations
+Update PEI Tree features
+Add Energy PA to PEI forms and more forms change
+Energy consumption widget 
+Added table paginated and select field tiem series
+airemission-ships to airemission-pa
+Updated seeds for upgrade grskg
+Updated seeds for upgrade insiel
+Updated seeds for upgrade frbod
+Updated seeds for upgrade grpir
+Updated seeds Insiels
+Updated seeds grskg
+Updated seeds grpir
+Updated seeds frbod
+Updated seeds develop
+Update DDBB and Upgrade system
+Monfalcone photovoltaic-measurement added
+Added photovoltaic-consumptions and aermod-map
