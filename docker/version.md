@@ -95,3 +95,12 @@ Monfalcone photovoltaic-measurement added
 Added photovoltaic-consumptions and aermod-map
 | 2.0.37   | 21/06/2021 | J Martinez   -> 
 Sort time range
+| 2.0.40   | 30/06/2021 | J Martinez   -> 
+Updated all seeds
+Add edit option in PEI forms
+energy and photovoltaic fixed
+ Hide Ngsi Agent field in Pei Tree
+Center COVID pilot map to port coordinates
+ Fix fossil fuel column from COVID vessels table
+[Custom Visualization] Vessel Call PPA fixed
+Menu add roles Grskg and Grpir
