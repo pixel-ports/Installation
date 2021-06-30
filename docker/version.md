@@ -104,3 +104,5 @@ Center COVID pilot map to port coordinates
  Fix fossil fuel column from COVID vessels table
 [Custom Visualization] Vessel Call PPA fixed
 Menu add roles Grskg and Grpir
+| 2.0.41   | 30/06/2021 | J Martinez   -> 
+Removed all widgets from upgrade seeds
