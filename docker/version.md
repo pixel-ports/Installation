@@ -106,3 +106,6 @@ Center COVID pilot map to port coordinates
 Menu add roles Grskg and Grpir
 | 2.0.41   | 30/06/2021 | J Martinez   -> 
 Removed all widgets from upgrade seeds
+| 2.0.42   | 05/07/2021 | J Martinez   -> 
+Pas Gantt new Dinamic Index
+Trafficmonitoring
