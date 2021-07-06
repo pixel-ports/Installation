@@ -2,10 +2,11 @@
 
 import sys
 import time
+
 import docker
 import requests
 
-VERSION = 1.1
+VERSION = 1.2
 
 """
 Works with any Python3 version that should be installed with your OS
@@ -15,7 +16,13 @@ Then you can install dependencies : pip3 install docker requests
 Run : python3 resetds.py --help
 """
 
-def main(srctype: str, srcname: str, delete_subscr: bool):
+
+def main(srctype: str,
+         srcname: str,
+         delete_subscr: bool = False,
+         fiware_service: str = None,
+         fiware_service_path: str = None
+         ):
     print("\n# Damjan's procedure to delete the source through IH API")
     print("Retrieve IH container IP address")
     client = docker.from_env()
@@ -40,11 +47,17 @@ def main(srctype: str, srcname: str, delete_subscr: bool):
     print("Success" if r.ok else f"Failed : {r.reason}")
     time.sleep(1)
 
+    orion_headers = {}
+    if fiware_service:
+        orion_headers["Fiware-Service"] = fiware_service
+    if fiware_service_path:
+        orion_headers["Fiware-ServicePath"] = fiware_service_path
+
     if delete_subscr:
         print(f"Looking for existing IH subscription to Orion datasource {srcname}")
         baseurl = "http://127.0.0.1:1026/v2"
         url = f"{baseurl}/subscriptions"
-        r = requests.get(url)
+        r = requests.get(url, headers=orion_headers)
         if r.ok:
             print("Success")
         else:
@@ -65,7 +78,7 @@ def main(srctype: str, srcname: str, delete_subscr: bool):
             print("Subscription found: " + subscr_id)
             print("Delete the Orion subsciption")
             subscr_id = subscr["id"]
-            r = requests.delete(f"{url}/{subscr_id}")
+            r = requests.delete(f"{url}/{subscr_id}", headers=orion_headers)
             if r.ok:
                 print(f"Successfully deleted subscription {subscr_id}")
             else:
@@ -78,7 +91,7 @@ def main(srctype: str, srcname: str, delete_subscr: bool):
     url = f"{baseurl}/entities/{srcname}"
     print(
         f"Retrieve the datasource entity {srcname} from Orion and store payload")
-    r = requests.get(url)
+    r = requests.get(url, headers=orion_headers)
     print("Success" if r.ok else f"Failed : {r.reason}")
     if not r.ok:
         print("Missing datasource. You should use DAL Orchestrator to register the corresponding NGSI Agent")
@@ -86,10 +99,10 @@ def main(srctype: str, srcname: str, delete_subscr: bool):
     payload = r.json()
     print("payload = " + str(payload))
     print("Delete the datasource entity in Orion")
-    r = requests.delete(url)
+    r = requests.delete(url, headers=orion_headers)
     print("Success" if r.ok else f"Failed : {r.reason}")
     print("Re-create the entity as-is (same payload)")
-    r = requests.post(f"{baseurl}/entities", json=payload)
+    r = requests.post(f"{baseurl}/entities", json=payload, headers=orion_headers)
     print("Success" if r.ok else f"Failed : {r.reason}")
     if not r.ok:
         sys.exit(4)
@@ -99,7 +112,7 @@ def main(srctype: str, srcname: str, delete_subscr: bool):
     print(
         f"Check there's an IH subscription to Orion for datasource {srcname}")
     url = f"{baseurl}/subscriptions"
-    r = requests.get(url)
+    r = requests.get(url, headers=orion_headers)
     subscriptions = [x for x in r.json() if x['description'] ==
                      f"Information Hub subscription to the source {srcname}."]
     if not subscriptions:
@@ -119,36 +132,57 @@ def main(srctype: str, srcname: str, delete_subscr: bool):
 
 
 def help():
-    print("Usage : resetds <sourceType> <sourceName> [--delete-subscr]")
+    print(
+        "Usage : resetds <sourceType> <sourceName> [--delete-subscr] [--fiware-service=<value>] [--fiware-service-path=<value>]")
     print("Usage : resetds --help")
     print("Usage : resetds --version")
     print("Chain Damjan and Marc procedures to respectively :")
     print("  - delete a datasource through IH API")
     print("  - force detection of a datasource through Orion")
-    print("Use --delete-subscr switch to delete data source subscription in Orion. Consequently, the IH will reimport ")
-    print("historical data from Orion when data source is re-registered in IH. Use this switch if you have also deleted data source index in Elasticsearch.")
     print("Use this script when data are stored in Orion but doesn't reach the Information Hub")
     print("Example : resetds AirQualityObserved urn:pixel:DataSource:frbod:AtmoNouvelleAquitaine")
+
+    print("Options:")
+    print(
+        "  --delete-subscr: delete data source subscription in Orion. Consequently, the IH will reimport historical data from Orion when data source is re-registered in IH. Use this switch if you have also deleted data source index in Elasticsearch.")
+    print("  --fiware-service=<value>: use specified Fiware-Service header when calling Orion")
+    print("  --fiware-service-path=<value>: use specified Fiware-ServicePath header when calling Orion")
 
 
 if __name__ == "__main__":
     opts = [opt for opt in sys.argv[1:] if opt.startswith("-")]
     args = [arg for arg in sys.argv[1:] if not arg.startswith("-")]
-    delete_subscr = False
+    delete_subscr = None
+    fiware_service = None
+    fiware_service_path = None
 
-    if opts:
-        if opts[0] == "-h" or opts[0] == "--help":
+    for opt in opts:
+        if opt == "-h" or opt == "--help":
             help()
             sys.exit(0)
-        if opts[0] == "-V" or opts[0] == "--version":
+        elif opt == "-V" or opt == "--version":
             print(f"{sys.argv[0]} version {VERSION}")
             sys.exit(0)
-        if "--delete-subscr" in opts:
+        elif opt == "--delete-subscr":
             delete_subscr = True
+        elif opt.startswith("--fiware-service="):
+            fiware_service = opt[len("--fiware-service="):]
+        elif opt.startswith("--fiware-service-path="):
+            fiware_service_path = opt[len("--fiware-service-path="):]
+        else:
+            print(f"Invalid option: {opt}")
+            print()
+            help()
+            sys.exit(0)
+
     if not args or len(args) != 2:
         help()
         sys.exit(1)
     if not args[1].startswith("urn:"):
         print("Invalid source name. Source names MUST begin with 'urn:'")
         sys.exit(2)
-    main(*args, delete_subscr)
+
+    srctype = args[0]
+    srcname = args[1]
+
+    main(srctype, srcname, delete_subscr, fiware_service, fiware_service_path)
