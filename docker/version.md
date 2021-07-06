@@ -109,3 +109,4 @@ Removed all widgets from upgrade seeds
 | 2.0.42   | 05/07/2021 | J Martinez   -> 
 Pas Gantt new Dinamic Index
 Trafficmonitoring
+| 2.0.43   | 06/07/2021 | Marc Despland | Add nagios configuration to store availability of components |

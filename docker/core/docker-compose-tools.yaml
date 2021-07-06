@@ -11,6 +11,8 @@ services:
     restart: always
     container_name: nagios
     hostname: nagios
+    volumes:
+      - /opt/pixel/kpi/nagios:/opt/kpi
     environment:
       - NAGIOSADMIN_PASSWORD_FILE=/run/secrets/nagios.ngiosadmin.password
       - ORIONDB_PASSWORD_FILE=/run/secrets/orion.db.password
