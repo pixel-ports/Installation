@@ -110,3 +110,7 @@ Removed all widgets from upgrade seeds
 Pas Gantt new Dinamic Index
 Trafficmonitoring
 | 2.0.43   | 06/07/2021 | Marc Despland | Add nagios configuration to store availability of components |
+| 2.0.44   | 13/07/2021 | J Martinez   -> 
+Fix 'storm water' error and other issues
+language agents list
+Agents List Dashboard/Server
