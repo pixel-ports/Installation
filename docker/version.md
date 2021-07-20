@@ -114,3 +114,6 @@ Trafficmonitoring
 Fix 'storm water' error and other issues
 language agents list
 Agents List Dashboard/Server
+| 2.0.45   | 20/07/2021 | J Martinez   -> 
+new widgets
+minor fixes
