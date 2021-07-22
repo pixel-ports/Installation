@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+  orion-collector-hopu:
+    image: pixelh2020/information-hub-orion-data-collector:hopu
+    restart: always
+    volumes:
+      - ./ih-config/infhub-hopu.properties:/etc/inf-hub/infhub.properties
+      - ./ih-config/log4j2.xml:/etc/inf-hub/log4j2.xml
+    extra_hosts:
+      - dal-orion:172.28.1.10
+      - schemas.pixel.internal:172.24.1.30
+    logging:
+      options:
+        max-size: "15m"
+        max-file: "2"
+    networks:
+      ih:
+        ipv4_address: 172.24.1.115
+      dal:
+        ipv4_address: 172.28.1.115
