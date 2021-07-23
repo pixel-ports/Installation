@@ -67,7 +67,7 @@ Here ```sha256:41038f3f8bf1d3d6c10b2a58bc38873221f9449b591ee6739e730f59bd1090b2`
 You can override all parameters, but most of the time it is not a good idea, just change the name with ```/ngsi-agent-pas-pei``` (the ```/``` is mandatory) by convention I use the name of the image.
 
 * Deploy the agent
-```curl -X POST -H "Content-Type: application/json" -H "X-Auth-Token: 0NkcsOAlKYPi" http://172.41.1.3:8080/api/ngsiagent -d @- <<EOF
+```curl -X POST -H "Content-Type: application/json" -H "X-Auth-Token: <ORCHESTRATOR API TOKEN>" http://172.41.1.3:8080/api/ngsiagent -d @- <<EOF
 {"name":"/ngsi-agent-pas-pei","image":"ngsi-agent-pas-pei:1.1.1","extrahosts":["ih.pixel.internal:10.128.138.4"],"type":"daemon","datasources":["urn:pixel:DataSource:KPI:EnvironmentalKeyPerformanceIndicator"],"datamodels":["/Pixel/KPI/EnvironmentalKeyPerformanceIndicator/schema.json"],"mode":"insert","environment":[{"key":"PATH","value":"/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"},{"key":"LANG","value":"C.UTF-8"},{"key":"GPG_KEY","value":"E3FF2839C048B25C084DEBE9B26995E310250568"},{"key":"PYTHON_VERSION","value":"3.9.5"},{"key":"PYTHON_PIP_VERSION","value":"21.1.1"},{"key":"PYTHON_GET_PIP_URL","value":"https://github.com/pypa/get-pip/raw/1954f15b3f102ace496a34a013ea76b061535bd2/public/get-pip.py"},{"key":"PYTHON_GET_PIP_SHA256","value":"f499d76e0149a673fb8246d88e116db589afbd291739bd84f2cd9a7bca7b6993"},{"key":"LC_ALL","value":"C.UTF-8"}]}
 EOF
 ```
