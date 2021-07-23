@@ -117,3 +117,4 @@ Agents List Dashboard/Server
 | 2.0.45   | 20/07/2021 | J Martinez   -> 
 new widgets
 minor fixes
+| 2.0.46   | 23/07/2021 | Marc Despland | Change to allow reboot of he hosts with auto restart of the componenets |
