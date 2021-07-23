@@ -86,6 +86,7 @@ services:
   elastalert:
     image: "praecoapp/elastalert-server"
     container_name: dashboard-alert-elastalert
+    restart: always
     volumes:
       - ./dashboard/praeco/config/elastalert.yaml:/opt/elastalert/config.yaml
       - ./dashboard/praeco/config/api.config.json:/opt/elastalert-server/config/config.json
@@ -104,6 +105,7 @@ services:
   webapp:
     image: "praecoapp/praeco"
     container_name: dashboard-alert-webapp
+    restart: always
     volumes:
       - ./dashboard/praeco/public/praeco.config.json:/var/www/html/praeco.config.json
       - ./dashboard/praeco/nginx_config/nginx.conf:/etc/nginx/nginx.conf

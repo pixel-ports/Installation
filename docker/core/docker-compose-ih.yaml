@@ -61,7 +61,9 @@ services:
       dal:
         ipv4_address: 172.28.1.15
   controller:
-    image: pixelh2020/information-hub-controller:1.2.0
+    build:
+      context: ./controller-waitfores
+    image: controller-waitfores
     restart: always
     depends_on:
       - zookeeper
@@ -77,7 +79,9 @@ services:
       ih:
         ipv4_address: 172.24.1.16
   extractor:
-    image: pixelh2020/information-hub-extractor:1.2.0
+    build:
+      context: ./extractor-waitfores
+    image: extractor-waitfores
     restart: always
     depends_on:
       - zookeeper
@@ -95,7 +99,9 @@ services:
       ih_public:
         ipv4_address: 172.25.1.17
   monitor:
-    image: pixelh2020/information-hub-monitor:1.2.0
+    build:
+      context: ./monitor-waitfores
+    image: monitor-waitfores
     restart: always
     depends_on:
       - zookeeper
@@ -146,6 +152,7 @@ services:
         ipv4_address: 172.25.1.20
   orchestrator:
     image: pixelh2020/information-hub-data-processor-orchestrator:1.2.0
+    restart: always
     depends_on:
       - zookeeper
       - kafka
@@ -162,6 +169,7 @@ services:
         ipv4_address: 172.25.1.29
   ih-health-probe:
     image: pixelh2020/ih-health-probe:v0.2.1
+    restart: always
     depends_on:
       - zookeeper
       - kafka
