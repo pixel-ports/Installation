@@ -10,7 +10,7 @@
 
 Go on the source folder on the ```PUBLIC``` host
 * INSIEL : ```cd /opt/pixel/Ngsi-agents/```
-* FRBOD : ```cd ```
+* FRBOD : ```cd /root/dev```
 
 ### Check the last version of the build image of the composant
 
