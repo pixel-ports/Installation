@@ -120,3 +120,5 @@ minor fixes
 | 2.0.46   | 23/07/2021 | Marc Despland | Change to allow reboot of he hosts with auto restart of the componenets |
 | 2.0.47   | 27/07/2021 | J Martinez   -> 
 Multiple fixes
+| 2.0.48   | 31/08/2021 | J Martinez   -> 
+Multiple fixes
