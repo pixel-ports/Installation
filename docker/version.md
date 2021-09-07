@@ -122,3 +122,7 @@ minor fixes
 Multiple fixes
 | 2.0.48   | 31/08/2021 | J Martinez   -> 
 Multiple fixes
+| 2.0.49   | 07/09/2021 | J Martinez   -> 
+Changed alert rules
+Merged UPV branch 
+Fixed Dashbaord from feedback
