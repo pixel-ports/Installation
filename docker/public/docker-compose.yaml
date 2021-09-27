@@ -142,6 +142,22 @@ services:
         ipv4_address: 172.42.1.200
       dal_proxy:
         ipv4_address: 172.43.1.200
+  docker-proxy:
+    restart: always
+    image: tecnativa/docker-socket-proxy:latest
+    container_name: docker-proxy
+    hostname: docker-proxy
+    logging:
+      options:
+        max-size: "15m"
+        max-file: "2"
+    ports:
+      - 2375:2375
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+      - IMAGES=1
+      - CONTAINERS=1
 networks:
   proxy:
     ipam:

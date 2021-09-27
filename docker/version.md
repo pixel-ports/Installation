@@ -128,3 +128,5 @@ Merged UPV branch
 Fixed Dashbaord from feedback
 | 2.1.0 | 14/09/2021 | J Martinez   -> 
 Added Maps sensors
+| 2.1.5 | 27/09/2021 | J Martinez   -> 
+Fixed agents
