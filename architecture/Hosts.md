@@ -2,14 +2,13 @@
 
 ## Public Host
 
-| Container           | proxy        | dal          | dal_agents   | dal_proxy    | 
+| Container           | proxy        | dal          | dal_agents   | dal_proxy    |
 | ------------------- |:------------:|:------------:|:------------:|:------------:|
 | frontrp             | 172.40.1.5   |              |              |              |
 | sec-wilma-pub       | 172.40.1.4   |              |              | 172.43.1.4   |
 | dal-proxy           |              | 172.41.1.2   | 172.42.1.2   | 172.43.1.2   |
 | dal-orchestrator    |              | 172.41.1.3   |              |              |
 | nagios              | 172.40.1.200 | 172.41.1.200 | 172.42.1.200 | 172.43.1.200 |
-
 
 ## Core Host
 
@@ -47,38 +46,36 @@
 | keyrock-manager     |              |              | 172.26.1.202 |              |              |              |              |              |              |
 | ih-health-probe     | 172.25.1.32  | 172.24.1.32  |              |              |              |              |              |              |              |
 
-
 ## Listening Port
-
 
 ### Core
 
-| Container           | host         | container    | 
+| Container           | host         | container    |
 | ------------------- |:------------:|:------------:|
-| internal_proxy      |      443     |     443      | 
-| sec-keyrock         |     3000     |    3000      | 
-| sec-mysql-db        |              |    3306      | 
-| sec-authzforce      |     3080     |    8080      | 
-| dal-orion-db        |              |   27017      | 
-| dal-orion           |     1026     |     1026     | 
-| dal-inquisitor      |              |     8080     | 
-| elasticsearch       |              |     9200     | 
-| core_kibana_1       |      5602    |     5601     | 
-| zookeeper           |      2181    |     2181     | 
-| kafka               |      9092    |     9092     | 
-| orion-collector     |              |              | 
-| controller          |              |              | 
-| extractor           |              |              | 
-| monitor             |              |              | 
-| writer              |              |              | 
-| elasticsearch-proxy |              |      80      | 
-| otdb                |     27017    |    27017     | 
-| dashboard-kibana    |     5601     |    5601      | 
-| dashboard-api-db    |              |    27017     | 
-| dashboard-api       |     3060     |     3000     | 
-| dashboard           |     8081     |     8080     | 
-| elastalert          |              |     3030     | 
-| webapp              |     8085     |     8080     | 
-| nagios              |     8088     |       80     | 
-| dal-provisioning    |              |              | 
-| ot-core             |     8080     |     8080     | 
+| internal_proxy      |      443     |     443      |
+| sec-keyrock         |     3000     |    3000      |
+| sec-mysql-db        |              |    3306      |
+| sec-authzforce      |     3080     |    8080      |
+| dal-orion-db        |              |   27017      |
+| dal-orion           |     1026     |     1026     |
+| dal-inquisitor      |              |     8080     |
+| elasticsearch       |              |     9200     |
+| core_kibana_1       |      5602    |     5601     |
+| zookeeper           |      2181    |     2181     |
+| kafka               |      9092    |     9092     |
+| orion-collector     |              |              |
+| controller          |              |              |
+| extractor           |              |              |
+| monitor             |              |              |
+| writer              |              |              |
+| elasticsearch-proxy |              |      80      |
+| otdb                |     27017    |    27017     |
+| dashboard-kibana    |     5601     |    5601      |
+| dashboard-api-db    |              |    27017     |
+| dashboard-api       |     3060     |     3000     |
+| dashboard           |     8081     |     8080     |
+| elastalert          |              |     3030     |
+| webapp              |     8085     |     8080     |
+| nagios              |     8088     |       80     |
+| dal-provisioning    |              |              |
+| ot-core             |     8080     |     8080     |

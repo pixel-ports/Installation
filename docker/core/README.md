@@ -1,6 +1,7 @@
 # Install Pixel Core Components
 
 ## Prepare installation
+
 Before installing PIXEL you have to install docker and docker-compose
 The link to install docker-compose could change, check the last version [here](https://docs.docker.com/compose/install/)
 
@@ -8,9 +9,7 @@ The link to install docker-compose could change, check the last version [here](h
 
 As root
 
-
-
-```
+```bash
 apt update
 apt upgrade -y
 apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
@@ -26,91 +25,101 @@ apt install -y git
 echo "vm.max_map_count=262144" >> /etc/sysctl.conf
 sysctl -w vm.max_map_count=262144
 ```
+
 ### For  CentOS
 
 As root
-```
+
+```bash
 yum install -y yum-utils
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 yum install docker-ce docker-ce-cli containerd.io
 ```
+
 If you have a conflict with podman-manpages for the last commands, try
-```
+
+```bash
 yum remove -y podman-manpages
 yum install docker-ce docker-ce-cli containerd.io
 ```
 
 The continue the installation
-```
+
+```bash
 curl -L "https://github.com/docker/compose/releases/download/1.28.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 yum install git
 echo "vm.max_map_count=262144" >> /etc/sysctl.conf
 sysctl -w vm.max_map_count=262144
 ```
+
 ### ALL OS
-```
+
+```bash
 systemctl enable docker
 systemctl start docker
 ```
+
 ## Retrieve the Core Archive
+
 Install the core archive in /opt/pixel
 
-```
+```bash
 mkdir -p /opt/pixel
 cd /opt/pixel
 ```
 
-Using GIT :
-A user as been created to retrieve the archive ```pixel/p1x3l```
-```
-GIT_SSL_NO_VERIFY=false git clone https://gitpixel.satrdlab.upv.es/marc.despland/Installation.git
+```bash
+git clone https://github.com/pixel-ports/Installation.git
 ```
 
 Later you can just run git pull to update
-```
-GIT_SSL_NO_VERIFY=false git pull
+
+```bash
+git pull
 ```
 
 then go to the Core folder
-```
+
+```bash
 cd /opt/pixel/Installation/docker/core
 ```
 
-
-
-## Configure the scripts 
+## Configure the scripts
 
 This part is easy :
 
 Create the ```.env``` to set the IP of the two servers.
-```
+
+```bash
 cp .env.template .env
 ```
 
 Then edit ```.env```
-```
+
+```bash
 PUBLIC_HOST_IP=10.66.16.137
 CORE_HOST_IP=10.12.182.193
 PIXEL_DOMAIN=.frbod.pixel-ports.eu
 PIXEL_INTERNAL_DOMAIN=.pixel.internal
 ```
-You can now run ```hosts.install.sh```to install local hostname used for configuration
-Check ```/etc/hosts```to check the result 
 
- Then define the value for all secrets, 
+You can now run ```hosts.install.sh```to install local hostname used for configuration
+Check ```/etc/hosts```to check the result
+
+ Then define the value for all secrets,
 
  First copy the ```secrets.template``` folder to create the ```secrets````
 
-```
+```bash
 cp -R ./secrets.template ./secrets
 ```
- 
- You have to edit each files in ```./secrets``` with strong and secure value.
 
- A quicker way is to use the given docker image ```pixelh2020/secrets```` on the secrets.template folder
+You have to edit each files in ```./secrets``` with strong and secure value.
 
-```
+A quicker way is to use the given docker image ```pixelh2020/secrets```` on the secrets.template folder
+
+```bash
 docker run -it --rm -v ${PWD}/secrets.template:/app/secrets pixelh2020/secrets:1.0.0
 ```
 
@@ -123,7 +132,7 @@ Edit ```pixel-rules.install.sh``` if the public interface is not ``èns2```
 
 Verify the content of the file !!!
 
-```
+```bash
 #!/bin/sh
 set -e
 
@@ -164,7 +173,7 @@ set -e
 
 Then copy the file in ```/etc/init.d``` and run it
 
-```
+```bash
 cp pixel-rules /etc/init.d
 /etc/init.d/pixel-rules start
 ```
@@ -172,28 +181,30 @@ cp pixel-rules /etc/init.d
 If something go south and you are kick out the server, reboot it, default rules should be reinstall
 
 if it works as expected, auto-start the script
-```
+
+```bash
 update-rc.d pixel-rules defaults
 ```
-
 
 ## Installation
 
 ### Installation process
 
 First build the local images using the helper scripts (could take some times):
-```
+
+```bash
 ./build.sh
 ```
 
 Then run the installation using the helper scripts:
-```
+
+```bash
 ./install.sh
 ```
 
 This should end with something like that
 
-```
+```bash
 Creating core_webapp_1                  ... done
 Creating dal-orion-db                   ... done
 Creating dashboard-kibana               ... done
@@ -231,8 +242,8 @@ And ```docker ps -a``` should show all containers working
 Run ```./dal-provisioning.sh``` display useful information to install ```PUBLIC``` server.
 
 It should display something like that
-```
 
+```bash
 > provisioning@1.0.0 start /app
 > node index.js
 
@@ -246,11 +257,9 @@ Subscription created            : 5ed36ccd502bffe0fedc6847
 Inquisitor      .............   Done
 ```
 
-
-
 #### Dashboard config
 
-Now you must create the OAUTH APP, the user and roles that will use the dashboard. This has to be done manually for now, it is expected to be automated in the future. To create these applications you must access to KeyRock so you can access directly if you have access to the IP and KeyRock port of the CORE machine or if not you must start and finish the installation of [Public Components](../public/README.md) and continue here (this way we can access to https://id.EXAMPLE.pixel-ports.eu and create the dashboard configuration correctly)
+Now you must create the OAUTH APP, the user and roles that will use the dashboard. This has to be done manually for now, it is expected to be automated in the future. To create these applications you must access to KeyRock so you can access directly if you have access to the IP and KeyRock port of the CORE machine or if not you must start and finish the installation of [Public Components](../public/README.md) and continue here (this way we can access to [https://id.EXAMPLE.pixel-ports.eu](https://id.EXAMPLE.pixel-ports.eu) and create the dashboard configuration correctly)
 
 1 - We created the new application from the KeyRock interface
 
@@ -264,7 +273,7 @@ Now you must create the OAUTH APP, the user and roles that will use the dashboar
 
 ![3](../../dashboard-config-3.png)
 
-4 - We add the roles `viewer` and `admin` 
+4 - We add the roles `viewer` and `admin`
 
 ![4](../../dashboard-config-4.png)
 
@@ -284,17 +293,18 @@ Now you must create the OAUTH APP, the user and roles that will use the dashboar
 
 Edit `.env` again with the client_ID and CLient_KEY from step 6 and the user PIXEL_DASHBOARD_ADMIN_EMAIL from step 5. Edit `./secrets/dashboard.admin.secret` with the password from step 5 and run `./build.sh` and `./install.sh`
 
-# Update the host
+## Update the host
 
 The process is simple
+
 * update the git repo
 * start the build script
 * start the install script
 
 Docker compose will update the modified components
 
-```
-GIT_SSL_NO_VERIFY=false git pull
+```bash
+git pull
 ./build.sh
 ./install.sh
 ```
